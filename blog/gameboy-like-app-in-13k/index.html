@@ -201,6 +201,11 @@ pre[class*="language-diff-"] {
 	--text-color-link-visited: inherit;
 
 	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -291,7 +296,7 @@ main :first-child {
 }
 
 header {
-	border-bottom: 1px dashed var(--color-gray-20);
+	border-bottom: 1px solid var(--color-gray-20);
 }
 header:after {
 	content: "";
@@ -420,7 +425,7 @@ header {
 	align-items: center;
 	justify-content: center;
 	text-transform: capitalize;
-	background: rgb(31, 139, 202);
+	background: var(--color-badge);
 	text-decoration: none;
 	font-size: 0.8em;
 	padding: 8px;
@@ -431,7 +436,7 @@ header {
 }
 
 .post-tag:hover {
-	background: rgb(6, 57, 87)
+	background: var(--color-badge-hover);
 }
 
 .postlist-item > .post-tag {
@@ -449,9 +454,6 @@ header {
 	align-items: center;
 	align-content: center;
 }
-.post-metadata time {
-	margin-right: 1em;
-}
 
 .article a {
 	color: #FFF;
@@ -468,23 +470,27 @@ header {
 
 .article-headings {
 	--offset: calc(min(10vh, 50px));
-	background: #0a0f15;
-	padding: 48px;
-	color: white;
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
 	position: relative;
-	transform: translate(0, calc(-1 * var(--offset)));
-	margin: 0 48px;
-	margin-bottom: calc(-1 * var(--offset));
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
 }
 
 .article-headings h1 {
 	font-size: 2em;
-	line-height: 1em;
+	line-height: 1.4em;
 	margin-bottom: 0;
 }
 
 .article-headings h2 {
 	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
 }
 
 /* Direct Links / Markdown Headers */
@@ -543,8 +549,8 @@ main img {
 </div>
 <div class="article-headings">
 	<h1>How I created a GameBoy-like game in 13kb</h1><h2>History of Gravepassing — my entry for js13kgames 2022.</h2>
+	<time class="article-time" datetime="2022-10-10">10 October 2022</time>
 	<ul class="post-metadata">
-	<li><time datetime="2022-10-10">10 October 2022</time></li>
 	<li><a href="/tags/web-game-development/" class="post-tag">Web Game Development</a> </li>
 	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
 	<li><a href="/tags/javascript/" class="post-tag">JavaScript</a> </li>

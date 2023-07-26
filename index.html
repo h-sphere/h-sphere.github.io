@@ -34,6 +34,11 @@
 	--text-color-link-visited: inherit;
 
 	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -124,7 +129,7 @@ main :first-child {
 }
 
 header {
-	border-bottom: 1px dashed var(--color-gray-20);
+	border-bottom: 1px solid var(--color-gray-20);
 }
 header:after {
 	content: "";
@@ -253,7 +258,7 @@ header {
 	align-items: center;
 	justify-content: center;
 	text-transform: capitalize;
-	background: rgb(31, 139, 202);
+	background: var(--color-badge);
 	text-decoration: none;
 	font-size: 0.8em;
 	padding: 8px;
@@ -264,7 +269,7 @@ header {
 }
 
 .post-tag:hover {
-	background: rgb(6, 57, 87)
+	background: var(--color-badge-hover);
 }
 
 .postlist-item > .post-tag {
@@ -282,9 +287,6 @@ header {
 	align-items: center;
 	align-content: center;
 }
-.post-metadata time {
-	margin-right: 1em;
-}
 
 .article a {
 	color: #FFF;
@@ -301,23 +303,27 @@ header {
 
 .article-headings {
 	--offset: calc(min(10vh, 50px));
-	background: #0a0f15;
-	padding: 48px;
-	color: white;
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
 	position: relative;
-	transform: translate(0, calc(-1 * var(--offset)));
-	margin: 0 48px;
-	margin-bottom: calc(-1 * var(--offset));
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
 }
 
 .article-headings h1 {
 	font-size: 2em;
-	line-height: 1em;
+	line-height: 1.4em;
 	margin-bottom: 0;
 }
 
 .article-headings h2 {
 	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
 }
 
 /* Direct Links / Markdown Headers */
@@ -367,7 +373,18 @@ main img {
 		</header>
 
 		<main id="skip">
-			
+			<h1>About Me</h1>
+I'm Kacper, Senior Engineer from London, UK.
+
+You can find me on <a href="https://twitter.com/kulak_at">Twitter</a>, <a href="https://medium.com/@kulak">Medium</a> and <a href="https://www.youtube.com/@hypersphere_blog">YouTube</a>.
+<br/><br/>
+<h1>My Projects</h1>
+<ul>
+	<li><a href="https://midival.github.io/">MIDIVal</a> - TypeScript MIDI Library</li>
+	<li><a href="https://medium.com/hypersphere-codes/introducing-omnibus-new-event-bus-library-written-in-typescript-4fc5d2f684c6">Omnibus</a> - TypeScript Event Bus</li>
+</ul>
+
+
 
 <h1>Latest 1 Post</h1>
 
