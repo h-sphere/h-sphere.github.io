@@ -5,12 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>How I created a GameBoy-like game in 13kb</title>
 		<meta name="description" content="Tech blog, mostly about TypeScript">
-		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
-		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.json" type="application/json" title="Hypersphere">
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;1,200;1,400&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
 		
 		<style>/**
  * okaidia theme for JavaScript, CSS and HTML
@@ -522,18 +522,67 @@ main img {
 	height: auto;
 	margin: 0 auto;
 	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
 }</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			<a href="/" class="home-link">Hypersphere</a>
+			<a href="/eleventy-base-blog/" class="home-link">Hypersphere</a>
 			<nav>
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
-					<li class="nav-item"><a href="/">About Me</a></li>
-					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/">About Me</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/blog/">Archive</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -544,17 +593,17 @@ main img {
 <section class="article">
 
 <div class="cover">
-	<img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.694915254237288" width="2000" height="1180" src="/img/TwPZntxLeN-2000.webp">
+	<img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.694915254237288" width="2000" height="1180" src="/eleventy-base-blog/img/TwPZntxLeN-2000.webp">
 </div>
 <div class="article-headings">
 	<h1>How I created a GameBoy-like game in 13kb</h1><h2>History of Gravepassing — my entry for js13kgames 2022.</h2>
 	<time class="article-time" datetime="2022-10-10">10 October 2022</time>
 	<ul class="post-metadata">
-	<li><a href="/tags/web-game-development/" class="post-tag">Web Game Development</a> </li>
-	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
-	<li><a href="/tags/javascript/" class="post-tag">JavaScript</a> </li>
-	<li><a href="/tags/canvas/" class="post-tag">Canvas</a> </li>
-	<li><a href="/tags/js13k/" class="post-tag">JS13K</a></li>
+	<li><a href="/eleventy-base-blog/tags/web-game-development/" class="post-tag">Web Game Development</a> </li>
+	<li><a href="/eleventy-base-blog/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/eleventy-base-blog/tags/javascript/" class="post-tag">JavaScript</a> </li>
+	<li><a href="/eleventy-base-blog/tags/canvas/" class="post-tag">Canvas</a> </li>
+	<li><a href="/eleventy-base-blog/tags/js13k/" class="post-tag">JS13K</a></li>
 </ul>
 </div>
 
@@ -579,13 +628,13 @@ main img {
 </ul>
 <h2 id="inspirations-and-graphics" tabindex="-1">Inspirations and graphics <a class="header-anchor" href="#inspirations-and-graphics">#</a></h2>
 <p>The choice for the graphics was a mix of the 1990s style handheld and home consoles like GameBoy Color and NES games. It wasn’t meant to mimic any specific game or style, but rather to be reminiscent of the era.</p>
-<img alt="Inspirations" loading="lazy" decoding="async" style="aspect-ratio: 1.2260869565217392" width="2115" height="1725" src="/img/PD2D3sRs6s-2115.webp">
+<img alt="Inspirations" loading="lazy" decoding="async" style="aspect-ratio: 1.2260869565217392" width="2115" height="1725" src="/eleventy-base-blog/img/PD2D3sRs6s-2115.webp">
 <p>I decided to go with 16x16px tiles making up one game unit. Each time on the screen you can see a 10x10 grid which results in a resolution of 160x160px (integer upscaled to look good on modern displays). This results in a more-or-less GameBoy feel, although the original hardware used 8x8px tiles instead and 160×144px resolution in total.</p>
 <p>As for the graphics, due to the size limitation, I restrained from adding any sprite maps. Instead, I use downscaled emojis to combine the sprites.</p>
-<img alt="Regular emojis rendered in very small sizes can get completely new meanings." loading="lazy" decoding="async" style="aspect-ratio: 1" width="792" height="792" src="/img/HEcdLvu56b-792.webp">
+<img alt="Regular emojis rendered in very small sizes can get completely new meanings." loading="lazy" decoding="async" style="aspect-ratio: 1" width="792" height="792" src="/eleventy-base-blog/img/HEcdLvu56b-792.webp">
 <p>The image above shows how the player model was built. It uses 4 emojis. Unsurprisingly I used a head emoji for a head with glasses on top, and trousers for a bottom part of a sprite. The torso part is a <a href="https://en.wikipedia.org/wiki/Red_envelope">Red Envelope</a> though, a popular monetary gift in Southeast Asia. Drawn in this resolution it loses all the details and the elongated shape of it is perfect to simulate the body.</p>
 <p>Emojis are not unified across the operating systems, which leads to the interesting effect of game rendering completely different on each OS. You can see the differences in the image below:</p>
-<img alt="Different operating systems: Windows, Ubuntu, MacOS" loading="lazy" decoding="async" style="aspect-ratio: 2.0350132625994695" width="3836" height="1885" src="/img/fwkFVCEbYB-3836.webp">
+<img alt="Different operating systems: Windows, Ubuntu, MacOS" loading="lazy" decoding="async" style="aspect-ratio: 2.0350132625994695" width="3836" height="1885" src="/eleventy-base-blog/img/fwkFVCEbYB-3836.webp">
 <p>Moreover, not all the systems support the same version of Unicode, making some of the newer emojis not compatible with older systems. In the screenshot above you can see that the tombstone emoji (🪦) was replaced with a coffin (⚰️) on Windows and Ubuntu — <a href="https://emojipedia.org/headstone/">tombstone was introduced in Unicode 13.0</a>. To achieve it I have created a small script rendering each emoji and checking if it was rendered properly. If not, it’s replaced with its equivalent specified in the handwritten configuration. Because emojis on different systems might have different sizes, some fine-tuning was required too.</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">interface</span> <span class="token class-name">OptionalEmojiSet</span> <span class="token punctuation">{</span>
     <span class="token comment">// EMOJI</span>
@@ -630,7 +679,7 @@ main img {
 <p>To check when each of the emojis was introduced, <a href="https://www.unicode.org/emoji/charts/emoji-versions.html">the following table was a really handy resource</a>.</p>
 <h2 id="game-screen-structure" tabindex="-1">Game Screen Structure <a class="header-anchor" href="#game-screen-structure">#</a></h2>
 <p>The screen displays 10x10 grid of 16px x 16px tiles making total of 160x160px resolution. Obviously, displaying it directly in such resolution would result in a tiny square on our modern 4k screens — that’s why the image is integer upscaled to the maximum value possible.</p>
-<img alt="Game Screen Structure." loading="lazy" decoding="async" style="aspect-ratio: 1.6164987405541562" width="2567" height="1588" src="/img/3cdrX0sTmY-2567.webp">
+<img alt="Game Screen Structure." loading="lazy" decoding="async" style="aspect-ratio: 1.6164987405541562" width="2567" height="1588" src="/eleventy-base-blog/img/3cdrX0sTmY-2567.webp">
 <p>To downscale emojis, I used a separate, tiny canvas that kept individual spites rendered in its original 16x16px. Then I can use those sprites to render them to the big destination canvas whenever needed. This allowed me to generate temporary sprite sheets to check if the tiles were properly generated.</p>
 <p>By default, canvas uses image smoothing meaning that when the sprite gets upscaled, it will be smoothened using antialiasing. To avoid that, we need to turn it off.</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts">context<span class="token punctuation">.</span>imageSmoothingEnabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span></code></pre>
@@ -640,7 +689,7 @@ main img {
 <h2 id="quadtree" tabindex="-1">QuadTree <a class="header-anchor" href="#quadtree">#</a></h2>
 <p>During the game lifecycle, a lot of game objects appear and disappear from the screen. The majority of the game logic revolves around finding which objects are close to each other and detecting collisions or proximity of them — every interaction like movement, detecting collisions, enemies following the player, etc; includes logic for finding objects within some distance. The most naive solution for this problem would be to check all objects stored in the memory. Unfortunately, this requires a lot of comparisons. If we would like to perform this action for each of the elements, this would result in having to do O(n²) comparisons every frame.</p>
 <p>With QuadTree, we can do a precomputation to optimize this process. The tree stores our elements in its nodes until the node reaches its capacity. In this scenario, it divides the space into four subspaces (thus the quad in the name). Then, each time we want to find all elements within the given area, we can easily discard objects outside the boundary. The whole process is recursive, so you end up with a structure that is really fast to find elements in.</p>
-<img alt="Visual representation of a quad-tree. The space gets divided into four subsections if there are too many items within its boundaries. Green rectangles represent the boundaries of the game objects." loading="lazy" decoding="async" style="aspect-ratio: 1.092896174863388" width="1200" height="1098" src="/img/cG8yr5Ofk9-1200.webp">
+<img alt="Visual representation of a quad-tree. The space gets divided into four subsections if there are too many items within its boundaries. Green rectangles represent the boundaries of the game objects." loading="lazy" decoding="async" style="aspect-ratio: 1.092896174863388" width="1200" height="1098" src="/eleventy-base-blog/img/cG8yr5Ofk9-1200.webp">
 <p>The recursive implementation itself is not too long and can easily fit within 100 lines.</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> GameObject <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../modules/GameObjects/GameObject"</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> Rectangle <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../modules/Primitives"</span><span class="token punctuation">;</span>
@@ -717,7 +766,7 @@ main img {
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <h2 id="dithering-effect" tabindex="-1">Dithering Effect <a class="header-anchor" href="#dithering-effect">#</a></h2>
-<img alt="Dithering effect." loading="lazy" decoding="async" style="aspect-ratio: 2.1226666666666665" width="2388" height="1125" src="/img/PUyIudwzQM-2388.webp">
+<img alt="Dithering effect." loading="lazy" decoding="async" style="aspect-ratio: 2.1226666666666665" width="2388" height="1125" src="/eleventy-base-blog/img/PUyIudwzQM-2388.webp">
 <p>To achieve retro aesthetics instead of varying the opacity of shadows, I resorted to dithering.</p>
 <p>The dithering effect is a technique of mimicking a richer color palette by alternating colors from the smaller set. In the picture above each of the patterns seems to be increasing in brightness even though all of them use just 2 base colors — black and purple.</p>
 <p>The effect was commonly used in old consoles and early computer games and applications where the palette was limited. This made developers think outside the box and use techniques like dithering to fake our eyes into thinking there are more colors than actually were displayed on the screen. And maybe most notably GameBoy Camera used ordered dither to display any image captured with it.</p>
@@ -727,12 +776,12 @@ main img {
   Dither</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
   on <a href="https://codepen.io">CodePen</a>.</span>
 </p>
-<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 <h2 id="post-processing" tabindex="-1">Post Processing <a class="header-anchor" href="#post-processing">#</a></h2>
 <p>Post-processing was an important step in making my game look more realistically retro. The old CRT created very unique artifacts when displaying color images due to the architecture of the display.</p>
-<img alt="Photo by ryuuji89 from Please show off what crt shaders can do!" loading="lazy" decoding="async" style="aspect-ratio: 1.356" width="678" height="500" src="/img/kUgpRapiGM-678.webp">
+<img alt="Photo by ryuuji89 from Please show off what crt shaders can do!" loading="lazy" decoding="async" style="aspect-ratio: 1.356" width="678" height="500" src="/eleventy-base-blog/img/kUgpRapiGM-678.webp">
 <p>In my attempt to emulate old retro style I overlayed a variation of <a href="https://en.wikipedia.org/wiki/Bayer_filter">Bayers Filter</a> with a slight blur on top of every game pixel and blended it using color-burn blend mode. This made the game have its original style. It, unfortunately, made it way darker but with the main theme around death, it seemed appropriate.</p>
-<img alt="Postprocessing" loading="lazy" decoding="async" style="aspect-ratio: 1.4613636363636364" width="2572" height="1760" src="/img/4wHe5u0V2n-2572.webp">
+<img alt="Postprocessing" loading="lazy" decoding="async" style="aspect-ratio: 1.4613636363636364" width="2572" height="1760" src="/eleventy-base-blog/img/4wHe5u0V2n-2572.webp">
 <p>Here’s the snippet of the code responsible for the effect:</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// drawing on posteffect canvas if it was not done before with slight blur between color "pixels"</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>postCanvas<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -764,9 +813,9 @@ main img {
 <span class="token keyword">this</span><span class="token punctuation">.</span>ctx<span class="token punctuation">.</span>globalAlpha <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
 <h2 id="audio" tabindex="-1">Audio <a class="header-anchor" href="#audio">#</a></h2>
 <p>To generate music I’ve used WebAudio API which provides node-based architecture you can use to combine oscillators, filters, effects, and other audio nodes together.</p>
-<img alt="Web Audio" loading="lazy" decoding="async" style="aspect-ratio: 2.08955223880597" width="1400" height="670" src="/img/cfqeE-TQyT-1400.webp">
+<img alt="Web Audio" loading="lazy" decoding="async" style="aspect-ratio: 2.08955223880597" width="1400" height="670" src="/eleventy-base-blog/img/cfqeE-TQyT-1400.webp">
 <p>I have <a href="https://github.com/h-sphere/gravepassing/blob/main/src/modules/Audio/AudioTrack.ts">implemented a simple audio tracker</a> that reads predefined music scores and schedules audio. The track can be defined as a string of MIDI notes, encoded as UTF-8 characters:</p>
-<img alt="UTF-8 to MIDI converter" loading="lazy" decoding="async" style="aspect-ratio: 1.6614620298083747" width="2341" height="1409" src="/img/4I8waPiEJJ-2341.webp">
+<img alt="UTF-8 to MIDI converter" loading="lazy" decoding="async" style="aspect-ratio: 1.6614620298083747" width="2341" height="1409" src="/eleventy-base-blog/img/4I8waPiEJJ-2341.webp">
 <p>A song consists of multiple tracks. They share the same BPM but can have different time divisions defined making it quite easy to iterate on music ideas.</p>
 <p>If you want to learn more about how to use Web Audio, I highly recommend my article about the subject:</p>
 <p><a href="https://medium.com/swinginc/playing-with-midi-in-javascript-b6999f2913c3">Playing with MIDI in JavaScript</a></p>
@@ -808,12 +857,14 @@ classes<span class="token punctuation">.</span><span class="token function">forE
 <p>To reduce the size even further I used <a href="https://lifthrasiir.github.io/roadroller/">roadroller</a>. It is a tool that flattens JavaScript by using complex compression techniques like bytewise rANS coder, making the source code completely unreadable but very efficient. It shaved a few kb of my code making my bundle fit the limit with no problem.</p>
 <p>What do you think of the solutions? What would you add or improve in my entry? Put your thoughts down in the comments!</p>
 
+<ul class="links-nextprev"><li>Next: <a href="/eleventy-base-blog/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li>
+</ul>
 
 </section>
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /blog/gameboy-like-app-in-13k/ -->
+		<!-- Current page: /eleventy-base-blog/blog/gameboy-like-app-in-13k/ -->
 	</body>
 </html>

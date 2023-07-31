@@ -340,3 +340,52 @@ main img {
 	margin: 0 auto;
 	display: block;
 }
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}

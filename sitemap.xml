@@ -2,62 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://hypersphere.codes/blog/gameboy-like-app-in-13k/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/blog/gameboy-like-app-in-13k/</loc>
 		<lastmod>2022-10-10</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/blog/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/blog/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/web-game-development/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/css/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/typescript/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/randomness/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/javascript/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/trigonometry/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/canvas/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/web-game-development/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/js13k/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/typescript/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/css/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/javascript/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/randomness/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/canvas/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
+		<loc>https://hypersphere.codes/eleventy-base-blog/tags/js13k/</loc>
 		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/eleventy-base-blog/blog/randomness-in-css-using-trigonometry/</loc>
+		<lastmod>2023-07-31</lastmod>
 	</url>
 </urlset>
