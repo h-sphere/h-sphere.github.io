@@ -273,7 +273,7 @@ header {
 }
 
 .article a {
-	color: #FFF;
+	color: var(--text-color);
 }
 
 .article {
