@@ -616,7 +616,7 @@ main img {
 </div>
 
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-<p>In the past, <a href="https://medium.com/hypersphere-codes/randomness-in-css-b55a0845c8dd">I have covered the topic of randomness in CSS using modulo operation</a> and I <a href="https://medium.com/hypersphere-codes/counting-in-css-unlock-magic-of-css-variables-8e610881097a">used prime numbers to create an automatic counter that can be used to generate different values for each object</a>. Thanks to that, we could compute pseudo-random values for each element independently.</p>
+<p>In the past, <a href="https://medium.com/hypersphere-codes/randomness-in-css-b55a0845c8dd">I have covered the topic of pseudo-randomness in CSS using modulo operation</a> and I <a href="https://medium.com/hypersphere-codes/counting-in-css-unlock-magic-of-css-variables-8e610881097a">used prime numbers to create an automatic counter that can be used to generate different values for each object</a>. Thanks to that, we could compute pseudo-random values for each element independently.</p>
 <p>As robust as this solution is, it has few downsides:</p>
 <ul>
 <li>The modulo function is not continuous</li>
@@ -626,6 +626,8 @@ main img {
 <p>Fortunately, we can do better! In this article, I would like to propose a better solution using trigonometry.</p>
 <h2 id="better-approach" tabindex="-1">Better approach <a class="header-anchor" href="#better-approach">#</a></h2>
 <p>Since the last time I explored this topic, new amazing features arrived in CSS. One of the most exciting additions is the trigonometric functions. They unlock a lot of previously impossible tasks. They are also the first bounded continuous functions natively supported in CSS, making them an amazing tool for creating pseudo-random generators.</p>
+<h3 id="randomness-vs-pseudo-randomness" tabindex="-1">Randomness vs pseudo-randomness <a class="header-anchor" href="#randomness-vs-pseudo-randomness">#</a></h3>
+<p>Obviously the solution presented here generates pseudo-random values only. All values are computed using predetermined constants. <a href="https://medium.com/hypersphere-codes/randomness-in-css-b55a0845c8dd">As described in my previous article</a>, we can add an additional <code>--seed</code> variable and change it from the outside of the system (set it in JavaScript on load for example) to provide less deterministic outcome, but CSS does not provide any non-deterministic methods to work with. That said, the solution should be enough to get sufficient pseudo-random values for animations, positions, etc. If you want to use it to solve your cryptographic functions, you might be not using proper technology to begin with 😉</p>
 <h2 id="characteristics-of-a-sine-function" tabindex="-1">Characteristics of a sine function <a class="header-anchor" href="#characteristics-of-a-sine-function">#</a></h2>
 <p>Sine and cosine functions are interesting for many reasons. They can be very useful in all sorts of operations where circles and rotations are involved. In our case though, we can use their properties for other purposes.</p>
 <h3 id="bounded-function" tabindex="-1">Bounded function <a class="header-anchor" href="#bounded-function">#</a></h3>
