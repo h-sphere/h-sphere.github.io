@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged “TypeScript”</title>
-		<meta name="description" content="Tech blog, mostly about TypeScript">
+		<title>webass TypeScript Typeguards - what are they and why you might not (always) need them?</title>
+		<meta name="description" content="TypeScript Typeguards">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
 
@@ -12,17 +12,184 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
 
-		<meta property="og:title" content="Tagged “TypeScript”"/>
-		<meta property="og:url" content="https://hypersphere.blog/tags/typescript/" />
-		<meta property="og:description" content="" />
-		<meta property="og:image" content="/default-cover.jpg" />
+		<meta property="og:title" content="webass TypeScript Typeguards - what are they and why you might not (always) need them?"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/getting-started-with-assemblyscript/" />
+		<meta property="og:description" content="TypeScript Typeguards" />
+		<meta property="og:image" content="https://hypersphere.blog/blog/randomness/cover.jpg" />
 		<meta property="og:type" content="article" />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@kulak_at" />
 		<meta name="twitter:creator" content="@kulak_at" />
 		
-		<style>.postlist { counter-reset: start-from 3 }
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
 * { box-sizing: border-box; }
 /* Defaults */
 :root {
@@ -431,32 +598,52 @@ main img {
 		</header>
 
 		<main id="skip">
-			<h1>Tagged “TypeScript”</h1>
+			
 
+<section class="article">
 
+<div class="cover">
+	<picture><source type="image/webp" srcset="/img/KtX0AbTI82-2560.webp 2560w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="2560" height="1440" src="/img/KtX0AbTI82-2560.jpeg"></picture>
+</div>
+<div class="article-headings">
+	<h1>webass TypeScript Typeguards - what are they and why you might not (always) need them?</h1>
+	<time class="article-time" datetime="2023-11-19">19 November 2023</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/tags/typeguards/" class="post-tag">Typeguards</a> </li>
+	<li><a href="/tags/type-narrowing-using-discriminated-unions/" class="post-tag">Type Narrowing using discriminated unions</a></li>
+</ul>
+</div>
 
-<ol reversed class="postlist">
+<h2 id="create-vite-project" tabindex="-1">Create vite project <a class="header-anchor" href="#create-vite-project">#</a></h2>
+<h2 id="interact-with-camera" tabindex="-1">interact with camera <a class="header-anchor" href="#interact-with-camera">#</a></h2>
+<h2 id="introduction-to-assemblyscript" tabindex="-1">introduction to assemblyscript <a class="header-anchor" href="#introduction-to-assemblyscript">#</a></h2>
+<h2 id="using-vite-plugin-assemblyscript-asc" tabindex="-1">using vite-plugin-assemblyscript-asc <a class="header-anchor" href="#using-vite-plugin-assemblyscript-asc">#</a></h2>
+<p>Install the plugin.</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"></code></pre>
+<p>Update the config to start using it</p>
+<p>Update <code>vite.config.ts</code>:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">{</span> defineConfig <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vite'</span>
+<span class="token keyword">import</span> assemblyScriptPlugin <span class="token keyword">from</span> <span class="token string">"vite-plugin-assemblyscript-asc"</span>
 
-	<li class="postlist-item">
-		<a href="/blog/typeguards-to-use-or-not/" class="postlist-link">TypeScript Typeguards: To use or not to use?</a>
-		<time class="postlist-date" datetime="2023-12-04">December 2023</time>
-	</li>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">defineConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token function">assemblyScriptPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      srcEntryFile<span class="token operator">:</span> <span class="token string">'assembly/sobel.ts'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<h2 id="applying-algorithm" tabindex="-1">Applying algorithm <a class="header-anchor" href="#applying-algorithm">#</a></h2>
+<h2 id="optimising-algorithm-by-unrolling-matrix-operations" tabindex="-1">Optimising algorithm by unrolling matrix operations <a class="header-anchor" href="#optimising-algorithm-by-unrolling-matrix-operations">#</a></h2>
 
-	<li class="postlist-item">
-		<a href="/blog/gameboy-like-app-in-13k/" class="postlist-link">How I created a GameBoy-like game in 13kb</a>
-		<time class="postlist-date" datetime="2022-10-10">October 2022</time>
-	</li>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li><li>Next: <a href="/blog/typescript-typeguards-and-alternatives/">TypeScript Typeguards: To use or not to use?</a></li>
+</ul>
 
-</ol>
-
-
-<p>See <a href="/tags/">all tags</a>.</p>
-
-
+</section>
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /tags/typescript/ -->
+		<!-- Current page: /blog/getting-started-with-assemblyscript/ -->
 	</body>
 </html>

@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>TypeScript Typeguards: To use or not to use?</title>
+		<meta name="description" content="TypeScript Typeguards">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
+
+		<meta property="og:title" content="TypeScript Typeguards: To use or not to use?"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/typeguards-to-use-or-not/" />
+		<meta property="og:description" content="TypeScript Typeguards" />
+		<meta property="og:image" content="https://hypersphere.blog/blog/randomness/cover.jpg" />
+		<meta property="og:type" content="article" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@kulak_at" />
+		<meta name="twitter:creator" content="@kulak_at" />
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: 'IBM Plex Sans', sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: inherit;
+	--text-color-link-active: inherit;
+	--text-color-link-visited: inherit;
+
+	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		/* --text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8; */
+
+
+		--text-color-link: inherit;
+		--text-color-link-active: inherit;
+		--text-color-link-visited: inherit;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	font-size: 16px;
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 60em;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	font-weight: 700;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px solid var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	background: var(--color-badge);
+	text-decoration: none;
+	font-size: 0.8em;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	text-transform: uppercase;
+}
+
+.post-tag:hover {
+	background: var(--color-badge-hover);
+}
+
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+	align-content: center;
+}
+
+.article a {
+	color: var(--text-color);
+}
+
+.article {
+	font-size: 20px;
+	line-height: 1.5em;
+}
+
+.article pre {
+	font-size: 14px;
+}
+
+.article-headings {
+	--offset: calc(min(10vh, 50px));
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
+	position: relative;
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
+}
+
+.article-headings h1 {
+	font-size: 2em;
+	line-height: 1.4em;
+	margin-bottom: 0;
+}
+
+.article-headings h2 {
+	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}
+
+main img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Hypersphere</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">About Me</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+
+<section class="article">
+
+<div class="cover">
+	<picture><source type="image/webp" srcset="/img/BDz10lHB53-1920.webp 1920w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="1920" height="1080" src="/img/BDz10lHB53-1920.jpeg"></picture>
+</div>
+<div class="article-headings">
+	<h1>TypeScript Typeguards: To use or not to use?</h1>
+	<time class="article-time" datetime="2023-12-04">04 December 2023</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/tags/typeguards/" class="post-tag">Typeguards</a> </li>
+	<li><a href="/tags/discriminated-unions/" class="post-tag">discriminated unions</a></li>
+</ul>
+</div>
+
+<p>TypeScript's static typing adds a layer of reliability and maintainability to JavaScript. Typeguards are a cornerstone of TypeScript and custom Typeguards can provide a lot of powerful typing options that would otherwise be impossible to achieve.</p>
+<p>In this article, I will go through built-in ways of typeguarding and how to create custom ones. I will also explain why it's not always a good idea to use custom typeguards and when you might want to rely on the built-in type narrowing of the language itself.</p>
+<h2 id="basics-of-typeguards" tabindex="-1">Basics of Typeguards <a class="header-anchor" href="#basics-of-typeguards">#</a></h2>
+<p>Typeguards are fundamental in TypeScript when dealing with uncertain types, particularly useful with unions and when dealing with variables typed as <code>any</code>. They can help you narrow down the type. Here’s a basic example using built-in <code>typeof</code> typeguard:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">function</span> <span class="token function">formatInput</span><span class="token punctuation">(</span>input<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">|</span> Date<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> input <span class="token operator">===</span> <span class="token string">"number"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// input is number</span>
+    <span class="token keyword">return</span> input<span class="token punctuation">.</span><span class="token function">toLocaleString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// input is Date</span>
+    <span class="token keyword">return</span> input<span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>In this case, <code>typeof</code> is a Typeguard that helps TypeScript distinguish between a <code>number</code> and a <code>Date</code> type. Note that inside the body of the if condition we can use a method of the number and Date types respectively without any extra type casting. TypeScript can automatically narrow down the type for us.</p>
+<h2 id="custom-typeguards" tabindex="-1">Custom Typeguards <a class="header-anchor" href="#custom-typeguards">#</a></h2>
+<p>The built-in Typeguards might not always be enough. When you want to deal with more advanced logic, you might want to create your own custom TypeGuard. TypeScript allows you to do so using the following syntax:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span>
+  x<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  y<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">isPoint</span><span class="token punctuation">(</span>value<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">)</span><span class="token operator">:</span> value <span class="token keyword">is</span> Point <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> value <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> value<span class="token punctuation">.</span>x <span class="token operator">===</span> <span class="token string">'number'</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> value<span class="token punctuation">.</span>y <span class="token operator">===</span> <span class="token string">'number'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Custom Typeguards are functions that return a boolean value, indicating if an input is of a certain type. Instead of simply typing the function as returning boolean, we type it with type predicative, which is a special TypeScript syntax that will make TypeScript treat a variable as a specific type if the function returns true.</p>
+<p>Once implemented, you can use the typeguard in the if statements and TypeScript will automatically narrow the type for you:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> <span class="token function">processData</span><span class="token punctuation">(</span>data<span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isPoint</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// data is typed here as Point, you can perform all Point operation here, no extra checks needed.</span>
+        <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">computeDistanceToOrigin</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>x<span class="token punctuation">,</span> data<span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// Here data is still typed as unknown</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="when-custom-typeguards-are-not-needed" tabindex="-1">When Custom TypeGuards are not needed? <a class="header-anchor" href="#when-custom-typeguards-are-not-needed">#</a></h2>
+<p>Let's imagine the following union type in your module that renders some content provided to it. The content can be either text, image or video and you need to handle them differently.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">TextContent</span> <span class="token punctuation">{</span>
+  type<span class="token operator">:</span> <span class="token string">'text'</span><span class="token punctuation">;</span>
+  content<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">ImageContent</span> <span class="token punctuation">{</span>
+  type<span class="token operator">:</span> <span class="token string">'image'</span><span class="token punctuation">;</span>
+  src<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  altText<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">VideoContent</span> <span class="token punctuation">{</span>
+  type<span class="token operator">:</span> <span class="token string">'video'</span><span class="token punctuation">;</span>
+  src<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  autoplay<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Content</span> <span class="token operator">=</span> TextContent <span class="token operator">|</span> ImageContent <span class="token operator">|</span> VideoContent<span class="token punctuation">;</span></code></pre>
+<p>It might be tempting to write a typeguard as the following:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Do not use this snippet, we will come up with something better ;)</span>
+<span class="token keyword">const</span> isTextContent <span class="token operator">=</span> <span class="token punctuation">(</span>content<span class="token operator">:</span> Content<span class="token punctuation">)</span><span class="token operator">:</span> content <span class="token keyword">is</span> TextContent <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> content<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'text'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> isImageContent <span class="token operator">=</span> <span class="token punctuation">(</span>content<span class="token operator">:</span> Content<span class="token punctuation">)</span><span class="token operator">:</span> content <span class="token keyword">is</span> ImageContent <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> content<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'image'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">processContent</span> <span class="token operator">=</span> <span class="token punctuation">(</span>content<span class="token operator">:</span> Content<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isTextContent</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: TextContent</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isImageContent</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: ImageContent</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: VideoContent</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The solution above works but is very explicit. We can improve it using <em>type narrowing using discriminated unions</em>. The name might sound intimidating but all it means is that TypeScript automatically narrows down types based on common properties in union types.
+In our example, a simple check on the type string literal will help TypeScript decide which of the types we are dealing with. No custom typeguards are required.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">processContent</span> <span class="token operator">=</span> <span class="token punctuation">(</span>content<span class="token operator">:</span> Content<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>content<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'text'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: TextContent</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>content<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'image'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: ImageContent</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// content: VideoContent</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We did not need to use any custom typeguard here.</p>
+<p>We can even use <code>switch</code> statement in this case and simplify the code further:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">processContent</span> <span class="token operator">=</span> <span class="token punctuation">(</span>content<span class="token operator">:</span> Content<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>content<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'text'</span><span class="token operator">:</span>
+            <span class="token comment">// content: TextContent</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'image'</span><span class="token operator">:</span>
+            <span class="token comment">// content: ImageContent</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'video'</span><span class="token operator">:</span>
+            <span class="token comment">// content: VideoContent</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>For deeper dive into disriminated unions, check out the <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions">official TypeScript Documentation about the topic</a>.</p>
+<h2 id="when-custom-typeguards-are-useful" tabindex="-1">When custom Typeguards are useful? <a class="header-anchor" href="#when-custom-typeguards-are-useful">#</a></h2>
+<p>Sometimes we might need to use custom typeguards nevertheless. Quite often our guard logic might go beyond simple type safety rules and it might be based on the business logic that can't be expressed in the type system itself.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">UserModel</span> <span class="token punctuation">{</span>
+    id<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    isAdmin<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">BookModel</span> <span class="token punctuation">{</span>
+    id<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    isInStock<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Model</span> <span class="token operator">=</span> UserModel <span class="token operator">|</span> BookModel
+
+<span class="token keyword">const</span> isUserModel <span class="token operator">=</span> <span class="token punctuation">(</span>model<span class="token operator">:</span> Model<span class="token punctuation">)</span><span class="token operator">:</span> model <span class="token keyword">is</span> UserModel <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> model<span class="token punctuation">.</span>id<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'user_'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> isBookModel <span class="token operator">=</span> <span class="token punctuation">(</span>model<span class="token operator">:</span> Model<span class="token punctuation">)</span><span class="token operator">:</span> model <span class="token keyword">is</span> BookModel <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> model<span class="token punctuation">.</span>id<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'book_'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">logModel</span> <span class="token operator">=</span> <span class="token punctuation">(</span>model<span class="token operator">:</span> Model<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isUserModel</span><span class="token punctuation">(</span>model<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">User </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>model<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> (</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>model<span class="token punctuation">.</span>isAdmin <span class="token operator">?</span> <span class="token string">'admin'</span> <span class="token operator">:</span> <span class="token string">'regular user'</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Book </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>model<span class="token punctuation">.</span>title<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>model<span class="token punctuation">.</span>isInStock <span class="token operator">?</span> <span class="token string">'(in stock)'</span> <span class="token operator">:</span> <span class="token string">''</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">logModel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    id<span class="token operator">:</span> <span class="token string">'book_1234'</span><span class="token punctuation">,</span>
+    title<span class="token operator">:</span> <span class="token string">'Pride and Prejudice'</span><span class="token punctuation">,</span>
+    isInStock<span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>In the example above the rules go beyond the TypeScript type system but based on the business logic we can deduct that any model that's id starts with <code>book_</code> is a book model. This can help us narrow the type down even though without it we would need to check for presence of other properties instead.</p>
+<h2 id="when-typeguards-can-go-wrong" tabindex="-1">When Typeguards can go wrong? <a class="header-anchor" href="#when-typeguards-can-go-wrong">#</a></h2>
+<p>Remember that typeguards are only as good as the logic you plug into them. The example from the previous section is good as long as we know our system guarantees ids matching the model shape. TypeScript will not check anything else and will trust us that the custom typeguard properly matched the type for us, so the following code will throw a runtime error.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token function">logModel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    id<span class="token operator">:</span> <span class="token string">'book_444'</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    isAdmin<span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>In many cases, we can guarantee business logic constraints like that with no problem whatsoever, but it's important to remember that real-world data might not always conform to our expectations or assumptions.</p>
+<p>A robust application should include additional runtime checks or validation mechanisms to ensure that the data actually matches the types as defined in TypeScript, when in doubt. This is especially critical in cases where data is dynamically loaded, user-generated, or comes from external sources.</p>
+
+<ul class="links-nextprev"><li>Previous: <a href="/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li>
+</ul>
+
+</section>
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/typeguards-to-use-or-not/ -->
+	</body>
+</html>
