@@ -390,22 +390,12 @@ header {
 .postlist {
 	list-style: none;
 	padding: 0;
-	padding-left: 1.5rem;
 }
 .postlist-item {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
-	counter-increment: start-from -1;
 	margin-bottom: 1em;
-}
-.postlist-item:before {
-	display: inline-block;
-	pointer-events: none;
-	content: "" counter(start-from, decimal-leading-zero) ". ";
-	line-height: 100%;
-	text-align: right;
-	margin-left: -1.5rem;
 }
 .postlist-date,
 .postlist-item:before {
@@ -428,6 +418,49 @@ header {
 .postlist-item-active .postlist-link {
 	font-weight: bold;
 }
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
 
 /* Tags */
 .post-tag {
@@ -636,7 +669,7 @@ main img {
 <h2 id="applying-algorithm" tabindex="-1">Applying algorithm <a class="header-anchor" href="#applying-algorithm">#</a></h2>
 <h2 id="optimising-algorithm-by-unrolling-matrix-operations" tabindex="-1">Optimising algorithm by unrolling matrix operations <a class="header-anchor" href="#optimising-algorithm-by-unrolling-matrix-operations">#</a></h2>
 
-<ul class="links-nextprev"><li>Previous: <a href="/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li><li>Next: <a href="/blog/typescript-typeguards-and-alternatives/">TypeScript Typeguards: To use or not to use?</a></li>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li><li>Next: <a href="/blog/typeguards-to-use-or-not/">TypeScript Typeguards: To use or not to use?</a></li>
 </ul>
 
 </section>

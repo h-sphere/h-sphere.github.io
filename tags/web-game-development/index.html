@@ -223,22 +223,12 @@ header {
 .postlist {
 	list-style: none;
 	padding: 0;
-	padding-left: 1.5rem;
 }
 .postlist-item {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
-	counter-increment: start-from -1;
 	margin-bottom: 1em;
-}
-.postlist-item:before {
-	display: inline-block;
-	pointer-events: none;
-	content: "" counter(start-from, decimal-leading-zero) ". ";
-	line-height: 100%;
-	text-align: right;
-	margin-left: -1.5rem;
 }
 .postlist-date,
 .postlist-item:before {
@@ -261,6 +251,49 @@ header {
 .postlist-item-active .postlist-link {
 	font-weight: bold;
 }
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
 
 /* Tags */
 .post-tag {
@@ -435,14 +468,22 @@ main img {
 
 
 
-<ol reversed class="postlist">
+<ul reversed class="postlist">
 
 	<li class="postlist-item">
-		<a href="/blog/gameboy-like-app-in-13k/" class="postlist-link">How I created a GameBoy-like game in 13kb</a>
+	<a href="/blog/gameboy-like-app-in-13k/" class="postlist-link">
+		<div class="post-image">
+		<picture><source type="image/webp" srcset="/img/5apC-9BZ3n-1080.webp 1080w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 1" width="1080" height="1080" src="/img/5apC-9BZ3n-1080.jpeg"></picture>
+		</div>
+		<div class="post-description">
+		<h2>How I created a GameBoy-like game in 13kb</h2>
 		<time class="postlist-date" datetime="2022-10-10">October 2022</time>
+		<p>History of Gravepassing - my entry for js13kgames 2022.</p>
+		</div>
+	</a>
 	</li>
 
-</ol>
+</ul>
 
 
 <p>See <a href="/tags/">all tags</a>.</p>

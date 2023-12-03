@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>How I created a GameBoy-like game in 13kb</title>
-		<meta name="description" content="Tech blog, mostly about TypeScript">
+		<meta name="description" content="History of Gravepassing - my entry for js13kgames 2022.">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
 
@@ -14,7 +14,7 @@
 
 		<meta property="og:title" content="How I created a GameBoy-like game in 13kb"/>
 		<meta property="og:url" content="https://hypersphere.blog/blog/gameboy-like-app-in-13k/" />
-		<meta property="og:description" content="" />
+		<meta property="og:description" content="History of Gravepassing - my entry for js13kgames 2022." />
 		<meta property="og:image" content="/default-cover.jpg" />
 		<meta property="og:type" content="article" />
 
@@ -390,22 +390,12 @@ header {
 .postlist {
 	list-style: none;
 	padding: 0;
-	padding-left: 1.5rem;
 }
 .postlist-item {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
-	counter-increment: start-from -1;
 	margin-bottom: 1em;
-}
-.postlist-item:before {
-	display: inline-block;
-	pointer-events: none;
-	content: "" counter(start-from, decimal-leading-zero) ". ";
-	line-height: 100%;
-	text-align: right;
-	margin-left: -1.5rem;
 }
 .postlist-date,
 .postlist-item:before {
@@ -428,6 +418,49 @@ header {
 .postlist-item-active .postlist-link {
 	font-weight: bold;
 }
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
 
 /* Tags */
 .post-tag {
