@@ -22,22 +22,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/typescript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/typeguards/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://hypersphere.codes/tags/web-game-development/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/typescript/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
@@ -57,7 +47,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
+		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
@@ -73,6 +68,11 @@
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
