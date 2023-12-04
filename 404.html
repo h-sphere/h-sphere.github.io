@@ -88,8 +88,25 @@ body {
 html {
 	overflow-y: scroll;
 }
-body {
+/* body {
 	max-width: 60em;
+} */
+
+.grid-wrapper {
+	--gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
+	column-gap: var(--gap);
+	font-size: clamp(14px, 1vw, 36px);
+}
+
+.grid-wrapper > * {
+	grid-column: 2;
+}
+
+.full-bleed {
+	width: 100%;
+	grid-column: 1 / -1;
 }
 
 h1, h2, h3, h4 {
@@ -128,13 +145,6 @@ a[href]:visited {
 a[href]:hover,
 a[href]:active {
 	color: var(--text-color-link-active);
-}
-
-main {
-	padding: 1rem;
-}
-main :first-child {
-	margin-top: 0;
 }
 
 header {
@@ -443,7 +453,59 @@ main img {
 	font-size: 0.4em;
 	line-height: 1em;
 	margin-top: auto;
-}</style>
+}
+
+
+
+.postlist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+	padding: 3em;
+	margin: 0 auto;
+	max-width: 300ch;
+}
+
+.postlist-item:first-child {
+	grid-column: 1 / 3;
+}
+
+@media (max-width: 700px) {
+	.postlist-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.postlist-item:first-child {
+		grid-column: auto;
+	}
+}
+
+@media (max-width: 1000px) and (min-width: 701px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 1600px) and (min-width: 1001px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
+
+/* .postlist-item {
+	background: rgb(0,0,0,0.1)
+} */
+
+.postlist-item a {
+	height: 100%;
+	background: rgb(0,0,0,0.1);
+	width: 100%;
+}
+
+/* .postlist-item:nth-child(2) { */
+	/* grid-row: 1 / -1; */
+/* } */</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
@@ -460,7 +522,8 @@ main img {
 		</header>
 
 		<main id="skip">
-			<h1 id="content-not-found" tabindex="-1">Content not found. <a class="header-anchor" href="#content-not-found">#</a></h1>
+			<section class="grid-wrapper">
+<h1 id="content-not-found" tabindex="-1">Content not found. <a class="header-anchor" href="#content-not-found">#</a></h1>
 <p>Go <a href="/">home</a>.</p>
 <!--
 
@@ -473,6 +536,7 @@ This will work for both GitHub pages and Netlify:
 
 -->
 
+</section>
 
 		</main>
 
