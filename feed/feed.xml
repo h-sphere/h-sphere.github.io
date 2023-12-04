@@ -202,10 +202,10 @@ In our example, a simple check on the type string literal will help TypeScript d
     &lt;/div&gt;
 &lt;/a&gt;
 &lt;p&gt;The value is then multiplied and offset by some arbitrary values to provide a pseudo-random big number (the values do not really matter, you can change them as you wish to get different results). After that, we use the sine function to map it to the range &lt;code&gt;[-1, 1]&lt;/code&gt;. Lastly, as shown in the animation below, we can map it to the range &lt;code&gt;[0, 1]&lt;/code&gt; by applying a simple algebraic transformation. Once we obtain value from the range &lt;code&gt;[0, 1]&lt;/code&gt;, we can use linear mapping to map it to any other desired value.&lt;/p&gt;
-&lt;img src=&quot;https://hypersphere.codes/blog/randomness/scaling.gif&quot; alt=&quot;Visualisation of Scaling&quot;&gt;
+&lt;img src=&quot;https://hypersphere.codes/blog/randomness/scaling.gif&quot; alt=&quot;Visualisation of Scaling&quot; class=&quot;full-bleed&quot;&gt;
 &lt;h3 id=&quot;continuity&quot; tabindex=&quot;-1&quot;&gt;Continuity &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/randomness-in-css-using-trigonometry/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Another characteristic of the sine function is continuity. You can &lt;a href=&quot;https://en.wikipedia.org/wiki/Continuous_function&quot;&gt;explore the full formal definition of continuity here&lt;/a&gt;, but to make things simple you can think of it that the small changes in the input for sine or cosine function will end up in small changes to the output. Thanks to that we can achieve a gradual change in values when animating while still having the system behave randomly.&lt;/p&gt;
-&lt;img src=&quot;https://hypersphere.codes/blog/randomness/continuity.gif&quot; alt=&quot;Visualisation of Continuity&quot;&gt;
+&lt;img src=&quot;https://hypersphere.codes/blog/randomness/continuity.gif&quot; alt=&quot;Visualisation of Continuity&quot; class=&quot;full-bleed&quot;&gt;
 &lt;h2 id=&quot;examples&quot; tabindex=&quot;-1&quot;&gt;Examples &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/randomness-in-css-using-trigonometry/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Here are a few examples demonstrating the potential of using trigonometric functions to generate pseudo-random values.&lt;/p&gt;
 &lt;h3 id=&quot;circles-grid&quot; tabindex=&quot;-1&quot;&gt;Circles Grid &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/randomness-in-css-using-trigonometry/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;

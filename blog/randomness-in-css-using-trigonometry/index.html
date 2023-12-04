@@ -738,10 +738,10 @@ main img {
     </div>
 </a>
 <p>The value is then multiplied and offset by some arbitrary values to provide a pseudo-random big number (the values do not really matter, you can change them as you wish to get different results). After that, we use the sine function to map it to the range <code>[-1, 1]</code>. Lastly, as shown in the animation below, we can map it to the range <code>[0, 1]</code> by applying a simple algebraic transformation. Once we obtain value from the range <code>[0, 1]</code>, we can use linear mapping to map it to any other desired value.</p>
-<img src="/blog/randomness/scaling.gif" alt="Visualisation of Scaling" />
+<img src="/blog/randomness/scaling.gif" alt="Visualisation of Scaling" class="full-bleed" />
 <h3 id="continuity" tabindex="-1">Continuity <a class="header-anchor" href="#continuity">#</a></h3>
 <p>Another characteristic of the sine function is continuity. You can <a href="https://en.wikipedia.org/wiki/Continuous_function">explore the full formal definition of continuity here</a>, but to make things simple you can think of it that the small changes in the input for sine or cosine function will end up in small changes to the output. Thanks to that we can achieve a gradual change in values when animating while still having the system behave randomly.</p>
-<img src="/blog/randomness/continuity.gif" alt="Visualisation of Continuity" />
+<img src="/blog/randomness/continuity.gif" alt="Visualisation of Continuity" class="full-bleed" />
 <h2 id="examples" tabindex="-1">Examples <a class="header-anchor" href="#examples">#</a></h2>
 <p>Here are a few examples demonstrating the potential of using trigonometric functions to generate pseudo-random values.</p>
 <h3 id="circles-grid" tabindex="-1">Circles Grid <a class="header-anchor" href="#circles-grid">#</a></h3>
