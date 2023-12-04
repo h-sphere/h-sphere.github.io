@@ -15,7 +15,7 @@
 		<meta property="og:title" content="TypeScript Typeguards: To use or not to use?"/>
 		<meta property="og:url" content="https://hypersphere.blog/blog/typeguards-to-use-or-not/" />
 		<meta property="og:description" content="What are custom typeguards? When should we use them and when should we resort to built-in methods instead?" />
-		<meta property="og:image" content="https://hypersphere.blog/blog/randomness/cover.jpg" />
+		<meta property="og:image" content="https://hypersphere.blog/blog/typeguards/cover.jpg" />
 		<meta property="og:type" content="article" />
 
 		<meta name="twitter:card" content="summary_large_image" />
@@ -409,11 +409,6 @@ header {
 	font-size: 1.1875em; /* 19px /16 */
 	font-weight: 700;
 	flex-basis: calc(100% - 1.5rem);
-	padding-left: .25em;
-	padding-right: .5em;
-	text-underline-position: from-font;
-	text-underline-offset: 0;
-	text-decoration-thickness: 1px;
 }
 .postlist-item-active .postlist-link {
 	font-weight: bold;
@@ -436,6 +431,7 @@ header {
 
 .post-image {
 	flex: 1;
+	font-size: 0;
 }
 
 .post-image img {
@@ -448,6 +444,7 @@ header {
 	flex: 2;
 	display: flex;
 	flex-direction: column;
+	padding-right: 1em;
 }
 
 .post-description time {
