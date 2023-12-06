@@ -265,7 +265,7 @@ html {
 	display: grid;
 	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
 	column-gap: var(--gap);
-	font-size: clamp(14px, 1vw, 36px);
+	font-size: clamp(16px, 1vw, 36px);
 }
 
 .grid-wrapper > * {
@@ -622,22 +622,28 @@ main img {
 	margin-top: auto;
 }
 
-
+.postlist-grid-container {
+	container-type: inline-size;
+	padding: 1em;
+	margin: 0 auto;
+	max-width: 120ch;
+}
 
 .postlist-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 16px;
-	padding: 1em;
-	margin: 0 auto;
-	max-width: 300ch;
+}
+
+.postlist-item h2 {
+	font-size: 30px;
 }
 
 .postlist-item:first-child {
 	grid-column: 1 / 3;
 }
 
-@media (max-width: 700px) {
+@container (max-width: 700px) {
 	.postlist-grid {
 		grid-template-columns: 1fr;
 	}
@@ -647,15 +653,19 @@ main img {
 	}
 }
 
-@media (max-width: 1000px) and (min-width: 701px) {
+@container (max-width: 1000px) and (min-width: 701px) {
 	.postlist-grid {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
-@media (max-width: 1600px) and (min-width: 1001px) {
+@container (max-width: 1600px) and (min-width: 1001px) {
 	.postlist-grid {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+
+	.postlist-item:nth-child(2) {
+		grid-column: 3 / 5;
 	}
 }
 
@@ -663,6 +673,20 @@ main img {
 /* .postlist-item {
 	background: rgb(0,0,0,0.1)
 } */
+
+.postlist-item {
+	container-type: inline-size;
+}
+
+@container (max-width: 500px) {
+	.postlist-link {
+		flex-direction: column;
+	}
+
+	.post-description {
+		padding: 0 1em 0.5em 1em;
+	}
+}
 
 .postlist-item a {
 	height: 100%;
