@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Introduction to AssemblyScript</title>
+		<meta name="description" content="Get started with AssemblyScript - start writing performant code!">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
+
+		<meta property="og:title" content="Introduction to AssemblyScript"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/introduction-to-assemblyscript/" />
+		<meta property="og:description" content="Get started with AssemblyScript - start writing performant code!" />
+		<meta property="og:image" content="https://hypersphere.blog/blog/randomness/cover.jpg" />
+		<meta property="og:type" content="article" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@kulak_at" />
+		<meta name="twitter:creator" content="@kulak_at" />
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: 'IBM Plex Sans', sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: inherit;
+	--text-color-link-active: inherit;
+	--text-color-link-visited: inherit;
+
+	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		/* --text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8; */
+
+
+		--text-color-link: inherit;
+		--text-color-link-active: inherit;
+		--text-color-link-visited: inherit;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	font-size: 16px;
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+/* body {
+	max-width: 60em;
+} */
+
+.grid-wrapper {
+	--gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
+	column-gap: var(--gap);
+	font-size: clamp(16px, 1vw, 20px);
+}
+
+.grid-wrapper > * {
+	grid-column: 2;
+}
+
+.full-bleed {
+	width: 100%;
+	grid-column: 1 / -1;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	font-weight: 700;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+header {
+	border-bottom: 1px solid var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+}
+.postlist-item {
+	align-items: baseline;
+	margin-bottom: 1em;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+	font-size: 0;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+	/* height: 100%; */
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	padding-right: 1em;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	background: var(--color-badge);
+	text-decoration: none;
+	font-size: 0.8em;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	text-transform: uppercase;
+}
+
+.post-tag:hover {
+	background: var(--color-badge-hover);
+}
+
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+	align-content: center;
+}
+
+.article a {
+	color: var(--text-color);
+}
+
+.article {
+	font-size: 20px;
+	line-height: 1.5em;
+}
+
+.article pre {
+	font-size: 14px;
+}
+
+.article-headings {
+	--offset: calc(min(10vh, 50px));
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
+	position: relative;
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
+}
+
+.article-headings h1 {
+	font-size: 2em;
+	line-height: 1.4em;
+	margin-bottom: 0;
+}
+
+.article-headings h2 {
+	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}
+
+main img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}
+
+.postlist-grid-container {
+	container-type: inline-size;
+	padding: 1em;
+	margin: 0 auto;
+	max-width: 120ch;
+}
+
+.postlist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+}
+
+.postlist-item h2 {
+	font-size: 30px;
+}
+
+.postlist-item:first-child {
+	grid-column: 1 / 3;
+}
+
+
+.postlist-item:nth-child(2) {
+	grid-column: 3 / 5;
+}
+
+@container (max-width: 700px) {
+	.postlist-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1000px) and (min-width: 701px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1600px) and (min-width: 1001px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+
+/* .postlist-item {
+	background: rgb(0,0,0,0.1)
+} */
+
+.postlist-item {
+	container-type: inline-size;
+}
+
+@container (max-width: 500px) {
+	.postlist-link {
+		flex-direction: column;
+	}
+
+	.post-description {
+		padding: 0 1em 0.5em 1em;
+	}
+}
+
+.postlist-item a {
+	height: 100%;
+	background: rgb(0,0,0,0.1);
+	width: 100%;
+}
+
+/* .postlist-item:nth-child(2) { */
+	/* grid-row: 1 / -1; */
+/* } */</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Hypersphere</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">About Me</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+
+<section class="article grid-wrapper">
+
+<div class="cover full-bleed">
+	<picture><source type="image/webp" srcset="/img/bd-vY9esJv-1200.webp 1200w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7518248175182483" width="1200" height="685" src="/img/bd-vY9esJv-1200.jpeg"></picture>
+</div>
+<div class="article-headings">
+	<h1>Introduction to AssemblyScript</h1>
+	<time class="article-time" datetime="2023-12-11">11 December 2023</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/tags/assemblyscript/" class="post-tag">AssemblyScript</a> </li>
+	<li><a href="/tags/fibbonaci-sequence/" class="post-tag">Fibbonaci Sequence</a></li>
+</ul>
+</div>
+
+<p>TypeScript and JavaScript are amazing technologies but they have a very crucial downside - by being high level script languages, they are not performant. In plenty of use cases it is not a problem but when your application is computation-heavy this might a very big let-down. Fortunately, with introduction of WebAssembly in 2015 (and first release in 2017) we now have a way to run low-level code which is way more performant. Unfortunately with great power comes assembly-like syntax which, despite being really powerful, might not be viable for bigger projects to write directly in. Fortunately many of languages can be compiled into WebAssembly. A lot of already extablished languages like C++ and Rust can be compiled this way, but if you are looking for the language that is most familar to web developer, AssemblyScript is the way to go! It provides familar TypeScript syntax but still makes the code performant by targeting WebAssembly feature set.</p>
+<p>In this article I will explain the history of WebAssembly and AssemblyScript. Then we will dive into the basic example of writing, compiling and running AssemblyScript in your browser. Later we will implement Fibonacci Sequence in both TypeScript and JavaScript and compare their performance.</p>
+<h2 id="what-exactly-is-webassembly-and-assemblyscript" tabindex="-1">What exactly is WebAssembly and AssemblyScript <a class="header-anchor" href="#what-exactly-is-webassembly-and-assemblyscript">#</a></h2>
+<h2 id="getting-started-with-assemblyscript" tabindex="-1">Getting started with AssemblyScript <a class="header-anchor" href="#getting-started-with-assemblyscript">#</a></h2>
+<p>To run AssemblyScript we need first to install necessary tool to compile AssemblyScript into the binary we will be later able to use on our website.</p>
+<h3 id="installing-tools" tabindex="-1">Installing tools <a class="header-anchor" href="#installing-tools">#</a></h3>
+<p>To install the tool you can simply install it globally using npm:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> assemblyscript</code></pre>
+<p>With the package installed we can create new project using <code>asinit</code> npx template.</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> asinit as-hello-world</code></pre>
+<p>This will create basic structure including <code>tsconfig.json</code>, <code>asconfig.json</code> and basic project structue with sample code. In the following sections we will modify this code to get you started.</p>
+<h3 id="writing-your-first-assemblyscript-code" tabindex="-1">Writing your first AssemblyScript code <a class="header-anchor" href="#writing-your-first-assemblyscript-code">#</a></h3>
+<p>AssemblyScript code is stored in regular TypeScript files. The only thing that can give it away it is not a plain TypeScript are low-level types: for example instead of typing number with <code>number</code>, we would usually type them with <code>i32</code> (representing 32-bit integers). Let's open the code in <code>assembly/index.ts</code> and check it out:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span>a<span class="token operator">:</span> i32<span class="token punctuation">,</span> b<span class="token operator">:</span> i32<span class="token punctuation">)</span><span class="token operator">:</span> i32 <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Besides the new datatype that replaces <code>number</code>, the code looks rather familar. AssemblyScript strives to make transition as easy as possible so you should not have too much problems with modifying this code to return sum of squares of the numbers.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span>a<span class="token operator">:</span> i32<span class="token punctuation">,</span> b<span class="token operator">:</span> i32<span class="token punctuation">)</span><span class="token operator">:</span> i32 <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a <span class="token operator">*</span> a <span class="token operator">+</span> b <span class="token operator">*</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now let's compile and run our modified code.</p>
+<h3 id="compiling-and-running-the-code" tabindex="-1">Compiling and running the code <a class="header-anchor" href="#compiling-and-running-the-code">#</a></h3>
+<p>Without the boilerplate provided you would need to first compile AssemblyScript into <code>wat</code> and then <code>wasm</code> files as well as provide a bridging code that would load and execute it. Fortunately, with the boilerplate provided it all will be performed for us automatically during the build stage. We can start building stage by simply running the following command:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> run asbuild</code></pre>
+<p>After sucessful build you can run a simple http server to see the files with</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> start</code></pre>
+<p>This should return the page that prints 5 (or 3 for unmodified code).</p>
+<h3 id="inspecting-artefacts" tabindex="-1">Inspecting artefacts <a class="header-anchor" href="#inspecting-artefacts">#</a></h3>
+<p>To learn more how WebAssembly and AssemblyScript works under the hood, let's inspect build folder. Let's open release.wat file first. This is direct translation of our AssemblyScript code into low level WebAssembly Text Format. If it wasn't for AssemblyScript, this is the language we would need to write all our low-level code in. The next file, <code>wasm</code> is a binary which is compiled version of this code. This is the final file that our browser will read and execute.
+To run that code, we need to fetch it and then instantiate using <code>WebAssembly</code> global object. This is done already for us in <code>release.js</code> file.</p>
+<h2 id="benchmarking-fibonacci-sequence" tabindex="-1">Benchmarking Fibonacci Sequence <a class="header-anchor" href="#benchmarking-fibonacci-sequence">#</a></h2>
+<p>To see the power of WebAssembly, let's run it using</p>
+<p><picture><source type="image/webp" srcset="/img/QIFOOvGa7W-1900.webp 1900w"><img alt="Comparison of performance of running fib(n) for TS and WebAssembly versions" loading="lazy" decoding="async" style="aspect-ratio: 1.756007393715342" width="1900" height="1082" src="/img/QIFOOvGa7W-1900.jpeg"></picture></p>
+
+<ul class="links-nextprev"><li>Previous: <a href="/blog/typeguards-to-use-or-not/">TypeScript Typeguards: To use or not to use?</a></li>
+</ul>
+
+</section>
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/introduction-to-assemblyscript/ -->
+	</body>
+</html>
