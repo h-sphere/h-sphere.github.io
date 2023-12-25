@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Advanced TypeScript: Mapped Types and more</title>
+		<meta name="description" content="Advanced TypeScript: Mapped Types and more">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
+
+		<meta property="og:title" content="Advanced TypeScript: Mapped Types and more"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/advanced-typescript-mapped-types/" />
+		<meta property="og:description" content="Advanced TypeScript: Mapped Types and more" />
+		<meta property="og:image" content="https://hypersphere.blog/blog/typeguards/cover.jpg" />
+		<meta property="og:type" content="article" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@kulak_at" />
+		<meta name="twitter:creator" content="@kulak_at" />
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5D5F7SM8E8"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-5D5F7SM8E8');
+		</script>
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: 'IBM Plex Sans', sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: inherit;
+	--text-color-link-active: inherit;
+	--text-color-link-visited: inherit;
+
+	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		/* --text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8; */
+
+
+		--text-color-link: inherit;
+		--text-color-link-active: inherit;
+		--text-color-link-visited: inherit;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	font-size: 16px;
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+/* body {
+	max-width: 60em;
+} */
+
+.grid-wrapper {
+	--gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
+	column-gap: var(--gap);
+	font-size: clamp(16px, 1vw, 20px);
+}
+
+.grid-wrapper > * {
+	grid-column: 2;
+}
+
+.full-bleed {
+	width: 100%;
+	grid-column: 1 / -1;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	font-weight: 700;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+header {
+	border-bottom: 1px solid var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+}
+.postlist-item {
+	align-items: baseline;
+	margin-bottom: 1em;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+	font-size: 0;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+	/* height: 100%; */
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	padding-right: 1em;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	background: var(--color-badge);
+	text-decoration: none;
+	font-size: 0.8em;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	text-transform: uppercase;
+}
+
+.post-tag:hover {
+	background: var(--color-badge-hover);
+}
+
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+	align-content: center;
+}
+
+.article a {
+	color: var(--text-color);
+}
+
+.article {
+	font-size: 20px;
+	line-height: 1.5em;
+}
+
+.article pre {
+	font-size: 14px;
+}
+
+.article-headings {
+	--offset: calc(min(10vh, 50px));
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
+	position: relative;
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
+}
+
+.article-headings h1 {
+	font-size: 2em;
+	line-height: 1.4em;
+	margin-bottom: 0;
+}
+
+.article-headings h2 {
+	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}
+
+main img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}
+
+.postlist-grid-container {
+	container-type: inline-size;
+	padding: 1em;
+	margin: 0 auto;
+	max-width: 120ch;
+}
+
+.postlist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+}
+
+.postlist-item h2 {
+	font-size: 30px;
+}
+
+.postlist-item:first-child {
+	grid-column: 1 / 3;
+}
+
+
+.postlist-item:nth-child(2) {
+	grid-column: 3 / 5;
+}
+
+@container (max-width: 700px) {
+	.postlist-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1000px) and (min-width: 701px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1600px) and (min-width: 1001px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+
+/* .postlist-item {
+	background: rgb(0,0,0,0.1)
+} */
+
+.postlist-item {
+	container-type: inline-size;
+}
+
+@container (max-width: 500px) {
+	.postlist-link {
+		flex-direction: column;
+	}
+
+	.post-description {
+		padding: 0 1em 0.5em 1em;
+	}
+}
+
+.postlist-item a {
+	height: 100%;
+	background: rgb(0,0,0,0.1);
+	width: 100%;
+}
+
+/* .postlist-item:nth-child(2) { */
+	/* grid-row: 1 / -1; */
+/* } */
+
+
+
+
+
+.external-link-data {
+	padding: 0.5em;
+	display: flex;
+	gap: 1em;
+	text-decoration: none;
+
+	background: rgba(0,0,0,0.2);
+
+	.external-image {
+		flex: 1;
+	}
+
+	.external-link-content {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.external-link-title {
+		font-weight: bold;
+	}
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Hypersphere</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">About Me</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+
+<section class="article grid-wrapper">
+
+<div class="cover full-bleed">
+	<img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.5006002400960383" width="2500" height="1666" src="/img/c8sm1XdtWa-2500.webp">
+</div>
+<div class="article-headings">
+	<h1>Advanced TypeScript: Mapped Types and more</h1>
+	<time class="article-time" datetime="2022-06-27">27 June 2022</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/tags/mapped-types/" class="post-tag">Mapped Types</a> </li>
+	<li><a href="/tags/as-const/" class="post-tag">as const</a></li>
+</ul>
+</div>
+
+<p>Using strongly typed language has a lot of benefits. But TypeScript is not a magical tool — the stronger types you provide, the better results you will get. Unfortunately, in a lot of the cases we can end up using very broad types to describe much narrower sets of values — it’s foremost apparent when using primitives like strings or numbers.</p>
+<p>In my previous article I write about an issue of using plain primitive types, as they often represent different things and cannot be used interchangeably:</p>
+<a class="external-link-data" href="https://medium.com/hypersphere-codes/better-types-for-strings-and-numbers-in-typestring-using-opaque-types-c9153eb8009c">
+			<div class="external-image">
+				<img src="https://miro.medium.com/v2/resize:fit:1200/1*sQKE6cmOqGgIMMrNI0JxpQ.png" />
+			</div>
+			<div class="external-link-content">
+				<div class="external-link-title">Better types for strings and numbers in TypeString using opaque types</div>
+				<div class="external-link-description">Are all strings equal? They serve different purposes in our codebases yet we type them with the same type. But fear not, there is a…</div>
+			</div>
+		</a>
+<p>Opaque types are great when dealing with infinite subsets of values. However, in plenty of cases, we deal with a finite subset of strings (or other primitive values). Instead of verifying those values in runtime, we can leverage TypeScript mechanisms to ensure we pass types properly.</p>
+<img alt="Subset" loading="lazy" decoding="async" style="aspect-ratio: 1.5006002400960383" width="2500" height="1666" src="/img/Ui2Y75W01T-2500.webp">
+<p>In this article I’d like to use an example that is quite common in multi-regional sites that deal with multiple locales, to showcase some of the lesser-known features of TypeScript. This will provide a good overview of the following TypeScript features:</p>
+<ul>
+<li><code>as const</code> expression</li>
+<li><code>keyof</code> and <code>typeof</code></li>
+<li>type argument inference for dynamic type resolution in generics</li>
+<li>mapped types</li>
+<li>using <code>never</code> in conditional types to filter out unions</li>
+</ul>
+<h2 id="the-problem" tabindex="-1">The Problem <a class="header-anchor" href="#the-problem">#</a></h2>
+<p>Imagine you are working on a website that is available in multiple countries (regions). Each country has its version of the website that can be available in multiple local languages. Moreover, we want to be able to disable certain regions or languages using the configuration below.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> EnabledRegons <span class="token operator">=</span> <span class="token punctuation">{</span>
+	<span class="token string-property property">"GB"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token string-property property">"en"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string-property property">"IT"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token string-property property">"en"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		<span class="token string-property property">"it"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string-property property">"PL"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token string-property property">"pl"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		<span class="token string-property property">"en"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token string-property property">"LU"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token string-property property">"fr"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		<span class="token string-property property">"de"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		<span class="token string-property property">"en"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword">as</span> <span class="token keyword">const</span><span class="token punctuation">;</span></code></pre>
+<p>Because we know we won’t change this object in our code in runtime, we can <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions">use <code>as const</code> assertion</a> to let TypeScript know that there’s no way those values will be modified. This allows TypeScript to freeze the structure of an object and prevent expression widening.</p>
+<img alt="As const in TypeScript" loading="lazy" decoding="async" style="aspect-ratio: 1.5006002400960383" width="2500" height="1666" src="/img/t1MUrUXwe_-2500.webp">
+<h2 id="extracting-countries" tabindex="-1">Extracting Countries <a class="header-anchor" href="#extracting-countries">#</a></h2>
+<p>Now we can implement a function that will return us the full name of the country for a given country code. It might be tempting to type it as follows:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> countryCodeToName <span class="token operator">=</span> <span class="token punctuation">(</span>countryCode<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+	<span class="token keyword">switch</span> <span class="token punctuation">(</span>countryCode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">case</span> <span class="token string">"GB"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Great Britain"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"IT"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Italy"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"PL"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Poland"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"LU"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Luxembourg"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The code above covers all possible country types, but TypeScript will complain that we don’t have a default value for our switch case. We could add a dummy return in this case which we know it’s never going to be used, but this solution has pitfalls:</p>
+<ul>
+<li>We introduce artificial code branches for situations we know will never happen</li>
+<li>If we decide to remove a region, we will end up with unused code across our application</li>
+<li>If we decide to add a new region, we will need to look for places where to add it — we cannot use TypeScript to tell us where should we edit our code</li>
+</ul>
+<p>Instead, we could narrow our countryCode parameter type to accept only the keys of our <code>EnableRegions</code> array.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> countryCodeToName <span class="token operator">=</span> <span class="token punctuation">(</span>countryCode<span class="token operator">:</span> <span class="token keyword">keyof</span> <span class="token keyword">typeof</span> EnabledRegons<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+	<span class="token keyword">switch</span> <span class="token punctuation">(</span>countryCode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">case</span> <span class="token string">"GB"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Great Britain"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"IT"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Italy"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"PL"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Poland"</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token string">"LU"</span><span class="token operator">:</span> <span class="token keyword">return</span> <span class="token string">"Luxembourg"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now TypeScript no longer complains about the lack of default return because it knows we covered all possible cases. Moreover, if you decide to remove one of the regions from the array, TypeScript will raise an error in all the cases where you use this value so you can easily remove obsolete code. If we decide to add a new value, TypeScript will let us know where in the code we are not covering the new scenario.</p>
+<h2 id="typing-languages-based-on-the-region" tabindex="-1">Typing languages based on the region <a class="header-anchor" href="#typing-languages-based-on-the-region">#</a></h2>
+<p>Now let’s imagine we want to have a function getUrl that returns a value for a specific country and the language. We also want to restrict, on the typing language level, that you can’t pass incorrect language/country configuration:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token string">"GB"</span><span class="token punctuation">,</span> <span class="token string">"en"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// no error</span>
+<span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token string">"IT"</span><span class="token punctuation">,</span> <span class="token string">"it"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// no error</span>
+<span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token string">"IT"</span><span class="token punctuation">,</span> <span class="token string">"pl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// type error because we didn't specify pl to be correct language for IT region</span></code></pre>
+<p>Fortunately, we can use type argument inference to capture country code and based on that type the second argument.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> getUrl <span class="token operator">=</span> <span class="token operator">&lt;</span>CountryCode <span class="token keyword">extends</span> <span class="token keyword">keyof</span> <span class="token keyword">typeof</span> EnabledRegons<span class="token operator">></span>
+  <span class="token punctuation">(</span>country<span class="token operator">:</span> CountryCode<span class="token punctuation">,</span>
+  language<span class="token operator">:</span> <span class="token keyword">keyof</span> <span class="token keyword">typeof</span> EnabledRegons<span class="token punctuation">[</span>CountryCode<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">// body of our function</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This technique is really useful in all the cases where one argument determines types of the other ones.</p>
+<p>Probably one of the most common use cases is addEventListener method - based on the event type, the callback argument is determined. I used the same concept in my cross-platform Event Bus library. Check out my other article about it:</p>
+<a class="external-link-data" href="https://medium.com/hypersphere-codes/introducing-omnibus-new-event-bus-library-written-in-typescript-4fc5d2f684c6">
+			<div class="external-image">
+				<img src="https://miro.medium.com/v2/resize:fit:1200/1*j7nGJWCG85iiHeDbkjNDtA.jpeg" />
+			</div>
+			<div class="external-link-content">
+				<div class="external-link-title">Introducing Omnibus: new Event Bus library written in TypeScript</div>
+				<div class="external-link-description">event bus library for all</div>
+			</div>
+		</a>
+<h2 id="dynamically-creating-locale-strings" tabindex="-1">Dynamically creating locale strings <a class="header-anchor" href="#dynamically-creating-locale-strings">#</a></h2>
+<p>If you worked on multilingual websites you might have come across a format that captures both region and language: locale.</p>
+<p>Locale is a string that contains both region and country connected with a hyphen. You might have come across it when using locale-aware methods like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString"><code>Date.prototype.toLocaleDateString</code></a> that formats date into proper language.</p>
+<p>Let us refactor the previous method to use a single parameter locale that will encapsulate both of those values — obviously it should be typed so we need dynamically create possible locale values. Fortunately, we can use mapped types to do so:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">ValueOf<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token keyword">keyof</span> <span class="token constant">T</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Locale</span> <span class="token operator">=</span> ValueOf<span class="token operator">&lt;</span><span class="token punctuation">{</span><span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> Region<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">keyof</span> <span class="token keyword">typeof</span> EnabledRegons<span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">K</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">}</span><span class="token operator">></span></code></pre>
+<img alt="Regions mapped" loading="lazy" decoding="async" style="aspect-ratio: 1.7506849315068493" width="1278" height="730" src="/img/nKOZd9ElTT-1278.webp">
+<p>The <code>Locale</code> type is created by iterating over regions and for each of them, it generates a mapped type consisting of the language code combined with region code. One small quirk we had to add in the example above is <code>&amp; string</code> — potential <code>keyof</code> type is <code>string | number | symbol</code> and we need to tell TS that we only care about the intersection with <code>string</code>.</p>
+<h2 id="excluding-false-values" tabindex="-1">Excluding false values <a class="header-anchor" href="#excluding-false-values">#</a></h2>
+<p>We can improve our solution and automatically exclude locales that are disabled in our configuration object. To do it, let’s create the following helper generic type:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">ExcludeFalseValues<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> <span class="token keyword">keyof</span> <span class="token constant">T</span> <span class="token keyword">as</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span> <span class="token keyword">extends</span> <span class="token class-name"><span class="token boolean">true</span></span> <span class="token operator">?</span> <span class="token constant">K</span> <span class="token operator">:</span> <span class="token builtin">never</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Locale</span> <span class="token operator">=</span> ValueOf<span class="token operator">&lt;</span><span class="token punctuation">{</span>
+    <span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> Region<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">keyof</span> ExcludeFalseValues<span class="token operator">&lt;</span><span class="token keyword">typeof</span> EnabledRegons<span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token operator">&amp;</span> <span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">K</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">}</span><span class="token operator">></span></code></pre>
+<p>The code above uses never to filter out unwanted values. When a value is not extending true (which is TS way of checking if it is equal to it or not), then instead of key we set never resulting in TypeScript omitting this field.</p>
+<p>Now if we decide to stop serving a locale, TypeScript will automatically detect which code should we remove alongside it:</p>
+<img alt="Adding disabled regions" loading="lazy" decoding="async" style="aspect-ratio: 1.9363636363636363" width="1278" height="660" src="/img/wv_vkdvYpr-1278.webp">
+<p>This technique can be particularly useful when dealing with flipper flags you want to decommission alongside all the related code or when maintaining translations, making sure we keep keys in sync between languages.</p>
+<h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion">#</a></h2>
+<p>TypeScript mapped types and other advanced techniques allow us to type our code much stricter if we spend time typing our code precisely. On the other side, it’s usually not trivial and adds a lot of extra overhead. What do you think? In which cases do you think this technique is the most useful? Or maybe you know other solutions that can help with similar tasks?</p>
+
+<ul class="links-nextprev"><li>Next: <a href="/blog/counting-in-css/">Counting in CSS: Unlock magic of CSS variables</a></li>
+</ul>
+
+</section>
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/advanced-typescript-mapped-types/ -->
+	</body>
+</html>

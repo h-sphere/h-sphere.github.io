@@ -541,7 +541,35 @@ main img {
 
 /* .postlist-item:nth-child(2) { */
 	/* grid-row: 1 / -1; */
-/* } */</style>
+/* } */
+
+
+
+
+
+.external-link-data {
+	padding: 0.5em;
+	display: flex;
+	gap: 1em;
+	text-decoration: none;
+
+	background: rgba(0,0,0,0.2);
+
+	.external-image {
+		flex: 1;
+	}
+
+	.external-link-content {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.external-link-title {
+		font-weight: bold;
+	}
+}</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
@@ -564,6 +592,15 @@ main img {
 <ul>
 
 	
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a></li>
+
+	
+	<li><a href="/tags/mapped-types/" class="post-tag">Mapped Types</a></li>
+
+	
+	<li><a href="/tags/as-const/" class="post-tag">as const</a></li>
+
+	
 	<li><a href="/tags/css/" class="post-tag">CSS</a></li>
 
 	
@@ -577,9 +614,6 @@ main img {
 
 	
 	<li><a href="/tags/web-game-development/" class="post-tag">Web Game Development</a></li>
-
-	
-	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a></li>
 
 	
 	<li><a href="/tags/javascript/" class="post-tag">JavaScript</a></li>

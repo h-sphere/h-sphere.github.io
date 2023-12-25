@@ -30,7 +30,7 @@
 		gtag('config', 'G-5D5F7SM8E8');
 		</script>
 		
-		<style>.postlist { counter-reset: start-from 3 }
+		<style>.postlist { counter-reset: start-from 4 }
 * { box-sizing: border-box; }
 /* Defaults */
 :root {
@@ -542,7 +542,35 @@ main img {
 
 /* .postlist-item:nth-child(2) { */
 	/* grid-row: 1 / -1; */
-/* } */</style>
+/* } */
+
+
+
+
+
+.external-link-data {
+	padding: 0.5em;
+	display: flex;
+	gap: 1em;
+	text-decoration: none;
+
+	background: rgba(0,0,0,0.2);
+
+	.external-image {
+		flex: 1;
+	}
+
+	.external-link-content {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.external-link-title {
+		font-weight: bold;
+	}
+}</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
@@ -589,6 +617,19 @@ main img {
 			<h2>How I created a GameBoy-like game in 13kb</h2>
 			<time class="postlist-date" datetime="2022-10-10">October 2022</time>
 			<p>History of Gravepassing - my entry for js13kgames 2022.</p>
+			</div>
+		</a>
+		</li>
+	
+		<li class="postlist-item">
+		<a href="/blog/advanced-typescript-mapped-types/" class="postlist-link">
+			<div class="post-image">
+			<picture><source type="image/webp" srcset="/img/T83RMkl3CN-1765.webp 1765w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 0.9994337485843715" width="1765" height="1766" src="/img/T83RMkl3CN-1765.jpeg"></picture>
+			</div>
+			<div class="post-description">
+			<h2>Advanced TypeScript: Mapped Types and more</h2>
+			<time class="postlist-date" datetime="2022-06-27">June 2022</time>
+			<p>Advanced TypeScript: Mapped Types and more</p>
 			</div>
 		</a>
 		</li>

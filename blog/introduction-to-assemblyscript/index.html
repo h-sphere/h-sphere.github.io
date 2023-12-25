@@ -709,7 +709,35 @@ main img {
 
 /* .postlist-item:nth-child(2) { */
 	/* grid-row: 1 / -1; */
-/* } */</style>
+/* } */
+
+
+
+
+
+.external-link-data {
+	padding: 0.5em;
+	display: flex;
+	gap: 1em;
+	text-decoration: none;
+
+	background: rgba(0,0,0,0.2);
+
+	.external-image {
+		flex: 1;
+	}
+
+	.external-link-content {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.external-link-title {
+		font-weight: bold;
+	}
+}</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
