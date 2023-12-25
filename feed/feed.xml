@@ -683,4 +683,227 @@ fn(10) = 0.38400000000000034&lt;/code&gt;&lt;/pre&gt;
 &lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
 </content>
 	</entry>
+	
+	<entry>
+		<title>Counting in CSS: Unlock magic of CSS variables</title>
+		<link href="https://hypersphere.codes/blog/counting-in-css/"/>
+		<updated>2022-07-13T00:00:00Z</updated>
+		<id>https://hypersphere.codes/blog/counting-in-css/</id>
+		<content type="html">&lt;p&gt;CSS evolved like no other technology during its lifespan. The tool that started in 1994 as a simple way of styling basic documents on an early internet, became a language offering animations, matrix transformations, variables, several layouting systems, and much more. Because of the constant ecosystem changes, it is hard to keep up with all of them. Rather than announcing the next big CSS release (as happened with CSS3), nowadays W3C and browser vendors just bring new functionality incrementally.&lt;/p&gt;
+&lt;p&gt;Recently I was amazed by Lea Verou’s talk about what CSS variables can do and started to experiment myself. I will refer to some of her techniques here to achieve my goal.&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube-nocookie.com/embed/ZuZizqDF4q8?si=DB6bDT7f5hDbtj-R&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;To tease you about what we are going to build by the end of this lengthy article, I’ve added the video of the last example. It uses just a bunch of identical &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; elements with no extra properties and no JavaScript at all:&lt;/p&gt;
+&lt;iframe src=&quot;https://player.vimeo.com/video/729533818?h=4f04ab3ec4&quot; width=&quot;640&quot; height=&quot;409&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; fullscreen; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://vimeo.com/729533818&quot;&gt;Counting in CSS - end result&lt;/a&gt; from &lt;a href=&quot;https://vimeo.com/hprsphr&quot;&gt;Hypersphere&lt;/a&gt; on &lt;a href=&quot;https://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;enumerating-things-in-css&quot; tabindex=&quot;-1&quot;&gt;Enumerating things in CSS &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The first thing that came to my mind after watching this video was to try vary CSS styles of sequential elements. Let’s imagine the most simple staircase design, each column represented by separate &lt;/p&gt;&lt;div&gt; element with no extra properties applied.&lt;p&gt;&lt;/p&gt;
+&lt;img alt=&quot;How would you achieve this in CSS&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 1.688118811881188&quot; width=&quot;1364&quot; height=&quot;808&quot; src=&quot;https://hypersphere.codes/img/YPR4gbKxkF-1364.webp&quot;&gt;
+&lt;p&gt;CSS operates in a context of a single element and does not have mechanisms to interact with or query its surroundings (the adjacent sibling combinators are very limited and won’t help us here). We also do not have a straightforward mechanism in CSS to get the ordinal of a given element (&lt;em&gt;which&lt;/em&gt; in a sequence it is).&lt;/p&gt;
+&lt;h3 id=&quot;what-about-counters&quot; tabindex=&quot;-1&quot;&gt;What about counters? &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;You might have a hunch to look into CSS counters — they surely can do the trick, can’t they? Unfortunately, counter values cannot be assigned to variables nor used in &lt;code&gt;calc&lt;/code&gt; equation. I did an experiment with counters but it turned out to be dead-end.&lt;/p&gt;
+&lt;h2 id=&quot;naive-solution&quot; tabindex=&quot;-1&quot;&gt;Naive solution &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Let’s try a naive solution first: we can just target each of the stairs separately and apply styling for it. Obviously, we’d have to repeat styles that change for each element making this solution pretty unportable.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;qBoNrXx&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/qBoNrXx&quot;&gt;
+  Stairs in CSS - Naive solution&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;The biggest drawback of the solution above is that we had to target each individual element with its separate selector and repeat styles for each of them.&lt;/p&gt;
+&lt;p&gt;There surely must be a better solution?&lt;/p&gt;
+&lt;p&gt;Below I present 2 approaches I’ve found — none of them is perfect and both have different drawbacks but they might be useful nevertheless.&lt;/p&gt;
+&lt;h2 id=&quot;finding-a-better-way-first-attempt-binary&quot; tabindex=&quot;-1&quot;&gt;Finding a better way — first attempt: binary! &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;In the search for a better solution, I resorted to the basics of computer science. It turns out that in conjunction with nth-child we can use it to count our elements. If you are not familiar with binary, I will try to quickly explain it in the next section. If you think you know binary already, feel free to skip directly to the solution.&lt;/p&gt;
+&lt;h3 id=&quot;introduction-to-binary-system&quot; tabindex=&quot;-1&quot;&gt;Introduction to binary system &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The binary system is the essence of our modern computing. All data are stored, transmitted and computed using its binary representation. There are many ways of encoding numbers to binary but, fortunately for us, in our case, we only operate on positive integers (whole numbers), which makes it possible to use the most simple representation. I have prepared &lt;em&gt;Binary System 101&lt;/em&gt; below to explain it (mind the pun):&lt;/p&gt;
+&lt;img alt=&quot;Binary 101&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 2&quot; width=&quot;1400&quot; height=&quot;700&quot; src=&quot;https://hypersphere.codes/img/qz3m3KIsS9-1400.webp&quot;&gt;
+&lt;p&gt;The main building blocks of the binary system are 0-s and 1-s. Like in the decimal system we are used to, binary is positional — meaning that the position of a given zero or one in the sequence matters. The further to the left, the bigger part of the number it represents.&lt;/p&gt;
+&lt;p&gt;Unlike the decimal system, in which moving left increases by the factor of 10, in binary each movement doubles the value — for example &lt;code&gt;101&lt;/code&gt; in binary represents 5 in decimal: &lt;code&gt;1 * 2^2 + 0 * 2^1 + 1 * 2^0 = 1 * 4 + 0 * 2 + 1 * 1 = 4 + 1 = 5&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;finding-patterns&quot; tabindex=&quot;-1&quot;&gt;Finding patterns &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To use our knowledge of binary system in CSS, we need to find a way to target specific bits — we want to write a selector that will match all numbers that should have specific bit set to 1 . Then we will set variables like b0, b1, b2, etc. to 1 only for the matching elements.&lt;/p&gt;
+&lt;p&gt;Let’s write first 16 numbers in binary (including 0 for consistency) and try to spot some patterns that would help us implement it in CSS. On the image below I highlighted all 1s — can you spot the pattern?&lt;/p&gt;
+&lt;img alt=&quot;Patterns in Binary&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 2&quot; width=&quot;1400&quot; height=&quot;700&quot; src=&quot;https://hypersphere.codes/img/UbSAsVrgPl-1400.webp&quot;&gt;
+&lt;p&gt;For each column, the pattern stays the same:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first column (from the right) has 1 set every other number.&lt;/li&gt;
+&lt;li&gt;The second column (from the right) pattern alternates every 2 numbers.&lt;/li&gt;
+&lt;li&gt;The next one alternates every 4 rows&lt;/li&gt;
+&lt;li&gt;the next one 8, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In general, the k-th column (indexing from 0) has sequence of 2^k bits off followed by 2^k bits on. We can use it in our CSS.&lt;/p&gt;
+&lt;h2 id=&quot;binary-counters-in-css&quot; tabindex=&quot;-1&quot;&gt;Binary counters in CSS &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Using that discovery we can write more generic nth-child selectors that will only match numbers that should have a specific bit set on. We can use CSS variables to set the bits. Then in the final selector, we can compute the actual counter value using the binary to decimal conversion.&lt;/p&gt;
+&lt;pre class=&quot;language-css&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;:root&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b4&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;div:nth-child(2n)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;div:nth-child(4n+3),
+div:nth-child(4n)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;div:nth-child(8n),
+div:nth-child(8n-1),
+div:nth-child(8n-2),
+div:nth-child(8n-3)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;div:nth-child(16n),
+div:nth-child(16n-1),
+div:nth-child(16n-2),
+div:nth-child(16n-3),
+div:nth-child(16n-4),
+div:nth-child(16n-5),
+div:nth-child(16n-6),
+div:nth-child(16n-7)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;--b3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;token property&quot;&gt;--n&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;--b0&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; + 2 * &lt;span class=&quot;token function&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;--b1&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; + 4 * &lt;span class=&quot;token function&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;--b2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; + 8 * &lt;span class=&quot;token function&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;--b3&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+	// Any CSS logic using --n can go &lt;span class=&quot;token property&quot;&gt;here&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;50px + 50px * &lt;span class=&quot;token function&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;--n&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The beauty of the solution is the fact that to represent the first 100 elements we only need 7 bits meaning 7 distinctive selector groups. That’s a big improvement compared to a naive solution that would need 100 separate classes. Moreover, we can automate it using SCSS mixins.&lt;/p&gt;
+&lt;h3 id=&quot;scss-mixin&quot; tabindex=&quot;-1&quot;&gt;SCSS mixin &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If you use a CSS preprocessor like SCSS you can use the following mixing to achieve the same effect. It produces all required styles for user-defined depth. Because the selectors grow quite a bit with each step, for most cases we would probably want to stay below 8 which will still allow us to distinguish between 127 elements.&lt;/p&gt;
+&lt;pre class=&quot;language-scss&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-scss&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;@mixin&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;binaryCounter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$selector&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;div&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$bits&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 4&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token selector&quot;&gt;:root &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@for&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;0 to &lt;span class=&quot;token variable&quot;&gt;$bits&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;--b&lt;span class=&quot;token variable&quot;&gt;#{$i}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  
+  &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$exponent&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1
+  &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$eq&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;0&quot;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;@for&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;0 to &lt;span class=&quot;token variable&quot;&gt;$bits&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$exponent&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 2 &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$exponent&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$eq&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$eq&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot; + #{$exponent/2} * var(--b#{$i})&quot;&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$sel&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@for&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$j&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;0 to &lt;span class=&quot;token variable&quot;&gt;$exponent&lt;/span&gt;/2 &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$sel&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$sel&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#{$selector}:nth-child(#{$exponent}n - #{$j}), &quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;#{$sel}&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;--b&lt;span class=&quot;token variable&quot;&gt;#{$i}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;#{$selector}&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;--n&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;#{$eq}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// Usage&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;binaryCounter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;div&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 9&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can see the use of the mixin below to generate 256 elements and style them individually.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;eYMzrJZ&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/eYMzrJZ&quot;&gt;
+  Binary counting in CSS - SCSS&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;h3 id=&quot;drawbacks&quot; tabindex=&quot;-1&quot;&gt;Drawbacks &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Unfortunately, after closer analysis of the code you can realise that we are still generating a lot of code. We no longer have individual styles for each element, instead we have only few (to be technical ceil(log2(n)) for any given maximal n elements we want to distinguish but each of those groups have exponentially more coma-separated selectors. We still end up with many selectors.&lt;/p&gt;
+&lt;h2 id=&quot;in-a-search-of-a-better-solution-prime-numbers&quot; tabindex=&quot;-1&quot;&gt;In a search of a better solution: prime numbers &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;After the first failed attempt, I tried a different approach. What if instead of splitting a number into its binary bits, we would try to use its prime factors. As a refresher, below’s the &lt;em&gt;Prime Numbers Primer&lt;/em&gt;:&lt;/p&gt;
+&lt;img alt=&quot;Prime numbers primer&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 2&quot; width=&quot;1400&quot; height=&quot;700&quot; src=&quot;https://hypersphere.codes/img/S3erLkvhda-1400.webp&quot;&gt;
+&lt;p&gt;Unfortunately computing just prime numbers and making groups out of them is not enough. Some numbers are made out of the same prime factor combined: 4 is the smallest example — it’s prime factors are 2 * 2. With that in mind I created a mixin that generates prime groups and their powers up to the given threshold:&lt;/p&gt;
+&lt;pre class=&quot;language-scss&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-scss&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;isPrime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$n&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;@each&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt; in &lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$n&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;@mixin&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;primeCounter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$selector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$upperBound&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 2000&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  
+  &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 2&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; []&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  
+  &lt;span class=&quot;token keyword&quot;&gt;@while&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt; &amp;lt;= &lt;span class=&quot;token variable&quot;&gt;$upperBound&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@if&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;isPrime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$curr&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token selector&quot;&gt;:root &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@each&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt; in &lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;--p&lt;span class=&quot;token variable&quot;&gt;#{$prime}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$mult&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;@each&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt; in &lt;span class=&quot;token variable&quot;&gt;$primesList&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$mult&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$mult&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot; * var(--p#{$prime})&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$val&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;@while&lt;/span&gt; &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$val&lt;/span&gt; &amp;lt;= &lt;span class=&quot;token variable&quot;&gt;$upperBound&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;#{$selector}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;nth-child&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;#{$val}&lt;/span&gt;n&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;--p&lt;span class=&quot;token variable&quot;&gt;#{$prime}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;#{$val}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$val&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$val&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$prime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  
+  &lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;#{$selector}&lt;/span&gt; &lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;--n&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;#{$mult}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// Example use&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;primeCounter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;div&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 500&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below you can see an example with the threshold set to 500. Notice that up to the threshold all the numbers are perfectly fine but above that the pattern breaks. All prime numbers above would default to 1 as they were not computed. Some composite numbers might miss one or few of its factors resulting in the number being smaller than expected. But for plenty of values, we can still see proper results.&lt;/p&gt;
+&lt;p&gt;The solution to generate properly first 500 numbers required 114 separate selectors — &lt;strong&gt;it’s a great improvement on both naive and binary solutions&lt;/strong&gt;. Moreover, it still provides a lot of value for the elements above the threshold and can be useful in cases like generative art where we might not care too much about the exact values.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;oNqzWMR&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/oNqzWMR&quot;&gt;
+  Counting in CSS: Primary Counter&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;h2 id=&quot;use-cases&quot; tabindex=&quot;-1&quot;&gt;Use-cases &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;There are multiple use-cases for being able to distinguish between identical elements and being able to process them differently. I came up with a few, but &lt;strong&gt;I would like to hear more from you in the comments about what other ideas you might have&lt;/strong&gt;! Here are couple of mines:&lt;/p&gt;
+&lt;h3 id=&quot;staircase&quot; tabindex=&quot;-1&quot;&gt;Staircase &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;First, let’s finish out the staircase example. Using this technique we can write more generic code to achieve the same effect.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;VwXjEov&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/VwXjEov&quot;&gt;
+  Binary counters in CSS - stairs&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;h3 id=&quot;generative-art&quot; tabindex=&quot;-1&quot;&gt;Generative art &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/counting-in-css/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Generative art is an amazing example where CSS can be incorporated. There are plenty of great CSS artists out there but all the examples I could find use at least some JavaScript to either number the elements or add randomness to the stylesheet. All the examples here do not use any JavaScript at all.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;qBoNQWW&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/qBoNQWW&quot;&gt;
+  Binary Counter in CSS - Generative Art 1&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;Great thing about this technique is that you can use the ordinal number inside the animations too. Each element will use it’s own value making it possible to implement very interesting effects:&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;mdxEQJO&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/mdxEQJO&quot;&gt;
+  Untitled&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;We can also use &lt;code&gt;@property&lt;/code&gt; to define and animate variable to create interesting rotating effects like this vortex-like creation. In the browsers that do not support &lt;code&gt;@property&lt;/code&gt; the image will appear static providing a graceful fallback. This example also uses a prime generator set to 250 threshold despite utilising 500 elements to show that even less accurate, the values above the threshold can give us really interesting patterns too.&lt;/p&gt;
+&lt;p&gt;Because of use of &lt;code&gt;@property&lt;/code&gt; the animation works only in Chrome but in other browsers the static version is shown.&lt;/p&gt;
+&lt;p class=&quot;codepen&quot; data-height=&quot;300&quot; data-default-tab=&quot;result&quot; data-slug-hash=&quot;ExEyOVB&quot; data-user=&quot;hypersphere&quot; style=&quot;height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/hypersphere/pen/ExEyOVB&quot;&gt;
+  Generative Art: Rotating Sphere&lt;/a&gt; by hypersphere (&lt;a href=&quot;https://codepen.io/hypersphere&quot;&gt;@hypersphere&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;What is your take on this solution? Do you know any examples where having ordinal numbers for elements would be helpful?&lt;/p&gt;
+&lt;/div&gt;</content>
+	</entry>
 </feed>

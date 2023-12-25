@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Counting in CSS: Unlock magic of CSS variables</title>
+		<meta name="description" content="Counting in CSS: Unlock magic of CSS variables">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
+
+		<meta property="og:title" content="Counting in CSS: Unlock magic of CSS variables"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/counting-in-css/" />
+		<meta property="og:description" content="Counting in CSS: Unlock magic of CSS variables" />
+		<meta property="og:image" content="/default-cover.jpg" />
+		<meta property="og:type" content="article" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@kulak_at" />
+		<meta name="twitter:creator" content="@kulak_at" />
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5D5F7SM8E8"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-5D5F7SM8E8');
+		</script>
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: 'IBM Plex Sans', sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: inherit;
+	--text-color-link-active: inherit;
+	--text-color-link-visited: inherit;
+
+	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		/* --text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8; */
+
+
+		--text-color-link: inherit;
+		--text-color-link-active: inherit;
+		--text-color-link-visited: inherit;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	font-size: 16px;
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+/* body {
+	max-width: 60em;
+} */
+
+.grid-wrapper {
+	--gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
+	column-gap: var(--gap);
+	font-size: clamp(16px, 1vw, 20px);
+}
+
+.grid-wrapper > * {
+	grid-column: 2;
+}
+
+.full-bleed {
+	width: 100%;
+	grid-column: 1 / -1;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	font-weight: 700;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+header {
+	border-bottom: 1px solid var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+}
+.postlist-item {
+	align-items: baseline;
+	margin-bottom: 1em;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+	font-size: 0;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+	/* height: 100%; */
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	padding-right: 1em;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	background: var(--color-badge);
+	text-decoration: none;
+	font-size: 0.8em;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	text-transform: uppercase;
+}
+
+.post-tag:hover {
+	background: var(--color-badge-hover);
+}
+
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+	align-content: center;
+}
+
+.article a {
+	color: var(--text-color);
+}
+
+.article {
+	font-size: 20px;
+	line-height: 1.5em;
+}
+
+.article pre {
+	font-size: 14px;
+}
+
+.article-headings {
+	--offset: calc(min(10vh, 50px));
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
+	position: relative;
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
+}
+
+.article-headings h1 {
+	font-size: 2em;
+	line-height: 1.4em;
+	margin-bottom: 0;
+}
+
+.article-headings h2 {
+	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}
+
+main img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}
+
+.postlist-grid-container {
+	container-type: inline-size;
+	padding: 1em;
+	margin: 0 auto;
+	max-width: 120ch;
+}
+
+.postlist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+}
+
+.postlist-item h2 {
+	font-size: 30px;
+}
+
+.postlist-item:first-child {
+	grid-column: 1 / 3;
+}
+
+
+.postlist-item:nth-child(2) {
+	grid-column: 3 / 5;
+}
+
+@container (max-width: 700px) {
+	.postlist-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1000px) and (min-width: 701px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1600px) and (min-width: 1001px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+
+/* .postlist-item {
+	background: rgb(0,0,0,0.1)
+} */
+
+.postlist-item {
+	container-type: inline-size;
+}
+
+@container (max-width: 500px) {
+	.postlist-link {
+		flex-direction: column;
+	}
+
+	.post-description {
+		padding: 0 1em 0.5em 1em;
+	}
+}
+
+.postlist-item a {
+	height: 100%;
+	background: rgb(0,0,0,0.1);
+	width: 100%;
+}
+
+/* .postlist-item:nth-child(2) { */
+	/* grid-row: 1 / -1; */
+/* } */</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Hypersphere</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">About Me</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+
+<section class="article grid-wrapper">
+
+<div class="cover full-bleed">
+	<img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 2" width="4000" height="2000" src="/img/n7-ANdmj3D-4000.webp">
+</div>
+<div class="article-headings">
+	<h1>Counting in CSS: Unlock magic of CSS variables</h1><h2>test</h2>
+	<time class="article-time" datetime="2022-07-13">13 July 2022</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/css/" class="post-tag">CSS</a> </li>
+	<li><a href="/tags/css-variables/" class="post-tag">CSS Variables</a></li>
+</ul>
+</div>
+
+<p>CSS evolved like no other technology during its lifespan. The tool that started in 1994 as a simple way of styling basic documents on an early internet, became a language offering animations, matrix transformations, variables, several layouting systems, and much more. Because of the constant ecosystem changes, it is hard to keep up with all of them. Rather than announcing the next big CSS release (as happened with CSS3), nowadays W3C and browser vendors just bring new functionality incrementally.</p>
+<p>Recently I was amazed by Lea Verou’s talk about what CSS variables can do and started to experiment myself. I will refer to some of her techniques here to achieve my goal.</p>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ZuZizqDF4q8?si=DB6bDT7f5hDbtj-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<p>To tease you about what we are going to build by the end of this lengthy article, I’ve added the video of the last example. It uses just a bunch of identical <code>&lt;div&gt;</code> elements with no extra properties and no JavaScript at all:</p>
+<iframe src="https://player.vimeo.com/video/729533818?h=4f04ab3ec4" width="640" height="409" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/729533818">Counting in CSS - end result</a> from <a href="https://vimeo.com/hprsphr">Hypersphere</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<h2 id="enumerating-things-in-css" tabindex="-1">Enumerating things in CSS <a class="header-anchor" href="#enumerating-things-in-css">#</a></h2>
+<p>The first thing that came to my mind after watching this video was to try vary CSS styles of sequential elements. Let’s imagine the most simple staircase design, each column represented by separate <div> element with no extra properties applied.</p>
+<img alt="How would you achieve this in CSS" loading="lazy" decoding="async" style="aspect-ratio: 1.688118811881188" width="1364" height="808" src="/img/YPR4gbKxkF-1364.webp">
+<p>CSS operates in a context of a single element and does not have mechanisms to interact with or query its surroundings (the adjacent sibling combinators are very limited and won’t help us here). We also do not have a straightforward mechanism in CSS to get the ordinal of a given element (<em>which</em> in a sequence it is).</p>
+<h3 id="what-about-counters" tabindex="-1">What about counters? <a class="header-anchor" href="#what-about-counters">#</a></h3>
+<p>You might have a hunch to look into CSS counters — they surely can do the trick, can’t they? Unfortunately, counter values cannot be assigned to variables nor used in <code>calc</code> equation. I did an experiment with counters but it turned out to be dead-end.</p>
+<h2 id="naive-solution" tabindex="-1">Naive solution <a class="header-anchor" href="#naive-solution">#</a></h2>
+<p>Let’s try a naive solution first: we can just target each of the stairs separately and apply styling for it. Obviously, we’d have to repeat styles that change for each element making this solution pretty unportable.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="qBoNrXx" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/qBoNrXx">
+  Stairs in CSS - Naive solution</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>The biggest drawback of the solution above is that we had to target each individual element with its separate selector and repeat styles for each of them.</p>
+<p>There surely must be a better solution?</p>
+<p>Below I present 2 approaches I’ve found — none of them is perfect and both have different drawbacks but they might be useful nevertheless.</p>
+<h2 id="finding-a-better-way-first-attempt-binary" tabindex="-1">Finding a better way — first attempt: binary! <a class="header-anchor" href="#finding-a-better-way-first-attempt-binary">#</a></h2>
+<p>In the search for a better solution, I resorted to the basics of computer science. It turns out that in conjunction with nth-child we can use it to count our elements. If you are not familiar with binary, I will try to quickly explain it in the next section. If you think you know binary already, feel free to skip directly to the solution.</p>
+<h3 id="introduction-to-binary-system" tabindex="-1">Introduction to binary system <a class="header-anchor" href="#introduction-to-binary-system">#</a></h3>
+<p>The binary system is the essence of our modern computing. All data are stored, transmitted and computed using its binary representation. There are many ways of encoding numbers to binary but, fortunately for us, in our case, we only operate on positive integers (whole numbers), which makes it possible to use the most simple representation. I have prepared <em>Binary System 101</em> below to explain it (mind the pun):</p>
+<img alt="Binary 101" loading="lazy" decoding="async" style="aspect-ratio: 2" width="1400" height="700" src="/img/qz3m3KIsS9-1400.webp">
+<p>The main building blocks of the binary system are 0-s and 1-s. Like in the decimal system we are used to, binary is positional — meaning that the position of a given zero or one in the sequence matters. The further to the left, the bigger part of the number it represents.</p>
+<p>Unlike the decimal system, in which moving left increases by the factor of 10, in binary each movement doubles the value — for example <code>101</code> in binary represents 5 in decimal: <code>1 * 2^2 + 0 * 2^1 + 1 * 2^0 = 1 * 4 + 0 * 2 + 1 * 1 = 4 + 1 = 5</code>.</p>
+<h3 id="finding-patterns" tabindex="-1">Finding patterns <a class="header-anchor" href="#finding-patterns">#</a></h3>
+<p>To use our knowledge of binary system in CSS, we need to find a way to target specific bits — we want to write a selector that will match all numbers that should have specific bit set to 1 . Then we will set variables like b0, b1, b2, etc. to 1 only for the matching elements.</p>
+<p>Let’s write first 16 numbers in binary (including 0 for consistency) and try to spot some patterns that would help us implement it in CSS. On the image below I highlighted all 1s — can you spot the pattern?</p>
+<img alt="Patterns in Binary" loading="lazy" decoding="async" style="aspect-ratio: 2" width="1400" height="700" src="/img/UbSAsVrgPl-1400.webp">
+<p>For each column, the pattern stays the same:</p>
+<ul>
+<li>The first column (from the right) has 1 set every other number.</li>
+<li>The second column (from the right) pattern alternates every 2 numbers.</li>
+<li>The next one alternates every 4 rows</li>
+<li>the next one 8, etc.</li>
+</ul>
+<p>In general, the k-th column (indexing from 0) has sequence of 2^k bits off followed by 2^k bits on. We can use it in our CSS.</p>
+<h2 id="binary-counters-in-css" tabindex="-1">Binary counters in CSS <a class="header-anchor" href="#binary-counters-in-css">#</a></h2>
+<p>Using that discovery we can write more generic nth-child selectors that will only match numbers that should have a specific bit set on. We can use CSS variables to set the bits. Then in the final selector, we can compute the actual counter value using the binary to decimal conversion.</p>
+<pre class="language-css" tabindex="0"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--b0</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">--b1</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">--b2</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">--b3</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">--b4</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">div:nth-child(2n)</span> <span class="token punctuation">{</span>
+  <span class="token property">--b0</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">div:nth-child(4n+3),
+div:nth-child(4n)</span> <span class="token punctuation">{</span>
+  <span class="token property">--b1</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">div:nth-child(8n),
+div:nth-child(8n-1),
+div:nth-child(8n-2),
+div:nth-child(8n-3)</span> <span class="token punctuation">{</span>
+  <span class="token property">--b2</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">div:nth-child(16n),
+div:nth-child(16n-1),
+div:nth-child(16n-2),
+div:nth-child(16n-3),
+div:nth-child(16n-4),
+div:nth-child(16n-5),
+div:nth-child(16n-6),
+div:nth-child(16n-7)</span> <span class="token punctuation">{</span>
+  <span class="token property">--b3</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token selector">div</span> <span class="token punctuation">{</span>
+	<span class="token property">--n</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token function">var</span><span class="token punctuation">(</span>--b0<span class="token punctuation">)</span> + 2 * <span class="token function">var</span><span class="token punctuation">(</span>--b1<span class="token punctuation">)</span> + 4 * <span class="token function">var</span><span class="token punctuation">(</span>--b2<span class="token punctuation">)</span> + 8 * <span class="token function">var</span><span class="token punctuation">(</span>--b3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	// Any CSS logic using --n can go <span class="token property">here</span><span class="token punctuation">:</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span>50px + 50px * <span class="token function">var</span><span class="token punctuation">(</span>--n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The beauty of the solution is the fact that to represent the first 100 elements we only need 7 bits meaning 7 distinctive selector groups. That’s a big improvement compared to a naive solution that would need 100 separate classes. Moreover, we can automate it using SCSS mixins.</p>
+<h3 id="scss-mixin" tabindex="-1">SCSS mixin <a class="header-anchor" href="#scss-mixin">#</a></h3>
+<p>If you use a CSS preprocessor like SCSS you can use the following mixing to achieve the same effect. It produces all required styles for user-defined depth. Because the selectors grow quite a bit with each step, for most cases we would probably want to stay below 8 which will still allow us to distinguish between 127 elements.</p>
+<pre class="language-scss" tabindex="0"><code class="language-scss"><span class="token keyword">@mixin</span> <span class="token function">binaryCounter</span><span class="token punctuation">(</span><span class="token property"><span class="token variable">$selector</span></span><span class="token punctuation">:</span> <span class="token string">'div'</span><span class="token punctuation">,</span> <span class="token property"><span class="token variable">$bits</span></span><span class="token punctuation">:</span> 4<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token selector">:root </span><span class="token punctuation">{</span>
+    <span class="token keyword">@for</span> <span class="token variable">$i</span> <span class="token keyword">from</span> <span class="token selector">0 to <span class="token variable">$bits</span> </span><span class="token punctuation">{</span>
+      <span class="token property">--b<span class="token variable">#{$i}</span></span><span class="token punctuation">:</span> 0
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token property"><span class="token variable">$exponent</span></span><span class="token punctuation">:</span> 1
+  <span class="token property"><span class="token variable">$eq</span></span><span class="token punctuation">:</span> <span class="token string">"0"</span>
+  <span class="token keyword">@for</span> <span class="token variable">$i</span> <span class="token keyword">from</span> <span class="token selector">0 to <span class="token variable">$bits</span> </span><span class="token punctuation">{</span>
+    <span class="token property"><span class="token variable">$exponent</span></span><span class="token punctuation">:</span> 2 <span class="token operator">*</span> <span class="token variable">$exponent</span>
+    <span class="token property"><span class="token variable">$eq</span></span><span class="token punctuation">:</span> <span class="token variable">$eq</span> <span class="token operator">+</span> <span class="token string">" + #{$exponent/2} * var(--b#{$i})"</span>
+    <span class="token property"><span class="token variable">$sel</span></span><span class="token punctuation">:</span> <span class="token string">""</span>
+    <span class="token keyword">@for</span> <span class="token variable">$j</span> <span class="token keyword">from</span> <span class="token selector">0 to <span class="token variable">$exponent</span>/2 </span><span class="token punctuation">{</span>
+      <span class="token property"><span class="token variable">$sel</span></span><span class="token punctuation">:</span> <span class="token variable">$sel</span> <span class="token operator">+</span> <span class="token string">"#{$selector}:nth-child(#{$exponent}n - #{$j}), "</span>
+    <span class="token punctuation">}</span>
+    <span class="token selector"><span class="token variable">#{$sel}</span> </span><span class="token punctuation">{</span>
+        <span class="token property">--b<span class="token variable">#{$i}</span></span><span class="token punctuation">:</span> 1
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector"><span class="token variable">#{$selector}</span> </span><span class="token punctuation">{</span>
+    <span class="token property">--n</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token variable">#{$eq}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Usage</span>
+<span class="token keyword">@include</span> <span class="token function">binaryCounter</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">,</span> 9<span class="token punctuation">)</span></code></pre>
+<p>You can see the use of the mixin below to generate 256 elements and style them individually.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="eYMzrJZ" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/eYMzrJZ">
+  Binary counting in CSS - SCSS</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h3 id="drawbacks" tabindex="-1">Drawbacks <a class="header-anchor" href="#drawbacks">#</a></h3>
+<p>Unfortunately, after closer analysis of the code you can realise that we are still generating a lot of code. We no longer have individual styles for each element, instead we have only few (to be technical ceil(log2(n)) for any given maximal n elements we want to distinguish but each of those groups have exponentially more coma-separated selectors. We still end up with many selectors.</p>
+<h2 id="in-a-search-of-a-better-solution-prime-numbers" tabindex="-1">In a search of a better solution: prime numbers <a class="header-anchor" href="#in-a-search-of-a-better-solution-prime-numbers">#</a></h2>
+<p>After the first failed attempt, I tried a different approach. What if instead of splitting a number into its binary bits, we would try to use its prime factors. As a refresher, below’s the <em>Prime Numbers Primer</em>:</p>
+<img alt="Prime numbers primer" loading="lazy" decoding="async" style="aspect-ratio: 2" width="1400" height="700" src="/img/S3erLkvhda-1400.webp">
+<p>Unfortunately computing just prime numbers and making groups out of them is not enough. Some numbers are made out of the same prime factor combined: 4 is the smallest example — it’s prime factors are 2 * 2. With that in mind I created a mixin that generates prime groups and their powers up to the given threshold:</p>
+<pre class="language-scss" tabindex="0"><code class="language-scss"><span class="token keyword">@function</span> <span class="token function">isPrime</span><span class="token punctuation">(</span><span class="token variable">$n</span><span class="token punctuation">,</span> <span class="token variable">$primesList</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">@each</span> <span class="token selector"><span class="token variable">$prime</span> in <span class="token variable">$primesList</span> </span><span class="token punctuation">{</span>
+    <span class="token keyword">@if</span> <span class="token punctuation">(</span><span class="token variable">$n</span> <span class="token operator">%</span> <span class="token variable">$prime</span> <span class="token operator">==</span> 0<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">@return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">@return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">@mixin</span> <span class="token function">primeCounter</span><span class="token punctuation">(</span><span class="token variable">$selector</span><span class="token punctuation">,</span> <span class="token property"><span class="token variable">$upperBound</span></span><span class="token punctuation">:</span> 2000<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  
+  <span class="token property"><span class="token variable">$curr</span></span><span class="token punctuation">:</span> 2<span class="token punctuation">;</span>
+  <span class="token property"><span class="token variable">$primesList</span></span><span class="token punctuation">:</span> []<span class="token punctuation">;</span>
+  
+  <span class="token keyword">@while</span> <span class="token selector"><span class="token variable">$curr</span> &lt;= <span class="token variable">$upperBound</span> </span><span class="token punctuation">{</span>
+    <span class="token keyword">@if</span> <span class="token function">isPrime</span><span class="token punctuation">(</span><span class="token variable">$curr</span><span class="token punctuation">,</span> <span class="token variable">$primesList</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token property"><span class="token variable">$primesList</span></span><span class="token punctuation">:</span> <span class="token function">append</span><span class="token punctuation">(</span><span class="token variable">$primesList</span><span class="token punctuation">,</span> <span class="token variable">$curr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token property"><span class="token variable">$curr</span></span><span class="token punctuation">:</span> <span class="token variable">$curr</span> <span class="token operator">+</span> 1<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">:root </span><span class="token punctuation">{</span>
+    <span class="token keyword">@each</span> <span class="token selector"><span class="token variable">$prime</span> in <span class="token variable">$primesList</span> </span><span class="token punctuation">{</span>
+        <span class="token property">--p<span class="token variable">#{$prime}</span></span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token property"><span class="token variable">$mult</span></span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+  <span class="token keyword">@each</span> <span class="token selector"><span class="token variable">$prime</span> in <span class="token variable">$primesList</span> </span><span class="token punctuation">{</span>
+    <span class="token property"><span class="token variable">$mult</span></span><span class="token punctuation">:</span> <span class="token variable">$mult</span> <span class="token string">" * var(--p#{$prime})"</span><span class="token punctuation">;</span>
+    <span class="token property"><span class="token variable">$val</span></span><span class="token punctuation">:</span> <span class="token variable">$prime</span><span class="token punctuation">;</span>
+    <span class="token keyword">@while</span> <span class="token selector"><span class="token variable">$val</span> &lt;= <span class="token variable">$upperBound</span> </span><span class="token punctuation">{</span>
+      <span class="token property"><span class="token variable">#{$selector}</span></span><span class="token punctuation">:</span><span class="token function">nth-child</span><span class="token punctuation">(</span><span class="token variable">#{$val}</span>n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token property">--p<span class="token variable">#{$prime}</span></span><span class="token punctuation">:</span> <span class="token variable">#{$val}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token property"><span class="token variable">$val</span></span><span class="token punctuation">:</span> <span class="token variable">$val</span> <span class="token operator">*</span> <span class="token variable">$prime</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token selector"><span class="token variable">#{$selector}</span> </span><span class="token punctuation">{</span>
+    <span class="token property">--n</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token variable">#{$mult}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Example use</span>
+<span class="token keyword">@include</span> <span class="token function">primeCounter</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span> 500<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Below you can see an example with the threshold set to 500. Notice that up to the threshold all the numbers are perfectly fine but above that the pattern breaks. All prime numbers above would default to 1 as they were not computed. Some composite numbers might miss one or few of its factors resulting in the number being smaller than expected. But for plenty of values, we can still see proper results.</p>
+<p>The solution to generate properly first 500 numbers required 114 separate selectors — <strong>it’s a great improvement on both naive and binary solutions</strong>. Moreover, it still provides a lot of value for the elements above the threshold and can be useful in cases like generative art where we might not care too much about the exact values.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="oNqzWMR" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/oNqzWMR">
+  Counting in CSS: Primary Counter</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="use-cases" tabindex="-1">Use-cases <a class="header-anchor" href="#use-cases">#</a></h2>
+<p>There are multiple use-cases for being able to distinguish between identical elements and being able to process them differently. I came up with a few, but <strong>I would like to hear more from you in the comments about what other ideas you might have</strong>! Here are couple of mines:</p>
+<h3 id="staircase" tabindex="-1">Staircase <a class="header-anchor" href="#staircase">#</a></h3>
+<p>First, let’s finish out the staircase example. Using this technique we can write more generic code to achieve the same effect.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="VwXjEov" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/VwXjEov">
+  Binary counters in CSS - stairs</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h3 id="generative-art" tabindex="-1">Generative art <a class="header-anchor" href="#generative-art">#</a></h3>
+<p>Generative art is an amazing example where CSS can be incorporated. There are plenty of great CSS artists out there but all the examples I could find use at least some JavaScript to either number the elements or add randomness to the stylesheet. All the examples here do not use any JavaScript at all.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="qBoNQWW" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/qBoNQWW">
+  Binary Counter in CSS - Generative Art 1</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>Great thing about this technique is that you can use the ordinal number inside the animations too. Each element will use it’s own value making it possible to implement very interesting effects:</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="mdxEQJO" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/mdxEQJO">
+  Untitled</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>We can also use <code>@property</code> to define and animate variable to create interesting rotating effects like this vortex-like creation. In the browsers that do not support <code>@property</code> the image will appear static providing a graceful fallback. This example also uses a prime generator set to 250 threshold despite utilising 500 elements to show that even less accurate, the values above the threshold can give us really interesting patterns too.</p>
+<p>Because of use of <code>@property</code> the animation works only in Chrome but in other browsers the static version is shown.</p>
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="ExEyOVB" data-user="hypersphere" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/hypersphere/pen/ExEyOVB">
+  Generative Art: Rotating Sphere</a> by hypersphere (<a href="https://codepen.io/hypersphere">@hypersphere</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>What is your take on this solution? Do you know any examples where having ordinal numbers for elements would be helpful?</p>
+
+<ul class="links-nextprev"><li>Next: <a href="/blog/randomness-in-css/">Randomness in CSS</a></li>
+</ul>
+
+</section>
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/counting-in-css/ -->
+	</body>
+</html>

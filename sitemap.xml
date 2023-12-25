@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
+		<loc>https://hypersphere.codes/blog/counting-in-css/</loc>
+		<lastmod>2022-07-13</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://hypersphere.codes/blog/randomness-in-css/</loc>
 		<lastmod>2022-09-22</lastmod>
 	</url>
@@ -42,6 +47,16 @@
 	</url>
 	
 	<url>
+		<loc>https://hypersphere.codes/tags/css/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/css-variables/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://hypersphere.codes/tags/web-game-development/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
@@ -68,11 +83,6 @@
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/css/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
