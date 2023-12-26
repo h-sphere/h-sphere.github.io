@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Better typings for strings and numbers in TypeString using opaque types</title>
+		<meta name="description" content="Tech blog, mostly about TypeScript">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
+
+		<meta property="og:title" content="Better typings for strings and numbers in TypeString using opaque types"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/typescript-opaque-branded-types/" />
+		<meta property="og:description" content="" />
+		<meta property="og:image" content="/default-cover.jpg" />
+		<meta property="og:type" content="article" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@kulak_at" />
+		<meta name="twitter:creator" content="@kulak_at" />
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5D5F7SM8E8"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-5D5F7SM8E8');
+		</script>
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
+/* Defaults */
+:root {
+	--font-family: 'IBM Plex Sans', sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: inherit;
+	--text-color-link-active: inherit;
+	--text-color-link-visited: inherit;
+
+	--syntax-tab-size: 2;
+
+	--color-badge: rgb(31, 139, 202);
+	--color-badge-hover: rgb(6, 57, 87);
+
+	--color-header: #F00;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		/* --text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8; */
+
+
+		--text-color-link: inherit;
+		--text-color-link-active: inherit;
+		--text-color-link-visited: inherit;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	font-size: 16px;
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+/* body {
+	max-width: 60em;
+} */
+
+.grid-wrapper {
+	--gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr min(80ch, calc(100% - 2 * var(--gap))) 1fr;
+	column-gap: var(--gap);
+	font-size: clamp(16px, 1vw, 20px);
+}
+
+.grid-wrapper > * {
+	grid-column: 2;
+}
+
+.full-bleed {
+	width: 100%;
+	grid-column: 1 / -1;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	font-weight: 700;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+header {
+	border-bottom: 1px solid var(--color-gray-20);
+}
+header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.links-nextprev {
+	list-style: none;
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em .5em;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 2em;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+}
+.postlist-item {
+	align-items: baseline;
+	margin-bottom: 1em;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+.postlist-link {
+	gap: 20px;
+	text-decoration: none;
+	display: inline-block;
+	display: flex;
+}
+
+.postlist-link p {
+	font-weight: normal;
+}
+
+.postlist-link:hover {
+	background: rgba(0,0,0,0.2);
+}
+
+.post-image {
+	flex: 1;
+	font-size: 0;
+}
+
+.post-image img {
+	aspect-ratio: 1 !important;
+	object-fit: cover;
+	width: 100%;
+	/* height: 100%; */
+}
+
+.post-description {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	padding-right: 1em;
+}
+
+.post-description time {
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+	line-height: 1;
+}
+
+/* .post-description p {
+	margin-top: auto;
+} */
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	background: var(--color-badge);
+	text-decoration: none;
+	font-size: 0.8em;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-family: 'IBM Plex Sans Condensed', sans-serif;
+	text-transform: uppercase;
+}
+
+.post-tag:hover {
+	background: var(--color-badge-hover);
+}
+
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	align-items: center;
+	align-content: center;
+}
+
+.article a {
+	color: var(--text-color);
+}
+
+.article {
+	font-size: 20px;
+	line-height: 1.5em;
+}
+
+.article pre {
+	font-size: 14px;
+}
+
+.article-headings {
+	--offset: calc(min(10vh, 50px));
+	/* background: #0a0f15; */
+	padding: 48px 0 20px 0;
+	position: relative;
+	border-bottom: 1px solid var(--color-gray-50);
+	/* transform: translate(0, calc(-1 * var(--offset))); */
+	/* margin-bottom: calc(-1 * var(--offset)); */
+}
+
+.article-headings h1 {
+	font-size: 2em;
+	line-height: 1.4em;
+	margin-bottom: 0;
+}
+
+.article-headings h2 {
+	margin: 0.2em 0 0.5em 0;
+}
+
+.article-time {
+	display: block;
+	margin: 0.5em 0;
+}
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: #aaa;
+}
+
+h2 + .header-anchor {
+	font-size: 1.5em;
+}
+
+main img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+
+.article-link {
+	padding: 1em;
+	margin: 0 2em;
+	border: 1px solid var(--color-gray-90);
+	display: block;
+	display: flex;
+	background: var(--color-gray-20);
+	text-decoration: none;
+	color: #000;
+	justify-items: space-between;
+}
+
+.article-link:hover {
+	background:rgb(184, 212, 228);
+}
+
+.article-link img {
+	width: 30%;
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.article-link div {
+	color: #000;
+	text-decoration: none;
+}
+
+.article-link .details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.article-link .details p {
+	font-size: 0.8em;
+}
+
+.article-link .link-title {
+	font-size: 1.1em;
+	font-weight: 800 !important;
+}
+
+.article-link .link-url {
+	font-size: 0.4em;
+	line-height: 1em;
+	margin-top: auto;
+}
+
+.postlist-grid-container {
+	container-type: inline-size;
+	padding: 1em;
+	margin: 0 auto;
+	max-width: 120ch;
+}
+
+.postlist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 16px;
+}
+
+.postlist-item h2 {
+	font-size: 30px;
+}
+
+.postlist-item:first-child {
+	grid-column: 1 / 3;
+}
+
+
+.postlist-item:nth-child(2) {
+	grid-column: 3 / 5;
+}
+
+@container (max-width: 700px) {
+	.postlist-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1000px) and (min-width: 701px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.postlist-item {
+		grid-column: auto !important;
+	}
+}
+
+@container (max-width: 1600px) and (min-width: 1001px) {
+	.postlist-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+
+/* .postlist-item {
+	background: rgb(0,0,0,0.1)
+} */
+
+.postlist-item {
+	container-type: inline-size;
+}
+
+@container (max-width: 500px) {
+	.postlist-link {
+		flex-direction: column;
+	}
+
+	.post-description {
+		padding: 0 1em 0.5em 1em;
+	}
+}
+
+.postlist-item a {
+	height: 100%;
+	background: rgb(0,0,0,0.1);
+	width: 100%;
+}
+
+/* .postlist-item:nth-child(2) { */
+	/* grid-row: 1 / -1; */
+/* } */
+
+
+
+
+
+.external-link-data {
+	padding: 0.5em;
+	display: flex;
+	gap: 1em;
+	text-decoration: none;
+
+	background: rgba(0,0,0,0.2);
+
+	.external-image {
+		flex: 1;
+	}
+
+	.external-link-content {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.external-link-title {
+		font-weight: bold;
+	}
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Hypersphere</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">About Me</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			
+
+<section class="article grid-wrapper">
+
+<div class="cover full-bleed">
+	<img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.777" width="1777" height="1000" src="/img/7eeGTVb1do-1777.webp">
+</div>
+<div class="article-headings">
+	<h1>Better typings for strings and numbers in TypeString using opaque types</h1>
+	<time class="article-time" datetime="2022-04-25">25 April 2022</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a> </li>
+	<li><a href="/tags/opaque-types/" class="post-tag">Opaque Types</a> </li>
+	<li><a href="/tags/branded-types/" class="post-tag">Branded Types</a> </li>
+	<li><a href="/tags/advanced-typescript/" class="post-tag">Advanced TypeScript</a></li>
+</ul>
+</div>
+
+<p>TypeScript is a great tool to ensure your code is correct and you are not passing incorrect data around. Unfortunately, there are still cases when we can’t guarantee that the types are correct — especially when dealing with primitives like strings or numbers.</p>
+<p>In almost every modern application we use strings to represent a bunch of different types of data: tokens, resource identifiers, names of events, generic data, template strings, and much more. Each of those use cases is very specific, yet, all of them will usually end up being typed as a generic <code>string</code>.</p>
+<img alt="each of these strings has completely different use-case yet we type them the same" loading="lazy" decoding="async" style="aspect-ratio: 2.8260869565217392" width="1560" height="552" src="/img/Qp6OvyebZ8-1560.webp">
+<p>Sometimes it is obvious that one is not interchangeable with another but in other cases it might be tricky without relying on manual testing.</p>
+<p>When it comes to numbers, they can represent: currency, virtual points, internal counters, timestamps, etc. Again, in our apps they all are typed as a <code>number</code>.</p>
+<p>The infamous example of incorrect use of types that ended up catastrophicaly is <a href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter">Mars Climate Orbiter</a>: one piece of software incorrectly produced results in United States customary units (pound-force seconds) instead of SI units (newton-seconds). It resulted in probe deorbiting on 23 September 1999 and failing $327.6 million mission.</p>
+<p>In this article I will deal with slightly less severe examples. I will try to show the drawbacks of using primitive types directly and introduce you to solution: Opaque Types (also commonly referred in TypeScript as Brands).</p>
+<h2 id="opaque-type" tabindex="-1">Opaque Type <a class="header-anchor" href="#opaque-type">#</a></h2>
+<p>Opaque type is a type which implementation is hidden to the application as a whole, and is accessible only in a specific function or a file. Thanks to that we can ensure the data was created only in a specific place.</p>
+<p>Unfortunately due to the <a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a>, JavaScript does not really have such mechanism in place. Almost every object can be mimicked by replicating set of its properties. Moreover, nor JavaScript nor TypeScript provide any way of creating distinguishable type aliases (aka. non-structural or nominal typing).</p>
+<p>The solution to overcome those limitations is fortunately straight-forward:</p>
+<img alt="" loading="lazy" decoding="async" style="aspect-ratio: 2" width="1560" height="780" src="/img/x9F8ifSr4V-1560.webp">
+<p>The code above will allow us to distinguish between IPs and URLs even though the underlying type in both cases is the same.</p>
+<h2 id="example-with-two-tokens" tabindex="-1">Example with two tokens <a class="header-anchor" href="#example-with-two-tokens">#</a></h2>
+<p>Let’s imagine the following scenario. We have a system that uses authentication server to obtain token, which later allows up to communicate with the API. To obtain it, we need to send another token to the auth server. This logic is represented in the diagram below:</p>
+<img alt="Example with two tokens communication" loading="lazy" decoding="async" style="aspect-ratio: 2.005509641873278" width="728" height="363" src="/img/39QzCd8EkD-728.webp">
+<p>Let’s implement this logic in our code using regular strings:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">authenticateAndGetData</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>token<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+	<span class="token keyword">const</span> apiToken <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getTokenFromAuthServer</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token function">getData</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h3 id="can-you-spot-the-bug-in-the-code-above" tabindex="-1">Can you spot the bug in the code above? <a class="header-anchor" href="#can-you-spot-the-bug-in-the-code-above">#</a></h3>
+<p><strong>The bug</strong>: Instead of using <code>apiToken</code> as an argument to <code>getData</code> method we use the token used to authenticate us with the auth server. In the best case, we would find this error while testing, in the worst, it would end up on production — both scenarios require runtime checks so we cannot use any advantages of the typing system.</p>
+<p>Fortunately, there is a solution. We can mark the strings with different “types”, making our code resilient to that kind of errors:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">OpaqueString<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token builtin">string</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token builtin">string</span> <span class="token operator">&amp;</span> <span class="token punctuation">{</span>
+    __type<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">AuthToken</span> <span class="token operator">=</span> OpaqueString<span class="token operator">&lt;</span><span class="token string">"authToken"</span><span class="token operator">></span>
+<span class="token keyword">type</span> <span class="token class-name">ServiceToken</span> <span class="token operator">=</span> OpaqueString<span class="token operator">&lt;</span><span class="token string">"serviceToken"</span><span class="token operator">></span>
+
+<span class="token keyword">interface</span> <span class="token class-name">AuthResult</span> <span class="token punctuation">{</span>
+	token<span class="token operator">:</span> ServiceToken
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> getTokenFromAuthServer <span class="token operator">=</span> <span class="token punctuation">(</span>authToken<span class="token operator">:</span> AuthToken<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>AuthResult<span class="token operator">></span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+	<span class="token comment">// This is mock implementation, usually you'd make a request to authService here</span>
+	<span class="token keyword">return</span> <span class="token builtin">Promise</span><span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+		token<span class="token operator">:</span> <span class="token string">"secret_token"</span> <span class="token keyword">as</span> ServiceToken
+	<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getData</span> <span class="token operator">=</span> <span class="token punctuation">(</span>token<span class="token operator">:</span> ServiceToken<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> data<span class="token operator">:</span> <span class="token string">"Xxx"</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">authenticateAndGetData</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>token<span class="token operator">:</span> AuthToken<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+	<span class="token keyword">const</span> apiToken <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getTokenFromAuthServer</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token function">getData</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>The most interesting part of the code above is an <code>OpaqueString</code> type — it’s “marking” our string with an additional <code>__type</code> field — this field is never meant to be accessed directly (that’s why it is prepended with double underscore). Instead, TypeScript will use it to determine if two types are equivalent to each other. Thanks to that, the code above will result in the following error:</p>
+<img alt="Error in VSCode" loading="lazy" decoding="async" style="aspect-ratio: 2.395209580838323" width="1600" height="668" src="/img/uvGVM3o4PC-1600.webp">
+<h2 id="example-with-currencies" tabindex="-1">Example with currencies <a class="header-anchor" href="#example-with-currencies">#</a></h2>
+<p>The same technique can be used to distinguish between different number types. Imagine you are working on an online store and you might have products in different currencies. Summing up the values of products in different currencies does not make any sense and can cause inconsistencies in the system or even a revenue loss. To make sure we’ve implemented all necessary fail-safes in our system, we could use the following opaque type:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">CurrencyCode</span> <span class="token operator">=</span> <span class="token string">"GBP"</span> <span class="token operator">|</span> <span class="token string">"EUR"</span> <span class="token operator">|</span> <span class="token string">"PHP"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Currency<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> CurrencyCode<span class="token operator">></span></span> <span class="token operator">=</span> <span class="token builtin">number</span> <span class="token operator">&amp;</span> <span class="token punctuation">{</span>
+    __type<span class="token operator">:</span> <span class="token constant">T</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> computeUKVAT <span class="token operator">=</span> <span class="token punctuation">(</span>price<span class="token operator">:</span> Currency<span class="token operator">&lt;</span><span class="token string">"GBP"</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token operator">:</span> Currency<span class="token operator">&lt;</span><span class="token string">"GBP"</span><span class="token operator">></span> <span class="token operator">=></span>
+    <span class="token punctuation">(</span>price <span class="token operator">*</span> <span class="token number">0.2</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"GBP"</span><span class="token operator">></span>
+
+<span class="token keyword">const</span> computePhilipinesVAT <span class="token operator">=</span> <span class="token punctuation">(</span>price<span class="token operator">:</span> Currency<span class="token operator">&lt;</span><span class="token string">"PHP"</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token operator">:</span> Currency<span class="token operator">&lt;</span><span class="token string">"PHP"</span><span class="token operator">></span> <span class="token operator">=></span>
+    <span class="token punctuation">(</span>price <span class="token operator">*</span> <span class="token number">0.12</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"PHP"</span><span class="token operator">></span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> priceInGbp <span class="token operator">=</span> <span class="token number">20</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"GBP"</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> priceInEur <span class="token operator">=</span> <span class="token number">30</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"EUR"</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> priceInPhp <span class="token operator">=</span> <span class="token number">50</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"PHP"</span><span class="token operator">></span><span class="token punctuation">;</span>
+
+
+<span class="token function">computeUKVAT</span><span class="token punctuation">(</span>priceInGbp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">computeUKVAT</span><span class="token punctuation">(</span>priceInPhp<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// type error.</span></code></pre>
+<p>The code above will throw a type error when trying to pass the amount in philippine peso (PHP) to <code>computeUKVat</code> method.</p>
+<p>You can also use this method to do more advanced checks like the one below:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">NoUnion<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token punctuation">,</span> <span class="token constant">U</span> <span class="token operator">=</span> <span class="token constant">T</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token class-name"><span class="token constant">U</span></span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token constant">U</span><span class="token punctuation">]</span> <span class="token keyword">extends</span> <span class="token punctuation">[</span><span class="token constant">T</span><span class="token punctuation">]</span> <span class="token operator">?</span> <span class="token constant">T</span> <span class="token operator">:</span> <span class="token builtin">never</span> <span class="token operator">:</span> <span class="token builtin">never</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">CurrencyCode</span> <span class="token operator">=</span> <span class="token string">"GBP"</span> <span class="token operator">|</span> <span class="token string">"EUR"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Currency<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> CurrencyCode<span class="token operator">></span></span> <span class="token operator">=</span> <span class="token builtin">number</span> <span class="token operator">&amp;</span> <span class="token punctuation">{</span>
+    __type<span class="token operator">:</span> <span class="token constant">T</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> sumProducts <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token class-name">CurrencyCode</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token operator">...</span>products<span class="token operator">:</span> Currency<span class="token operator">&lt;</span>NoUnion<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">>></span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> Currency<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> products<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">+</span> b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> productInGbp <span class="token operator">=</span> <span class="token number">20</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"GBP"</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> productInEur1 <span class="token operator">=</span> <span class="token number">30</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"EUR"</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> productInEur2 <span class="token operator">=</span> <span class="token number">40</span> <span class="token keyword">as</span> Currency<span class="token operator">&lt;</span><span class="token string">"EUR"</span><span class="token operator">></span><span class="token punctuation">;</span>
+
+<span class="token function">sumProducts</span><span class="token punctuation">(</span>productInEur1<span class="token punctuation">,</span> productInEur2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">sumProducts</span><span class="token punctuation">(</span>productInGbp<span class="token punctuation">,</span> productInEur1<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>The code allows you to pass products in a single currency only. The first <code>sumProducts</code> call will not throw any error because all the arguments are in EUR. The second one will fail because its parameters are of different currencies. To detect that we use NoUnion helper type that ensures types do not make a union (they would normally resolve into <code>Currency&lt;”EUR” | “GBP”&gt;</code> which we try to avoid.</p>
+<h2 id="more-generic-solutions" tabindex="-1">More generic solutions <a class="header-anchor" href="#more-generic-solutions">#</a></h2>
+<p>The problem is not new and there are already existing solutions for it. Many TypeScript utility libraries provide helper generics for it:</p>
+<ul>
+<li><a href="https://github.com/piotrwitek/utility-types">utility-types</a> provides <a href="https://github.com/piotrwitek/utility-types#brandt-u">Brand&lt;T, U&gt;</a></li>
+<li><a href="https://github.com/millsp/ts-toolbelt">ts-toolbelt</a> provides <a href="https://millsp.github.io/ts-toolbelt/modules/any_type.html">Type&lt;A, Id&gt;</a></li>
+<li><a href="https://github.com/ts-essentials/ts-essentials">ts-essentials</a> provides <a href="https://github.com/ts-essentials/ts-essentials#Opaque-types">Opaque&lt;T, Key&gt;</a></li>
+<li><a href="https://github.com/kourge/ts-brand">ts-brand</a> which provides more advanced functionality for branding.</li>
+</ul>
+<p>If you have used Flow before, you might be familiar with its <a href="https://flow.org/en/docs/types/opaque-types/">Opaque Type Aliases</a> which provide similar functionality.</p>
+<p>Native TypeScript implementation for similar solution has been discussed in <a href="https://github.com/microsoft/TypeScript/issues/202">TypeScript community since 2014</a> but it doesn’t seem to be any consensus so far. Fortunately the solution is straight forward so you can start using it in almost every project if you’d like.</p>
+
+<ul class="links-nextprev"><li>Next: <a href="/blog/advanced-typescript-mapped-types/">Advanced TypeScript: Mapped Types and more</a></li>
+</ul>
+
+</section>
+		</main>
+
+		<footer></footer>
+
+		<!-- Current page: /blog/typescript-opaque-branded-types/ -->
+	</body>
+</html>

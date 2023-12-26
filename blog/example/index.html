@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Hypersphere</title>
+		<title>Title</title>
 		<meta name="description" content="Tech blog, mostly about TypeScript">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
@@ -12,8 +12,8 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
 
-		<meta property="og:title" content="Hypersphere"/>
-		<meta property="og:url" content="https://hypersphere.blog/tags/" />
+		<meta property="og:title" content="Title"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/example/" />
 		<meta property="og:description" content="" />
 		<meta property="og:image" content="/default-cover.jpg" />
 		<meta property="og:type" content="article" />
@@ -30,7 +30,175 @@
 		gtag('config', 'G-5D5F7SM8E8');
 		</script>
 		
-		<style>* { box-sizing: border-box; }
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+* { box-sizing: border-box; }
 /* Defaults */
 :root {
 	--font-family: 'IBM Plex Sans', sans-serif;
@@ -586,70 +754,31 @@ main img {
 		</header>
 
 		<main id="skip">
-			<section class="grid-wrapper">
-<h1>Tags</h1>
+			
 
-<ul>
+<section class="article grid-wrapper">
 
-	
+<div class="cover full-bleed">
+	<picture><source type="image/webp" srcset="/img/G3AEcG7hSz-1920.webp 1920w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="1920" height="1080" src="/img/G3AEcG7hSz-1920.jpeg"></picture>
+</div>
+<div class="article-headings">
+	<h1>Title</h1><h2>test</h2>
+	<time class="article-time" datetime="2024-01-01">01 January 2024</time>
+	<ul class="post-metadata">
 	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a></li>
+</ul>
+</div>
 
-	
-	<li><a href="/tags/opaque-types/" class="post-tag">Opaque Types</a></li>
+<p>Article goes here</p>
 
-	
-	<li><a href="/tags/branded-types/" class="post-tag">Branded Types</a></li>
-
-	
-	<li><a href="/tags/advanced-typescript/" class="post-tag">Advanced TypeScript</a></li>
-
-	
-	<li><a href="/tags/mapped-types/" class="post-tag">Mapped Types</a></li>
-
-	
-	<li><a href="/tags/as-const/" class="post-tag">as const</a></li>
-
-	
-	<li><a href="/tags/css/" class="post-tag">CSS</a></li>
-
-	
-	<li><a href="/tags/css-variables/" class="post-tag">CSS Variables</a></li>
-
-	
-	<li><a href="/tags/randomness/" class="post-tag">Randomness</a></li>
-
-	
-	<li><a href="/tags/prime-numbers/" class="post-tag">Prime Numbers</a></li>
-
-	
-	<li><a href="/tags/web-game-development/" class="post-tag">Web Game Development</a></li>
-
-	
-	<li><a href="/tags/javascript/" class="post-tag">JavaScript</a></li>
-
-	
-	<li><a href="/tags/canvas/" class="post-tag">Canvas</a></li>
-
-	
-	<li><a href="/tags/js13k/" class="post-tag">JS13K</a></li>
-
-	
-	<li><a href="/tags/trigonometry/" class="post-tag">Trigonometry</a></li>
-
-	
-	<li><a href="/tags/typeguards/" class="post-tag">Typeguards</a></li>
-
-	
-	<li><a href="/tags/discriminated-unions/" class="post-tag">discriminated unions</a></li>
-
+<ul class="links-nextprev"><li>Previous: <a href="/blog/introduction-to-assemblyscript/">Introduction to AssemblyScript</a></li>
 </ul>
 
 </section>
-
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /tags/ -->
+		<!-- Current page: /blog/example/ -->
 	</body>
 </html>
