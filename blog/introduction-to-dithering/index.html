@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged “CSS”</title>
+		<title>Introduction to Dithering</title>
 		<meta name="description" content="Tech blog, mostly about TypeScript">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
@@ -12,8 +12,8 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@700&family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,700;1,200;1,400&display=swap" rel="stylesheet">
 
-		<meta property="og:title" content="Tagged “CSS”"/>
-		<meta property="og:url" content="https://hypersphere.blog/tags/css/" />
+		<meta property="og:title" content="Introduction to Dithering"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/introduction-to-dithering/" />
 		<meta property="og:description" content="" />
 		<meta property="og:image" content="/default-cover.jpg" />
 		<meta property="og:type" content="article" />
@@ -30,7 +30,174 @@
 		gtag('config', 'G-5D5F7SM8E8');
 		</script>
 		
-		<style>.postlist { counter-reset: start-from 4 }
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
 * { box-sizing: border-box; }
 /* Defaults */
 :root {
@@ -588,64 +755,56 @@ main img {
 		</div>
 
 		<main id="skip">
-			<section class="grid-wrapper">
-<h1>Tagged “CSS”</h1>
+			
 
+<section class="article grid-wrapper">
 
+<div class="cover full-bleed">
+	<picture><source type="image/webp" srcset="/img/G3AEcG7hSz-1920.webp 1920w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="1920" height="1080" src="/img/G3AEcG7hSz-1920.jpeg"></picture>
+</div>
+<div class="article-headings">
+	<h1>Introduction to Dithering</h1><h2>test</h2>
+	<time class="article-time" datetime="2024-01-01">01 January 2024</time>
+	<ul class="post-metadata">
+	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a></li>
+</ul>
+</div>
 
-<section class="full-bleed postlist-grid-container">
-	<ul reversed class="postlist postlist-grid">
-	
-		<li class="postlist-item">
-		<a href="/blog/randomness-in-css-using-trigonometry/" class="postlist-link">
-			<div class="post-image">
-			<picture><source type="image/webp" srcset="/img/LMa8uDtGtn-1080.webp 1080w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 1" width="1080" height="1080" src="/img/LMa8uDtGtn-1080.jpeg"></picture>
-			</div>
-			<div class="post-description">
-			<h2>Randomness in CSS using trigonometry</h2>
-			<time class="postlist-date" datetime="2023-07-31">July 2023</time>
-			<p>Explore brand new technique to generate random numbers with plain CSS using new trigonometry functions!</p>
-			</div>
-		</a>
-		</li>
-	
-		<li class="postlist-item">
-		<a href="/blog/randomness-in-css/" class="postlist-link">
-			<div class="post-image">
-			<picture><source type="image/webp" srcset="/img/Ha2GBfcajN-2200.webp 2200w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 1" width="2200" height="2200" src="/img/Ha2GBfcajN-2200.png"></picture>
-			</div>
-			<div class="post-description">
-			<h2>Randomness in CSS</h2>
-			<time class="postlist-date" datetime="2022-09-22">September 2022</time>
-			<p>Randomness in the browsers without using JavaScript? Check out how to generate random numbers using just CSS and make some generative art!</p>
-			</div>
-		</a>
-		</li>
-	
-		<li class="postlist-item">
-		<a href="/blog/counting-in-css/" class="postlist-link">
-			<div class="post-image">
-			<picture><source type="image/webp" srcset="/img/YKDOIcXmJd-932.webp 932w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 1.0010741138560688" width="932" height="931" src="/img/YKDOIcXmJd-932.jpeg"></picture>
-			</div>
-			<div class="post-description">
-			<h2>Counting in CSS: Unlock magic of CSS variables</h2>
-			<time class="postlist-date" datetime="2022-07-13">July 2022</time>
-			<p>Counting in CSS: Unlock magic of CSS variables</p>
-			</div>
-		</a>
-		</li>
-	
-	</ul>
-</section>
+<p>Dithering is a technique in digital image processing used to create illusion of color depth in images with limited colour palette. You might recognise it from fourth and fifth generation of game consoles.</p>
+<p>// Add collage of games that use dither</p>
+<h2 id="history-of-dithering" tabindex="-1">History of Dithering <a class="header-anchor" href="#history-of-dithering">#</a></h2>
+<p>Despite being quite prevalent in the tech world this technique actually originated in the analogue printing. The printers used dot patterns to represent different shades and colours. The term <em>dither</em> was coined in the 1940s, related to random perturbations added to a signal. In the context of digital images, it became a method to overcome the limitations of display hardware by using combination of available colours to simulate wider spectrum of colours.</p>
+<p>The technique was significantly improved in the 70s and 80s with the invention of Floyd-Steinberg algorithm and many other variations which provided more sophisticated techniques to handle colour limitations. These improvements were pivotal in the early days of computer and video game graphics.</p>
+<h2 id="understanding-dithering" tabindex="-1">Understanding dithering <a class="header-anchor" href="#understanding-dithering">#</a></h2>
+<p>Dithering is essentially a form of error diffusion. When image is converted to a format with fewer colours, dithering helps to mange the colour conversion errors. It redistributes the quantisation error of a pixel to its neighbouring pixels which in result creates more appealing (and closer to the original) image. The result creates an illusion of more extensive colour depth and smoother gradients than the actual colour palette would achieve otherwise.</p>
+<p>In this article we will focus on a black and white dithering and we will be transforming grayscale images. Operating with colours and multiple stops requires adjustment to those techniques and can muddy the main concepts which I’m trying to explain here.</p>
+<h2 id="types-of-dithering" tabindex="-1">Types of dithering <a class="header-anchor" href="#types-of-dithering">#</a></h2>
+<p>Dithering algorithms can be grouped in two main categories - ordered dithering and error diffusion dithering. They each have their own advantages and disadvantages.</p>
+<h3 id="ordered-dithering" tabindex="-1">Ordered Dithering <a class="header-anchor" href="#ordered-dithering">#</a></h3>
+<p>Ordered dithering is fast and simple way of computing dithering for an image. It uses NxN threshold matrix that is being applied to an image to determine resulting colours of the pixels.</p>
+<p>// Here example of the matrix and how it is applied to the image</p>
+<p>Each pixel of the original image is compared with corresponding threshold. If the pixel value is greater than a threshold, it becomes full white, otherwise it becomes full black.</p>
+<p>This approach is fast and easy to parallelise. Values of each individual pixels do not depend on any other pixels so they can be computed independently.</p>
+<p>You can apply any NxN matrix in ordered dithering but there are two which are most commonly used: 2x2 and 4x4:</p>
+<p>// Matrixes here, this article describes it: https://observablehq.com/@jobleonard/ordered-error-diffusion-dithering#AppendixA</p>
+<h3 id="error-diffusion-dithering" tabindex="-1">Error diffusion dithering <a class="header-anchor" href="#error-diffusion-dithering">#</a></h3>
+<p>Error diffusion dithering was invented in 1970s and was exemplified by Floyd-Steiner algorithm. It is based on a simple idea, that the error (difference between actual value and result value in a pixel) can be propagated to the neighbouring pixels, changing their resulting values. The process is repeated for each of the pixels.</p>
+<p>// Visualisation here.</p>
+<p>This technique in majority of cases creates images visually closer to the original and more pleasing but it comes with more computations needed to be performed (usually not a problem on modern computers but in 1970s it was a real consideration).</p>
+<p>There are multiple algorithms and techniques improving error diffusion dithering in many use-cases but in this article let’s focus on implementing original Floyd-Steiner algorithm.</p>
+<h2 id="implementation" tabindex="-1">Implementation <a class="header-anchor" href="#implementation">#</a></h2>
+<p>To implement real-time dithering algorithms, we will use TypeScript and WebGL shaders. We will pass camera feed into canvas that will have dithering shader applied.</p>
+<h3 id="initial-setup-and-capturing-camera-feed" tabindex="-1">Initial setup and capturing camera feed <a class="header-anchor" href="#initial-setup-and-capturing-camera-feed">#</a></h3>
+<p>Let’s start with passing camera feed into canvas first.</p>
 
-<p>See <a href="/tags/">all tags</a>.</p>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/example/">Title</a></li>
+</ul>
 
 </section>
-
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /tags/css/ -->
+		<!-- Current page: /blog/introduction-to-dithering/ -->
 	</body>
 </html>
