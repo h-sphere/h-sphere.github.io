@@ -485,6 +485,23 @@ p {
   align-items: center;
 }
 
+.post-image.draft {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image.draft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  background: red;
+  color: #FFF;
+  padding: 1em 5em;
+  transform: translate(30%, 50%) rotate(45deg);
+}
+
 
 .post-description {
   display: flex;
@@ -705,7 +722,7 @@ body > footer {
 <h3 id="initial-setup-and-capturing-camera-feed" tabindex="-1">Initial setup and capturing camera feed <a class="header-anchor" href="#initial-setup-and-capturing-camera-feed">#</a></h3>
 <p>Let’s start with passing camera feed into canvas first.</p>
 
-<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/example/">Title</a></li>
+<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/introduction-to-assemblyscript/">Introduction to AssemblyScript</a></li><li class="link-next">Next: <a href="/blog/assembly-script-image-processing/">Sobel Article</a></li>
 </ul>
 
 </section>

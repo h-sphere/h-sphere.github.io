@@ -228,6 +228,23 @@ p {
   align-items: center;
 }
 
+.post-image.draft {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image.draft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  background: red;
+  color: #FFF;
+  padding: 1em 5em;
+  transform: translate(30%, 50%) rotate(45deg);
+}
+
 
 .post-description {
   display: flex;

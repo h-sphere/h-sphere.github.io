@@ -485,6 +485,23 @@ p {
   align-items: center;
 }
 
+.post-image.draft {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image.draft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  background: red;
+  color: #FFF;
+  padding: 1em 5em;
+  transform: translate(30%, 50%) rotate(45deg);
+}
+
 
 .post-description {
   display: flex;
@@ -680,7 +697,7 @@ body > footer {
 </ul>
 </div>
 
-<p>TypeScript and JavaScript are amazing technologies but they have a very crucial downside - by being high level script languages, they are not performant. In plenty of use cases it is not a problem but when your application is computation-heavy this might a very big let-down. Fortunately, with introduction of WebAssembly in 2015 (and first release in 2017) we now have a way to run low-level code which is way more performant. Unfortunately with great power comes assembly-like syntax which, despite being really powerful, might not be viable for bigger projects to write directly in. Fortunately many of languages can be compiled into WebAssembly. A lot of already extablished languages like C++ and Rust can be compiled this way, but if you are looking for the language that is most familar to web developer, AssemblyScript is the way to go! It provides familar TypeScript syntax but still makes the code performant by targeting WebAssembly feature set.</p>
+<p>TypeScript and JavaScript are amazing technologies but they have a very crucial downside - by being high level script languages, they might not be as performant as the native code. In plenty of use cases it is not a problem but when your application is computation-heavy this might become a let-down. Fortunately, with introduction of WebAssembly in 2015 (and first release in 2017) we now have a way to run low-level code which is way more performant. Unfortunately with great power comes assembly-like syntax which, despite being really powerful, might not be viable for bigger projects to write directly in. Fortunately many of languages can be compiled into WebAssembly. A lot of already extablished languages like C++ and Rust can be compiled this way, but if you are looking for the language that is most familar to web developer, AssemblyScript is the way to go! It provides familar TypeScript syntax but still makes the code performant by targeting WebAssembly feature set.</p>
 <p>In this article I will explain the history of WebAssembly and AssemblyScript. Then we will dive into the basic example of writing, compiling and running AssemblyScript in your browser. Later we will implement Fibonacci Sequence in both TypeScript and JavaScript and compare their performance.</p>
 <h2 id="what-exactly-is-webassembly-and-assemblyscript" tabindex="-1">What exactly is WebAssembly and AssemblyScript <a class="header-anchor" href="#what-exactly-is-webassembly-and-assemblyscript">#</a></h2>
 <h2 id="getting-started-with-assemblyscript" tabindex="-1">Getting started with AssemblyScript <a class="header-anchor" href="#getting-started-with-assemblyscript">#</a></h2>
@@ -714,7 +731,7 @@ To run that code, we need to fetch it and then instantiate using <code>WebAssemb
 <p>To see the power of WebAssembly, let's run it using</p>
 <p><picture><source type="image/webp" srcset="/img/QIFOOvGa7W-1900.webp 1900w"><img alt="Comparison of performance of running fib(n) for TS and WebAssembly versions" loading="lazy" decoding="async" style="aspect-ratio: 1.756007393715342" width="1900" height="1082" src="/img/QIFOOvGa7W-1900.jpeg"></picture></p>
 
-<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/typeguards-to-use-or-not/">TypeScript Typeguards: To use or not to use?</a></li><li class="link-next">Next: <a href="/blog/example/">Title</a></li>
+<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/typeguards-to-use-or-not/">TypeScript Typeguards: To use or not to use?</a></li><li class="link-next">Next: <a href="/blog/introduction-to-dithering/">Introduction to Dithering</a></li>
 </ul>
 
 </section>

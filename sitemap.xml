@@ -47,22 +47,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
+		<loc>https://hypersphere.codes/tags/as-const/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
@@ -102,27 +92,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/as-const/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	
@@ -138,6 +113,31 @@
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/advanced-typescript/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
+		<lastmod>2023-06-25</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
 		<lastmod>2023-06-25</lastmod>
 	</url>
 	

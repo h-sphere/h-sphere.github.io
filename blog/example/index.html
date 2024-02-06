@@ -485,6 +485,23 @@ p {
   align-items: center;
 }
 
+.post-image.draft {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image.draft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  background: red;
+  color: #FFF;
+  padding: 1em 5em;
+  transform: translate(30%, 50%) rotate(45deg);
+}
+
 
 .post-description {
   display: flex;
@@ -672,7 +689,7 @@ body > footer {
 </div>
 <div class="article-headings">
 	<h1>Title</h1><h2>test</h2>
-	<time class="article-time" datetime="2024-01-01">01 January 2024</time>
+	<time class="article-time" datetime="2025-01-01">01 January 2025</time>
 	<ul class="post-metadata" role="list">
 	<li><a href="/tags/typescript/" class="post-tag">TypeScript</a></li>
 </ul>
@@ -680,7 +697,7 @@ body > footer {
 
 <p>Article goes here</p>
 
-<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/introduction-to-assemblyscript/">Introduction to AssemblyScript</a></li><li class="link-next">Next: <a href="/blog/introduction-to-dithering/">Introduction to Dithering</a></li>
+<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/assembly-script-image-processing/">Sobel Article</a></li>
 </ul>
 
 </section>
