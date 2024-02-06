@@ -198,7 +198,7 @@ In our example, a simple check on the type string literal will help TypeScript d
     &lt;div class=&quot;details&quot;&gt;
         &lt;div class=&quot;link-title&quot;&gt;Counting in CSS: Unlock magic of CSS variables&lt;/div&gt;
         &lt;p&gt;Use prime numbers to create generic counters in CSS that you can use for all sorts of stuff.&lt;/p&gt;
-        &lt;div class=&quot;link-url&quot;&gt;medium.com/hypersphere-codes/counting-in-css-unlock-magic-of-css-variables-8e610881097a&lt;/div&gt;
+        &lt;div class=&quot;link-url&quot;&gt;medium.com&lt;/div&gt;
     &lt;/div&gt;
 &lt;/a&gt;
 &lt;p&gt;The value is then multiplied and offset by some arbitrary values to provide a pseudo-random big number (the values do not really matter, you can change them as you wish to get different results). After that, we use the sine function to map it to the range &lt;code&gt;[-1, 1]&lt;/code&gt;. Lastly, as shown in the animation below, we can map it to the range &lt;code&gt;[0, 1]&lt;/code&gt; by applying a simple algebraic transformation. Once we obtain value from the range &lt;code&gt;[0, 1]&lt;/code&gt;, we can use linear mapping to map it to any other desired value.&lt;/p&gt;
@@ -914,13 +914,12 @@ div:nth-child(16n-7)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&g
 		<id>https://hypersphere.codes/blog/advanced-typescript-mapped-types/</id>
 		<content type="html">&lt;p&gt;Using strongly typed language has a lot of benefits. But TypeScript is not a magical tool — the stronger types you provide, the better results you will get. Unfortunately, in a lot of the cases we can end up using very broad types to describe much narrower sets of values — it’s foremost apparent when using primitives like strings or numbers.&lt;/p&gt;
 &lt;p&gt;In my previous article I write about an issue of using plain primitive types, as they often represent different things and cannot be used interchangeably:&lt;/p&gt;
-&lt;a class=&quot;external-link-data&quot; href=&quot;https://medium.com/hypersphere-codes/better-types-for-strings-and-numbers-in-typestring-using-opaque-types-c9153eb8009c&quot;&gt;
-			&lt;div class=&quot;external-image&quot;&gt;
+&lt;a class=&quot;article-link&quot; href=&quot;https://medium.com/hypersphere-codes/better-types-for-strings-and-numbers-in-typestring-using-opaque-types-c9153eb8009c&quot;&gt;
 				&lt;img src=&quot;https://miro.medium.com/v2/resize:fit:1200/1*sQKE6cmOqGgIMMrNI0JxpQ.png&quot;&gt;
-			&lt;/div&gt;
-			&lt;div class=&quot;external-link-content&quot;&gt;
-				&lt;div class=&quot;external-link-title&quot;&gt;Better types for strings and numbers in TypeString using opaque types&lt;/div&gt;
-				&lt;div class=&quot;external-link-description&quot;&gt;Are all strings equal? They serve different purposes in our codebases yet we type them with the same type. But fear not, there is a…&lt;/div&gt;
+			&lt;div class=&quot;details&quot;&gt;
+				&lt;div class=&quot;link-title&quot;&gt;Better types for strings and numbers in TypeString using opaque types&lt;/div&gt;
+				&lt;p class=&quot;link-description&quot;&gt;Are all strings equal? They serve different purposes in our codebases yet we type them with the same type. But fear not, there is a…&lt;/p&gt;
+				&lt;div class=&quot;link-url&quot;&gt;medium.com&lt;/div&gt;
 			&lt;/div&gt;
 		&lt;/a&gt;
 &lt;p&gt;Opaque types are great when dealing with infinite subsets of values. However, in plenty of cases, we deal with a finite subset of strings (or other primitive values). Instead of verifying those values in runtime, we can leverage TypeScript mechanisms to ensure we pass types properly.&lt;/p&gt;
@@ -994,13 +993,12 @@ div:nth-child(16n-7)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&g
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This technique is really useful in all the cases where one argument determines types of the other ones.&lt;/p&gt;
 &lt;p&gt;Probably one of the most common use cases is addEventListener method - based on the event type, the callback argument is determined. I used the same concept in my cross-platform Event Bus library. Check out my other article about it:&lt;/p&gt;
-&lt;a class=&quot;external-link-data&quot; href=&quot;https://medium.com/hypersphere-codes/introducing-omnibus-new-event-bus-library-written-in-typescript-4fc5d2f684c6&quot;&gt;
-			&lt;div class=&quot;external-image&quot;&gt;
+&lt;a class=&quot;article-link&quot; href=&quot;https://medium.com/hypersphere-codes/introducing-omnibus-new-event-bus-library-written-in-typescript-4fc5d2f684c6&quot;&gt;
 				&lt;img src=&quot;https://miro.medium.com/v2/resize:fit:1200/1*j7nGJWCG85iiHeDbkjNDtA.jpeg&quot;&gt;
-			&lt;/div&gt;
-			&lt;div class=&quot;external-link-content&quot;&gt;
-				&lt;div class=&quot;external-link-title&quot;&gt;Introducing Omnibus: new Event Bus library written in TypeScript&lt;/div&gt;
-				&lt;div class=&quot;external-link-description&quot;&gt;event bus library for all&lt;/div&gt;
+			&lt;div class=&quot;details&quot;&gt;
+				&lt;div class=&quot;link-title&quot;&gt;Introducing Omnibus: new Event Bus library written in TypeScript&lt;/div&gt;
+				&lt;p class=&quot;link-description&quot;&gt;event bus library for all&lt;/p&gt;
+				&lt;div class=&quot;link-url&quot;&gt;medium.com&lt;/div&gt;
 			&lt;/div&gt;
 		&lt;/a&gt;
 &lt;h2 id=&quot;dynamically-creating-locale-strings&quot; tabindex=&quot;-1&quot;&gt;Dynamically creating locale strings &lt;a class=&quot;header-anchor&quot; href=&quot;https://hypersphere.codes/blog/advanced-typescript-mapped-types/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
