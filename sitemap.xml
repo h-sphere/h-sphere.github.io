@@ -27,121 +27,6 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/blog/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/typescript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/as-const/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/web-game-development/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/javascript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/canvas/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/js13k/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/css/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/css-variables/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/randomness/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/opaque-types/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/branded-types/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/advanced-typescript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/typeguards/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
-		<lastmod>2023-06-25</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://hypersphere.codes/blog/randomness-in-css-using-trigonometry/</loc>
 		<lastmod>2023-07-31</lastmod>
 	</url>
@@ -152,17 +37,132 @@
 	</url>
 	
 	<url>
+		<loc>https://hypersphere.codes/blog/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://hypersphere.codes/demo/assemblyscript/sum/</loc>
-		<lastmod>2023-12-10</lastmod>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/</loc>
+		<lastmod>2024-04-29</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://hypersphere.codes/legal/privacy-policy/</loc>
-		<lastmod>2023-12-20</lastmod>
+		<lastmod>2024-04-29</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://hypersphere.codes/projects/</loc>
-		<lastmod>2024-02-06</lastmod>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/typescript/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/as-const/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/css/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/css-variables/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/web-game-development/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/javascript/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/canvas/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/js13k/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/randomness/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/opaque-types/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/branded-types/</loc>
+		<lastmod>2024-04-29</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/advanced-typescript/</loc>
+		<lastmod>2024-04-29</lastmod>
 	</url>
 </urlset>
