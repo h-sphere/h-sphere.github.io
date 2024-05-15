@@ -1,0 +1,41 @@
+.postlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1rem;
+}
+
+.postlist-item {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    text-decoration: none;
+    border: 1px solid rgba(100, 100, 100, 0.5);
+    border-radius: 0px;
+    overflow: hidden;
+}
+
+.postlist-item {
+    h2, time, p {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    transition: background ease-in 0.2s;
+    background: rgba(0, 0, 0, 0.1);
+
+}
+
+.postlist-item:hover {
+    background: hsl(from var(--background-color) h s calc(l / 2));
+}
+
+/* .postlist-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 8;
+    grid-template-rows: auto auto auto auto;
+    display: block;
+} */
+/*
+.postlist-item:nth-child(n + 2):nth-child(-n + 5) {
+    background: red;
+    grid-row: span 4;
+} */

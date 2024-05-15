@@ -287,7 +287,28 @@ In our example, a simple check on the type string literal will help TypeScript d
 		<link href="https://hypersphere.codes/blog/gameboy-like-app-in-13k/"/>
 		<updated>2022-10-10T00:00:00Z</updated>
 		<id>https://hypersphere.codes/blog/gameboy-like-app-in-13k/</id>
-		<content type="html">&lt;!-- &lt;img alt=&quot;Article Cover&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 1.694915254237288&quot; width=&quot;2000&quot; height=&quot;1180&quot; src=&quot;/img/TwPZntxLeN-2000.webp&quot;&gt; --&gt;
+		<content type="html">&lt;div class=&quot;article-header gameboy parallax&quot;&gt;
+    &lt;div class=&quot;u-container header-grid&quot;&gt;
+        &lt;div class=&quot;header-image&quot;&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://hypersphere.codes/img/UDIA3t8BYx-1000.webp 1000w&quot;&gt;&lt;img alt=&quot;Header Image&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; style=&quot;aspect-ratio: 0.8554319931565441&quot; width=&quot;1000&quot; height=&quot;1169&quot; src=&quot;https://hypersphere.codes/img/UDIA3t8BYx-1000.png&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;header-text&quot;&gt;
+        &lt;div class=&quot;animation-container&quot;&gt;
+            &lt;div class=&quot;moveText&quot;&gt;
+                &lt;h1&gt;How I created a GameBoy-like game in 13kb&lt;/h1&gt;
+                &lt;h2&gt;History of Gravepassing — my entry for js13kgames 2022.&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;ul class=&quot;post-metadata&quot; role=&quot;list&quot;&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/web-game-development/&quot; class=&quot;post-tag&quot;&gt;Web Game Development&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/typescript/&quot; class=&quot;post-tag&quot;&gt;TypeScript&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/javascript/&quot; class=&quot;post-tag&quot;&gt;JavaScript&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/canvas/&quot; class=&quot;post-tag&quot;&gt;Canvas&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/js13k/&quot; class=&quot;post-tag&quot;&gt;JS13K&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;This year I decided to participate in the js13kgames game jam. It’s a yearly, month-long competition to create a game in JavaScript from scratch that will fit 13kb (zipped). It does not sound like plenty of space, but with enough creativity, a lot can be achieved. Just look at those amazing examples from the past years:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://js13kgames.com/entries/underrun&quot;&gt;Underrun&lt;/a&gt; (winner in 2018)&lt;/li&gt;
@@ -912,7 +933,21 @@ div:nth-child(16n-7)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&g
 		<link href="https://hypersphere.codes/blog/advanced-typescript-mapped-types/"/>
 		<updated>2022-06-27T00:00:00Z</updated>
 		<id>https://hypersphere.codes/blog/advanced-typescript-mapped-types/</id>
-		<content type="html">&lt;p&gt;Using strongly typed language has a lot of benefits. But TypeScript is not a magical tool — the stronger types you provide, the better results you will get. Unfortunately, in a lot of the cases we can end up using very broad types to describe much narrower sets of values — it’s foremost apparent when using primitives like strings or numbers.&lt;/p&gt;
+		<content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    &lt;div class=&quot;u-container&quot;&gt;
+		&lt;div class=&quot;text-container&quot;&gt;
+		&lt;span class=&quot;reverse&quot;&gt;Advanced TypeScript&lt;/span&gt;
+		&lt;h1&gt;Mapped Types&lt;/h1&gt;
+		&lt;div class=&quot;force-right&quot;&gt;&lt;span class=&quot;reverse&quot;&gt;and more&lt;/span&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul class=&quot;post-metadata&quot; role=&quot;list&quot;&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/typescript/&quot; class=&quot;post-tag&quot;&gt;TypeScript&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/mapped-types/&quot; class=&quot;post-tag&quot;&gt;Mapped Types&lt;/a&gt; &lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;https://hypersphere.codes/tags/as-const/&quot; class=&quot;post-tag&quot;&gt;as const&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using strongly typed language has a lot of benefits. But TypeScript is not a magical tool — the stronger types you provide, the better results you will get. Unfortunately, in a lot of the cases we can end up using very broad types to describe much narrower sets of values — it’s foremost apparent when using primitives like strings or numbers.&lt;/p&gt;
 &lt;p&gt;In my previous article I write about an issue of using plain primitive types, as they often represent different things and cannot be used interchangeably:&lt;/p&gt;
 &lt;a class=&quot;article-link&quot; href=&quot;https://medium.com/hypersphere-codes/better-types-for-strings-and-numbers-in-typestring-using-opaque-types-c9153eb8009c&quot;&gt;
 				&lt;img src=&quot;https://miro.medium.com/v2/resize:fit:1200/1*sQKE6cmOqGgIMMrNI0JxpQ.png&quot;&gt;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background: #1D2351;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <canvas id="myChart"></canvas>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script type="module">
+    import { fibonacci } from "./build/release.js";
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line', // or 'bar', 'pie', etc.
+    data: {
+        labels: [], // initial labels
+        datasets: [{
+            label: 'TypeScript',
+            data: [], // initial data
+            // other properties like backgroundColor, borderColor, etc.
+        },
+        {
+            label: 'WebAssembly',
+            data: []
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                display: true,
+                grid: {
+                    display: true,
+                    color: '#555'
+                },
+                scaleLabel: { // To format the scale label
+                    display: true,
+                    labelString: 'X axis name',
+                    color: '#FFF',
+                    fontSize: 10
+                },
+                ticks: {
+                    color: "#FFF", // To format the ticks, coming on the axis/labels which we are passing
+                    font: { size : 20 }
+                }
+            },
+            y: {
+                grid: {
+                    display: true,
+                    color: '#555'
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Y axis name',
+                    color: '#FFF',
+                    fontSize: 10
+                },
+                ticks: {
+                    color: "#FFF",
+                    font: { size : 20 }
+                }
+            }
+        }
+        }
+});
+Chart.defaults.defaultFontColor = "#fff";
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    console.log(chart.data.datasets)
+    data.forEach((d, i) => chart.data.datasets[i].data.push(d))
+    chart.update();
+}
+
+const performTests = (start, step, count) => {
+    if (count <= 0) {
+        return
+    }
+    const startTime = performance.now()
+    fibonacciTS(start)
+    const endTime = performance.now()
+
+    // WebAss
+    const startTime2 = performance.now()
+    fibonacci(start)
+    const endTime2 = performance.now()
+
+    const data = [endTime - startTime, endTime2 - startTime2]
+
+    addData(myChart, start, data)
+    console.log((data[0] - data[1]) / data[0])
+    setTimeout(() => performTests(start + step, step, count - 1), 200)
+}
+
+function fibonacciTS(n) {
+  if (n <= 1) return n;
+  return fibonacciTS(n - 1) + fibonacciTS(n - 2);
+}
+
+    performTests(12, 1, 30)
+
+      </script>
+
+
+
+</body>
+</html>

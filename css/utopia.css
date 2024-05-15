@@ -58,6 +58,9 @@
   --background-color: var(--main-color-dark);
   --background-color-reversed: var(--main-color-light);
   --display-font-family: 'Alumni Sans';
+
+  --background-color: #093d6e;
+  --background-accent: hsl(from var(--background-color) h s calc(l / 2));
 }
 
 @media (prefers-color-scheme: light) {
@@ -66,6 +69,7 @@
     --font-color-reversed: var(--main-color-light);
     --background-color: var(--main-color-light);
     --background-color-reversed: var(--main-color-dark);
+    
 
   }
 }
@@ -84,7 +88,8 @@
   }
 
   body {
-    background: var(--background-color);
+  	background: radial-gradient(circle at 0 0, var(--background-color) 0%, var(--background-accent) 100%);
+    background-attachment: fixed;
   }
 
   a {
@@ -126,59 +131,6 @@ body {
 p {
     font-size: var(--step-0);
     padding: var(--space-m) 0;
-}
-
-
-.postlist-grid-container {
-	container-type: inline-size;
-}
-
-
-.postlist-grid {
-    --rows: 4;
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(var(--rows), 1fr);
-}
-
-.postlist-item {
-    /* background: var(--background-color-reversed);
-    color: var(--font-color-reversed); */
-    border: 1px solid var(--background-color-reversed);
-    border-width: 0 0 1px 0px;
-    /* border-bottom-width: 1px; */
-    padding: var(--space-s);
-    padding-bottom: var(--space-m);
-    &:hover {
-      border-bottom-width: var(--space-m);
-      padding-bottom: 1px;
-      background: rgba(255, 255, 255, 0.01);
-    }
-    a {
-      text-decoration: none;
-    }
-
-    h2 {
-      margin: var(--space-m) 0;
-    }
-}
-
-@container (max-width: 40rem) {
-    .postlist-grid {
-      --rows: 1;
-    }
-}
-
-@container (min-width: 40rem) and (max-width: 60rem) {
-    .postlist-grid {
-      --rows: 2;
-    }
-}
-
-@container (min-width: 60rem) and (max-width: 80rem) {
-  .postlist-grid {
-    --rows: 3;
-  }
 }
 
 .header {
