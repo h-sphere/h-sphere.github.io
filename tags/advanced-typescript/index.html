@@ -515,6 +515,20 @@ body > footer {
     animation: imageIn ease-in-out both;
     animation-timeline: view();
     animation-range: entry -20%;
+}
+@view-transition {
+    navigation: auto;
+}
+
+.article h1 {
+    view-transition-name: article-title;
+}
+
+.article .cover img {
+    view-transition-name: article-cover;
+}
+.article-header h2 {
+    view-transition-name: article-subtitle;
 }</style>
 
 		<script>/*!
@@ -571,6 +585,16 @@ body > footer {
 	
 	</div>
 </section>
+<script>
+	window.addEventListener('pageswap', e => {
+		const url = '/' + e.activation.entry.url.split('//')[1].split('/').slice(1).join('/')
+		document.querySelectorAll(`[href="${ url }"]`).forEach(a => {
+			a.querySelector('h2').style.viewTransitionName = 'article-title'
+			a.querySelector('.post-image').style.viewTransitionName = 'article-cover'
+			a.querySelector('p').style.viewTransitionName = 'article-subtitle'
+		})
+	})
+</script>
 
 <p>See <a href="/tags/">all tags</a>.</p>
 

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged “Typeguards”</title>
+		<title>Synchronise Scroll Animations in CSS</title>
 		<meta name="description" content="Tech blog, mostly about TypeScript">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
@@ -14,8 +14,8 @@
 
 		
 
-		<meta property="og:title" content="Tagged “Typeguards”"/>
-		<meta property="og:url" content="https://hypersphere.blog/tags/typeguards/" />
+		<meta property="og:title" content="Synchronise Scroll Animations in CSS"/>
+		<meta property="og:url" content="https://hypersphere.blog/blog/css-synchronise-scroll-animations/" />
 		<meta property="og:description" content="" />
 		<meta property="og:image" content="/default-cover.jpg" />
 		<meta property="og:type" content="article" />
@@ -35,7 +35,174 @@
 
 		
 		
-		<style>.postlist { counter-reset: start-from 2 }
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
 * { box-sizing: border-box; }
 *, *::before, *::after{
     box-sizing: border-box; /* Set the sizing of an element to include it's border */
@@ -564,42 +731,30 @@ body > footer {
 </div>
 
 		<main id="skip">
-			<section class="u-container">
-<h1>Tagged “Typeguards”</h1>
-
-
-
-<section class="postlist-grid-container">
-	<div reversed class="postlist postlist-grid" role="list">
-	
-		<a href="/blog/typeguards-to-use-or-not/" class="postlist-item">
 			
-			
-			<div class="post-image">
-			<picture><source type="image/webp" srcset="/img/RBMyp0KD8t-1080.webp 1080w" sizes=""><img alt="Post cover" loading="lazy" decoding="async" style="aspect-ratio: 1" width="1080" height="1080" src="/img/RBMyp0KD8t-1080.jpeg"></picture>
-			</div>
-			<h2>TypeScript Typeguards: To use or not to use?</h2>
-			<time class="postlist-date" datetime="2023-12-04">December 2023</time>
-			<p>What are custom typeguards? When should we use them and when should we resort to built-in methods instead?</p>
-		</a>
+
+<section class="article u-container">
+
 	
+	<div class="cover full-bleed">
+		<picture><source type="image/webp" srcset="/img/G3AEcG7hSz-1920.webp 1920w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="1920" height="1080" src="/img/G3AEcG7hSz-1920.jpeg"></picture>
 	</div>
+	
+	<div class="article-headings">
+		<h1>Synchronise Scroll Animations in CSS</h1><h2>test</h2>
+		<time class="article-time" datetime="2025-01-01">01 January 2025</time>
+		<ul class="post-metadata" role="list">
+	<li><a href="/tags/css/" class="post-tag">CSS</a></li>
+</ul>
+	</div>
+
+
+<p>Article goes here</p>
+
+<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/css-scroll-animations/">CSS Scroll Animations</a></li><li class="link-next">Next: <a href="/blog/example/">Title</a></li>
+</ul>
+
 </section>
-<script>
-	window.addEventListener('pageswap', e => {
-		const url = '/' + e.activation.entry.url.split('//')[1].split('/').slice(1).join('/')
-		document.querySelectorAll(`[href="${ url }"]`).forEach(a => {
-			a.querySelector('h2').style.viewTransitionName = 'article-title'
-			a.querySelector('.post-image').style.viewTransitionName = 'article-cover'
-			a.querySelector('p').style.viewTransitionName = 'article-subtitle'
-		})
-	})
-</script>
-
-<p>See <a href="/tags/">all tags</a>.</p>
-
-</section>
-
 		</main>
 
 		<footer>
@@ -608,6 +763,6 @@ body > footer {
 			</section>
 		</footer>
 
-		<!-- Current page: /tags/typeguards/ -->
+		<!-- Current page: /blog/css-synchronise-scroll-animations/ -->
 	</body>
 </html>
