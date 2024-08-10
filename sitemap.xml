@@ -87,27 +87,7 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://hypersphere.codes/tags/css-variables/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/randomness/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -132,6 +112,31 @@
 	</url>
 	
 	<url>
+		<loc>https://hypersphere.codes/tags/randomness/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/assemblyscript/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/fibbonaci-sequence/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://hypersphere.codes/tags/opaque-types/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
@@ -148,11 +153,6 @@
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/trigonometry/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
