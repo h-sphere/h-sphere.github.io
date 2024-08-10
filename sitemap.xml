@@ -72,22 +72,22 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/typeguards/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://hypersphere.codes/tags/css/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/css-variables/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -137,6 +137,11 @@
 	</url>
 	
 	<url>
+		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
+		<lastmod>2024-07-31</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://hypersphere.codes/tags/opaque-types/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
@@ -148,11 +153,6 @@
 	
 	<url>
 		<loc>https://hypersphere.codes/tags/advanced-typescript/</loc>
-		<lastmod>2024-07-31</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
