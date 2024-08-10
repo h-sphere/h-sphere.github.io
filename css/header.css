@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    gap: var(--space-s);
+    align-items: center;
+    margin: var(--space-m) auto var(--space-m) auto;
+    justify-content: space-between;
+}
+
+.home-link {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-right: 2em;
+}
+
+.home-link:link:not(:hover) {
+    text-decoration: none;
+}

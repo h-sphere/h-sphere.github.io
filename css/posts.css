@@ -1,0 +1,152 @@
+.postlist {
+    list-style: none;
+    padding: 0;
+}
+
+.postlist-item {
+    border: 1px solid var(--background-color-reversed);
+    border-width: 0 0 1px 0px;
+    padding: var(--space-s);
+    padding-bottom: var(--space-m);
+}
+
+.postlist-item:hover {
+    border-bottom-width: var(--space-m);
+    padding-bottom: 1px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.postlist-item a {
+    text-decoration: none;
+}
+
+.postlist-item h2 {
+    margin: var(--space-m) 0;
+}
+
+.postlist-date {
+    font-size: 0.8125em;
+    color: var(--color-gray-90);
+}
+
+.postlist-link {
+    font-size: 1.1875em;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    gap: 20px;
+}
+
+.post-image {
+    flex: 1;
+    font-size: 0;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+}
+
+.post-image img {
+    aspect-ratio: 1 !important;
+    object-fit: cover;
+    width: 100%;
+}
+
+.post-description {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    padding-right: 1em;
+}
+
+.post-description time {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.post-description h2 {
+    line-height: 1;
+}
+
+.post-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    background: var(--color-badge);
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    text-transform: uppercase;
+}
+
+.post-tag:hover {
+    background: var(--color-badge-hover);
+}
+
+.post-metadata {
+    display: flex;
+    gap: var(--space-s);
+    margin: var(--space-m) 0;
+}
+
+.post-metadata a {
+    display: inline-block;
+    text-decoration: none;
+    padding: var(--space-3xs);
+    background: var(--accent-color-light);
+    color: var(--main-color-dark);
+    font-family: var(--display-font-family);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.postlist-grid-container {
+    container-type: inline-size;
+    padding: 1em;
+    margin: 0 auto;
+    max-width: 120ch;
+}
+
+.postlist-grid {
+    --rows: 4;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(var(--rows), 1fr);
+}
+
+@container (max-width: 40rem) {
+    .postlist-grid {
+        --rows: 1;
+    }
+}
+
+@container (min-width: 40rem) and (max-width: 60rem) {
+    .postlist-grid {
+        --rows: 2;
+    }
+}
+
+@container (min-width: 60rem) and (max-width: 80rem) {
+    .postlist-grid {
+        --rows: 3;
+    }
+}
+
+.post-image.draft {
+    position: relative;
+    overflow: hidden;
+}
+
+.post-image.draft::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%;
+    background: red;
+    color: #FFF;
+    padding: 1em 5em;
+    transform: translate(30%, 50%) rotate(45deg);
+}

@@ -1,0 +1,38 @@
+.article-header {
+    background-color: #4158D0;
+background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    font-size: 2rem;
+    text-align: center;
+    padding: 8rem;
+    font-family: "Alumni Sans";
+
+
+    width: 100vw;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+.article-header h1 {
+    font-size: 10rem;
+    color: #447ba3;
+    mix-blend-mode: color-burn;
+}
+
+.force-right {
+    text-align: right;
+}
+
+.text-container {
+    width: fit-content;
+    margin-inline: auto;
+}
+
+.reverse {
+    display: inline-block;
+    background: white;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    mix-blend-mode: lighten;
+    padding: 0.25em 0.5em;
+}

@@ -1,0 +1,113 @@
+:root {
+  --code-bg: #1e1e1e;
+  --code-color: #e0e0e0;
+}
+
+[data-theme="light"] {
+  --font-color: #333;
+  --background-color: #f0f4f8;
+  --background-accent: #e1e8f0;
+  --main-color-dark: #093d6e;
+  --accent-color-light: #2980b9;
+  --accent-color-dark: #1c587f;
+  --code-bg: #1e1e1e;
+  --code-color: #e0e0e0;
+}
+
+[data-theme="light"] .header-container {
+  background-color: rgba(9, 61, 110, 0.9);
+}
+
+[data-theme="light"] .nav a,
+[data-theme="light"] .nav button {
+  color: var(--main-color-light);
+}
+
+[data-theme="light"] .nav a:hover,
+[data-theme="light"] .nav a[aria-current="page"],
+[data-theme="light"] .nav button:hover {
+  background-color: var(--accent-color-light);
+  color: var(--background-color);
+}
+
+[data-theme="light"] .postlist-item,
+[data-theme="light"] .article-link {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .article-link:hover {
+  background-color: #f8f8f8;
+}
+
+[data-theme="light"] #theme-toggle svg {
+  fill: var(--main-color-light);
+}
+
+[data-theme="light"] .post-tag {
+  background-color: var(--accent-color-dark);
+  color: #ffffff;
+}
+
+[data-theme="light"] .post-tag:hover {
+  background-color: var(--accent-color-light);
+}
+
+[data-theme="light"] footer {
+  background-color: var(--main-color-dark);
+  color: var(--main-color-light);
+}
+
+[data-theme="light"] .article-content {
+  color: #333;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: var(--main-color-dark);
+}
+
+[data-theme="light"] a {
+  color: var(--accent-color-dark);
+}
+
+[data-theme="light"] a:hover {
+  color: var(--accent-color-light);
+}
+
+[data-theme="light"] .article-time,
+[data-theme="light"] .post-description time {
+  color: #666;
+}
+
+[data-theme="light"] .copy-button {
+  background-color: var(--accent-color-dark);
+  color: #ffffff;
+}
+
+[data-theme="light"] .copy-button:hover {
+  background-color: var(--accent-color-light);
+}
+
+[data-theme="light"] .article pre,
+[data-theme="light"] .article code {
+  background-color: var(--code-bg);
+  color: var(--code-color);
+}
+
+[data-theme="light"] .modal {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .close {
+  color: #333;
+}
+
+[data-theme="light"] .close:hover,
+[data-theme="light"] .close:focus {
+  color: #666;
+}

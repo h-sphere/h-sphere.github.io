@@ -1,0 +1,30 @@
+.nav {
+    display: flex;
+    gap: var(--space-s);
+    text-transform: uppercase;
+}
+
+.nav a {
+    text-decoration: none;
+    padding: var(--space-2xs);
+    font-family: var(--display-font-family);
+    font-size: var(--step-1);
+}
+
+.nav a:hover {
+    background: var(--background-color-reversed);
+    color: var(--font-color-reversed);
+}
+
+.nav-item {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.nav-item a[href]:not(:hover) {
+    text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+    text-decoration: underline;
+}

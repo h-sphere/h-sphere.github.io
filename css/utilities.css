@@ -1,0 +1,18 @@
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.cp_embed_wrapper {
+    width: calc(min(80ch, 100%));
+    margin: 0 auto;
+}
+
+.player {
+    margin: 1em auto;
+}

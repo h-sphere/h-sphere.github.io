@@ -1,3 +1,4 @@
+/* Keep only the styles specific to article animations */
 @keyframes imageIn {
     from {
         opacity: 0.5;

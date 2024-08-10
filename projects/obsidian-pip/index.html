@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian Picture-in-picture</title>
+    <meta name="description" content="An Obsidian plugin for picture-in-picture functionality within your notes.">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Assistant&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="Obsidian Picture-in-picture"/>
+    <meta property="og:url" content="https://hypersphere.blog/projects/obsidian-pip/" />
+    <meta property="og:description" content="An Obsidian plugin for picture-in-picture functionality within your notes." />
+    <meta property="og:image" content="/default-cover.jpg" />
+    <meta property="og:type" content="article" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@kulak_at" />
+    <meta name="twitter:creator" content="@kulak_at" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5D5F7SM8E8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5D5F7SM8E8');
+    </script>
+
+    <style>*, *::before, *::after{
+    box-sizing: border-box; /* Set the sizing of an element to include it's border */
+}
+
+*{
+    margin: 0; /* Set the default margin to 0 */
+    padding: 0; /* Set the default padding to 0 */
+}
+
+ul[role='list'], ol[role='list']{
+    list-style: none; /* Turn off numbered and unordered list decoration */
+}
+
+html:focus-within{
+    scroll-behavior: smooth; /* Make the scrolling inside of any scrollable element smooth */
+}
+/* 
+a:not([class]){
+    text-decoration-skip-ink: auto;
+} */
+
+img, picture, svg, video, canvas{
+    max-width: 100%; /* Makes it responsive */
+    height: auto; /* Makes it responsive */
+    vertical-align: middle; /* Makes text next to inline images look better */
+    font-style: italic; /* If the images don't load it makes the alt decription look better */
+    background-repeat: no-repeat; 
+    /* The background repeat and size are there if you want to load a picture first like a backroung image that is worse quality while the better quality image loads */
+    background-size: cover;
+}
+
+input, button, textarea, select{
+    font: inherit; /* Makes these elements inherit fonts */
+}
+
+/* Turns off animation for people who don't want to see them */
+@media (prefers-reduced-motion: reduce){
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transition: none;
+    }
+}
+
+body, html{
+    height: 100%; /* Makes the body element full screen */
+    scroll-behavior: smooth; /* Makes normal scrolling smooth */
+}
+/* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+:root {
+    --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
+    --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
+    --step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+    --step-1: clamp(1.35rem, 1.2761rem + 0.3696vw, 1.5625rem);
+    --step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
+    --step-3: clamp(1.9438rem, 1.7707rem + 0.8652vw, 2.4413rem);
+    --step-4: clamp(2.3325rem, 2.0823rem + 1.2511vw, 3.0519rem);
+    --step-5: clamp(2.7994rem, 2.4461rem + 1.7663vw, 3.815rem);
+  }
+
+
+/* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+:root {
+    --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
+    --space-2xs: clamp(0.5625rem, 0.5408rem + 0.1087vw, 0.625rem);
+    --space-xs: clamp(0.875rem, 0.8533rem + 0.1087vw, 0.9375rem);
+    --space-s: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+    --space-m: clamp(1.6875rem, 1.6223rem + 0.3261vw, 1.875rem);
+    --space-l: clamp(2.25rem, 2.163rem + 0.4348vw, 2.5rem);
+    --space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
+    --space-2xl: clamp(4.5rem, 4.3261rem + 0.8696vw, 5rem);
+    --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
+  
+    /* One-up pairs */
+    --space-3xs-2xs: clamp(0.3125rem, 0.2038rem + 0.5435vw, 0.625rem);
+    --space-2xs-xs: clamp(0.5625rem, 0.4321rem + 0.6522vw, 0.9375rem);
+    --space-xs-s: clamp(0.875rem, 0.7446rem + 0.6522vw, 1.25rem);
+    --space-s-m: clamp(1.125rem, 0.8641rem + 1.3043vw, 1.875rem);
+    --space-m-l: clamp(1.6875rem, 1.4049rem + 1.413vw, 2.5rem);
+    --space-l-xl: clamp(2.25rem, 1.7283rem + 2.6087vw, 3.75rem);
+    --space-xl-2xl: clamp(3.375rem, 2.8098rem + 2.8261vw, 5rem);
+    --space-2xl-3xl: clamp(4.5rem, 3.4565rem + 5.2174vw, 7.5rem);
+  
+    /* Custom pairs */
+    --space-s-l: clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem);
+  }
+
+/* @link https://utopia.fyi/grid/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,xl,2xl,12 */
+
+:root {
+    --grid-max-width: 108.75rem;
+    --grid-gutter: var(--space-s-xl, clamp(1.125rem, 0.5335rem + 2.9577vw, 3.75rem));
+    --grid-columns: 12;
+  }
+
+:root {
+  --main-color-dark: #13293D;
+  --main-color-light: #A0C5E3;
+  --accent-color-dark: #16324f;
+  --accent-color-light: #4E9AD0;
+  /* brand variables */
+  --font-color: var(--main-color-light);
+  --font-color-reversed: var(--main-color-dark);
+  --background-color: var(--main-color-dark);
+  --background-color-reversed: var(--main-color-light);
+  --display-font-family: 'Alumni Sans';
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --font-color: var(--main-color-dark);
+    --font-color-reversed: var(--main-color-light);
+    --background-color: var(--main-color-light);
+    --background-color-reversed: var(--main-color-dark);
+
+  }
+}
+
+  
+  .u-container {
+    max-width: var(--grid-max-width);
+    padding-inline: var(--grid-gutter);
+    margin-inline: auto;
+  }
+  
+  .u-grid {
+    display: grid;
+    gap: var(--grid-gutter);
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+  }
+
+  body {
+    background: var(--background-color);
+  }
+
+  a {
+    color: inherit;
+  }
+
+/* Fonts */
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--display-font-family);
+  font-weight: bold;
+  font-style: italic;
+}
+
+body {
+  color: var(--font-color);
+  font-family: Assistant;
+}
+
+h1 {
+    font-size: var(--step-5);
+}
+
+h2 {
+    font-size: var(--step-4);
+    line-height: 1em;
+}
+
+h3 {
+    font-size: var(--step-3);
+    line-height: 1em;
+    margin-top: 0.8em;
+}
+
+body {
+    font-size: var(--step-0);
+}
+
+p {
+    font-size: var(--step-0);
+    padding: var(--space-m) 0;
+}
+
+
+.postlist-grid-container {
+	container-type: inline-size;
+}
+
+
+.postlist-grid {
+    --rows: 4;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(var(--rows), 1fr);
+}
+
+.postlist-item {
+    /* background: var(--background-color-reversed);
+    color: var(--font-color-reversed); */
+    border: 1px solid var(--background-color-reversed);
+    border-width: 0 0 1px 0px;
+    /* border-bottom-width: 1px; */
+    padding: var(--space-s);
+    padding-bottom: var(--space-m);
+    &:hover {
+      border-bottom-width: var(--space-m);
+      padding-bottom: 1px;
+      background: rgba(255, 255, 255, 0.01);
+    }
+    a {
+      text-decoration: none;
+    }
+
+    h2 {
+      margin: var(--space-m) 0;
+    }
+}
+
+@container (max-width: 40rem) {
+    .postlist-grid {
+      --rows: 1;
+    }
+}
+
+@container (min-width: 40rem) and (max-width: 60rem) {
+    .postlist-grid {
+      --rows: 2;
+    }
+}
+
+@container (min-width: 60rem) and (max-width: 80rem) {
+  .postlist-grid {
+    --rows: 3;
+  }
+}
+
+.header {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  margin: var(--space-m) auto var(--space-m) auto;
+
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-s);
+  text-transform: uppercase;
+  a {
+    text-decoration: none;
+    padding: var(--space-2xs);
+    font-family: var(--display-font-family);
+    font-size: var(--step-1);
+    &:hover {
+      background: var(--background-color-reversed);
+      color: var(--font-color-reversed);
+    }
+  }
+}
+
+.post-metadata {
+  display: flex;
+  gap: var(--space-s);
+  margin: var(--space-m) 0;
+  a {
+    display: inline-block;
+    text-decoration: none;
+    padding: var(--space-3xs);
+    background: var(--accent-color-light);
+    color: var(--main-color-dark);
+    font-family: var(--display-font-family);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.post-image {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+}
+
+.post-image.draft {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image.draft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  background: red;
+  color: #FFF;
+  padding: 1em 5em;
+  transform: translate(30%, 50%) rotate(45deg);
+}
+
+
+.post-description {
+  display: flex;
+  flex-direction: column;
+  p {
+    margin-top: auto;
+  }
+}
+
+
+.article img {
+  display: inline-block;
+  margin: var(--space-s) auto;
+}
+
+.content {
+  padding-bottom: var(--space-xl);
+}
+
+
+
+pre {
+	width: calc(min(80ch, 80%));
+  margin: 0 auto !important;
+  display: flex;
+  border-bottom: 5px solid rgb(23, 23, 23);
+  border-radius: 0 !important;
+  font-size: var(--step--1) !important;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+/* Direct Links / Markdown Headers */
+.header-anchor {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1em;
+	margin-left: .1em;
+}
+a[href].header-anchor,
+a[href].header-anchor:visited {
+	color: transparent;
+}
+a[href].header-anchor:focus,
+a[href].header-anchor:hover {
+	text-decoration: underline;
+}
+a[href].header-anchor:focus,
+:hover > a[href].header-anchor {
+	color: inherit;
+}
+
+
+/* PREV NEXT */
+.links-nextprev {
+  display: grid;
+  grid-template-areas: "prev next";
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  padding: 2em 0;
+}
+
+.links-nextprev .link-prev {
+  grid-area: 'prev';
+}
+
+.links-nextprev .link-next {
+  grid-area: 'next';
+  text-align: right;
+}
+
+footer {
+  background: rgba(0, 0, 0, 0.6);
+  color: #DDD;
+  padding: 3em 0 6em 0;
+}
+
+
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body > footer {
+  margin-top: auto;
+}
+
+
+.article-link {
+  display: flex;
+  text-decoration: none;
+  background: rgba(0,0,0,0.5);
+  width: calc(min(80ch, 100%));
+  margin: 0.5em auto;
+  padding: 1em;
+  align-items: center;
+}
+
+.article-link img {
+  flex: 1;
+  width: 35%;
+  height: 100%;
+}
+
+.article-link .details {
+  flex: 4;
+  margin-left: 1em;
+}
+
+.link-title {
+  font-weight: bold;
+  font-size: var(--step-1);
+}
+
+.article-link p {
+  font-size: var(--step--1) !important;
+}
+
+.article img {
+  display: block;
+  margin: 1em auto;
+  max-width: 100%;
+}
+
+.link-url {
+  font-size: var(--step--2) !important;
+  text-align: right;
+}
+
+
+/* codepen */
+.cp_embed_wrapper {
+  width: calc(min(80ch, 100%));
+  margin: 0 auto;
+}
+
+.player {
+  margin: 1em auto;
+}
+/* Base styles */
+:root {
+  --main-color-dark: #1A2A38;
+  --main-color-light: #E6EDF3;
+  --accent-color-dark: #2C5282;
+  --accent-color-light: #63B3ED;
+  --font-color: var(--main-color-light);
+  --font-color-reversed: var(--main-color-dark);
+  --background-color: var(--main-color-light);
+  --background-color-reversed: var(--main-color-dark);
+  --display-font-family: 'Alumni Sans', sans-serif;
+  --body-font-family: 'Assistant', sans-serif;
+  --code-background: #2D3748;
+  --code-color: #E2E8F0;
+  --tag-background: #E2E8F0;
+  --tag-color: #2D3748;
+}
+
+body {
+  --text-color: #2D3748;
+  --background-color: #F7FAFC;
+  --accent-color: var(--accent-color-dark);
+  --secondary-color: #718096;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+  --text-color: #E2E8F0;
+  --background-color: #1A202C;
+  --accent-color: var(--accent-color-light);
+  --secondary-color: #A0AEC0;
+  --code-background: #2D3748;
+  --code-color: #E2E8F0;
+  --tag-background: #4A5568;
+  --tag-color: #E2E8F0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--display-font-family);
+  font-weight: bold;
+  font-style: italic;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  color: var(--accent-color);
+}
+
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-4); }
+h3 { font-size: var(--step-3); }
+h4 { font-size: var(--step-2); }
+h5 { font-size: var(--step-1); }
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--text-color);
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+/* Layout styles */
+.u-container {
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-gutter);
+  margin-inline: auto;
+}
+
+.u-grid {
+  display: grid;
+  gap: var(--grid-gutter);
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+}
+
+.header {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-m) auto;
+  padding: var(--space-s) 0;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.content {
+  padding: var(--space-xl) 0;
+}
+
+footer {
+  background: var(--text-color);
+  color: var(--background-color);
+  padding: var(--space-l) 0;
+  margin-top: auto;
+}
+
+/* Post view styles */
+.article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-l);
+  background-color: var(--background-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.article-headings {
+  text-align: center;
+  margin-bottom: var(--space-l);
+}
+
+.article-headings h1 {
+  font-size: var(--step-5);
+  margin-bottom: var(--space-xs);
+}
+
+.article-headings h2 {
+  font-size: var(--step-3);
+  color: var(--secondary-color);
+  margin-bottom: var(--space-m);
+}
+
+.article-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.article-time {
+  color: var(--secondary-color);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.post-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2xs);
+  margin-top: var(--space-xs);
+}
+
+.cover {
+  margin: -var(--space-l) -var(--space-l) var(--space-l);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0), var(--background-color));
+}
+
+.article-content {
+  font-size: var(--step-0);
+  line-height: 1.8;
+}
+
+.article-content p {
+  margin-bottom: var(--space-m);
+}
+
+.article-content h2,
+.article-content h3 {
+  margin-top: var(--space-l);
+}
+
+.article-content a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-content blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding-left: var(--space-m);
+  font-style: italic;
+  margin: var(--space-m) 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+.article-content pre {
+  background-color: var(--code-background);
+  color: var(--code-color);
+  padding: var(--space-m);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  margin: var(--space-m) 0;
+}
+
+.article-content code {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--step--2);
+  padding: 0.2em 0.4em;
+  background-color: var(--code-background);
+  color: var(--code-color);
+  border-radius: 3px;
+}
+
+.article-content pre code {
+  padding: 0;
+  background-color: transparent;
+}
+
+.article-content img {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.article-content img:hover {
+  opacity: 0.8;
+}
+
+.post-tag {
+  display: inline-block;
+  background-color: var(--tag-background);
+  color: var(--tag-color);
+  padding: 0.2em 0.6em;
+  margin: 0.2em;
+  border-radius: 20px;
+  font-size: var(--step--1);
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.post-tag:hover {
+  background-color: var(--accent-color);
+  color: var(--background-color);
+}
+
+.links-nextprev {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--secondary-color);
+}
+
+.article-author {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-xl);
+  padding: var(--space-m);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.article-author img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-right: var(--space-m);
+}
+
+.article-author-info h3 {
+  margin-bottom: var(--space-2xs);
+}
+
+.article-author-info p {
+  font-size: var(--step--1);
+  color: var(--secondary-color);
+}
+
+/* Image overlay styles */
+.image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.image-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+/* Component styles */
+.nav {
+  display: flex;
+  gap: var(--space-s);
+}
+
+.nav a {
+  padding: var(--space-2xs) var(--space-xs);
+  font-family: var(--display-font-family);
+  font-size: var(--step-0);
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav a:hover {
+  background: var(--accent-color);
+  color: var(--background-color);
+}
+
+.postlist-grid-container {
+  container-type: inline-size;
+}
+
+.postlist-grid {
+  --rows: 3;
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(var(--rows), 1fr);
+}
+
+.postlist-item {
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--background-color);
+}
+
+.postlist-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.post-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.postlist-item:hover .post-image img {
+  transform: scale(1.05);
+}
+
+.post-description {
+  padding: var(--space-m);
+}
+
+.post-description h2 {
+  font-size: var(--step-2);
+  margin-bottom: var(--space-xs);
+}
+
+.post-description time {
+  font-size: var(--step--1);
+  color: var(--secondary-color);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.post-description p {
+  font-size: var(--step--1);
+  margin-bottom: 0;
+  color: var(--text-color);
+}
+
+/* Tags */
+.post-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  background: var(--accent-color);
+  color: var(--background-color);
+  text-decoration: none;
+  font-size: 0.8em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-family: var(--display-font-family);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.post-tag:hover {
+  background: var(--text-color);
+  color: var(--background-color);
+}
+
+.post-metadata {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .5em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  align-content: center;
+}
+
+@container (max-width: 50rem) {
+  .postlist-grid {
+    --rows: 2;
+  }
+}
+
+@container (max-width: 30rem) {
+  .postlist-grid {
+    --rows: 1;
+  }
+}
+/* Animation styles */
+@keyframes borderGrow {
+  from {
+    border-bottom-width: 1px;
+    padding-bottom: var(--space-m);
+  }
+  to {
+    border-bottom-width: var(--space-m);
+    padding-bottom: 1px;
+  }
+}
+
+.postlist-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.postlist-item:hover {
+  animation: borderGrow 0.3s forwards;
+}</style>
+  </head>
+  <body>
+    <div class="header-container">
+      <header class="header u-container">
+        <a href="/" class="home-link" alt="Hypersphere">
+          <img src="/hypersphere_logo.svg" style="width: 200px; height: 48px;" alt="Hypersphere Logo" />
+        </a>
+        <nav>
+          <ul class="nav" role="list">
+            <li class="nav-item"><a href="/">Home</a></li>
+            <li class="nav-item"><a href="/blog/">Archive</a></li>
+            <li class="nav-item"><a href="/projects/">Projects</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </header>
+    </div>
+
+    <main id="skip">
+      <article class="project">
+  <h1>Obsidian Picture-in-picture</h1>
+  
+  <h1 id="obsidian-picture-in-picture" tabindex="-1">Obsidian Picture-in-picture <a class="header-anchor" href="#obsidian-picture-in-picture">#</a></h1>
+<p>Obsidian Picture-in-picture is a plugin that adds picture-in-picture functionality to your Obsidian notes.</p>
+<h2 id="features" tabindex="-1">Features <a class="header-anchor" href="#features">#</a></h2>
+<ul>
+<li>Picture-in-picture for images and videos in notes</li>
+<li>Customizable PiP window size and position</li>
+<li>Seamless integration with Obsidian's interface</li>
+</ul>
+<h2 id="links" tabindex="-1">Links <a class="header-anchor" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/yourusername/obsidian-pip">Obsidian Picture-in-picture GitHub Page</a></li>
+</ul>
+
+  
+  <h2>Related Blog Posts</h2>
+  
+  
+  <ul class="related-posts">
+    
+      <li><a href="/blog/typescript-opaque-branded-types/">Better typings for strings and numbers in TypeString using opaque types</a></li>
+    
+      <li><a href="/blog/advanced-typescript-mapped-types/">Advanced TypeScript: Mapped Types and more</a></li>
+    
+      <li><a href="/blog/counting-in-css/">Counting in CSS: Unlock magic of CSS variables</a></li>
+    
+      <li><a href="/blog/randomness-in-css/">Randomness in CSS</a></li>
+    
+      <li><a href="/blog/gameboy-like-app-in-13k/">How I created a GameBoy-like game in 13kb</a></li>
+    
+      <li><a href="/blog/randomness-in-css-using-trigonometry/">Randomness in CSS using trigonometry</a></li>
+    
+      <li><a href="/blog/typeguards-to-use-or-not/">TypeScript Typeguards: To use or not to use?</a></li>
+    
+      <li><a href="/blog/introduction-to-assemblyscript/">Introduction to AssemblyScript</a></li>
+    
+      <li><a href="/blog/introduction-to-dithering/">Introduction to Dithering</a></li>
+    
+      <li><a href="/blog/assembly-script-image-processing/">Sobel Article</a></li>
+    
+      <li><a href="/blog/example/">Title</a></li>
+    
+  </ul>
+  
+  
+  <hr>
+  
+  <p><a href="/projects/">← Back to Projects</a></p>
+</article>
+
+    </main>
+
+    <footer>
+      <section class="u-container">
+        By Hypersphere. 2024.
+      </section>
+    </footer>
+
+    <script>
+      const themeToggle = document.querySelector('.theme-toggle');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function setTheme(theme) {
+        document.body.classList.toggle('dark-theme', theme === 'dark');
+        localStorage.setItem('theme', theme);
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+          setTheme('light');
+        } else {
+          setTheme('dark');
+        }
+      });
+
+      // Set initial theme
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme) {
+        setTheme(storedTheme);
+      } else if (prefersDarkScheme.matches) {
+        setTheme('dark');
+      }
+    </script>
+  </body>
+</html>

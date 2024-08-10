@@ -1,0 +1,19 @@
+/* Animation styles */
+@keyframes borderGrow {
+  from {
+    border-bottom-width: 1px;
+    padding-bottom: var(--space-m);
+  }
+  to {
+    border-bottom-width: var(--space-m);
+    padding-bottom: 1px;
+  }
+}
+
+.postlist-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.postlist-item:hover {
+  animation: borderGrow 0.3s forwards;
+}
