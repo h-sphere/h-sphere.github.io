@@ -592,3 +592,48 @@ h6:hover .header-anchor {
     font-size: var(--step-2);
   }
 }
+
+.newsletter-container {
+  display: grid;
+  justify-content: center;
+}
+
+.formkit-form.formkit-form.formkit-form.formkit-form.formkit-form.formkit-form {
+  max-width: initial !important;
+  width: 100%;
+}
+
+.article-newletter-form {
+  margin-top: 2em;
+}
+
+:is(.article-newletter-form, .newsletter-container) form {
+  background: none !important;
+  color: inherit !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+:is(.article-newletter-form, .newsletter-container) .formkit-column {
+  background-color: transparent !important;
+
+}
+
+:is(.article-newletter-form, .newsletter-container) input {
+  background: transparent !important;
+  color: inherit !important;
+  width: 50%;
+  border: 1px solid #DDD !important;
+}
+
+.formkit-header {
+  color: inherit !important;
+} 
+
+.article-newletter-form :is(.formkit-header, .formkit-subheader, .formkit-guarantee)  {
+  color: inherit !important;
+}
+
+html[data-theme="dark"] .formkit-powered-by-convertkit-container {
+  filter: invert(1);
+}

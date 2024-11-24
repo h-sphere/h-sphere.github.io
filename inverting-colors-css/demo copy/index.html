@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"> <style>:root
+        {
+            --theme-color-1: #fcca00;
+            --theme-color-2: #392310;
+            --theme-color-alt-1: #fcca00;
+            --theme-color-alt-2: #392310;
+            --themes-background: var(--theme-color-1), var(--theme-color-2);
+            --themes-color: var(--theme-color-alt-1), var(--theme-color-alt-2);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-size: 18px;
+            --dark: 0;
+            --invert: 0;
+            --theme: 0;
+        }
+        * {
+            --theme: max(var(--dark) - var(--invert), var(--invert) - var(--dark));
+            --background: color-mix(in hsl, var(--themes-background) calc(var(--theme) * 100%));
+            --color: color-mix(in hsl, var(--themes-color) calc((1 - var(--theme)) * 100%));
+        }
+        section:nth-child(2n) {
+            --invert: 1;
+        }
+        section {
+            min-height: 50vh;
+            box-sizing: border-box;
+            padding: 1em;
+            background: var(--background);
+            color: var(--color);
+        }
+        .list {
+            --invert: 1;
+            display: flex;
+            gap: 1em;
+            list-style: none;
+            padding: 1em;
+            margin: 0;
+        }
+        .quote {
+            --invert: 1;
+            background: var(--background);
+            color: var(--color);
+            position: relative;
+            padding: 0.5em;
+            margin-right: 1em;
+            font-style: italic;
+            &::after {
+                content: '"';
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: none;
+                opacity: 0.8;
+                font-size: 2em;
+            }
+        }
+        .list li {
+            flex: 1;
+            background: var(--background);
+            color: var(--color);
+            padding: 0.5em;
+        }
+        .invert {
+            --invert: 1;
+        }
+        @container style(--dark: 0) and style(--invert: 1) {
+            * {
+                --dark: 1;
+                --invert: 0;
+            }
+        }
+        @container style(--dark: 1) and style(--invert: 1) {
+            * {
+                --dark: 0;
+                --invert: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Wing & Scale Wellness Center</h2>
+        <p>Our state-of-the-art facility specializes in treating all varieties of mythical beings, from the smallest pixie to
+            the most majestic dragon. Our certified healers combine ancient magical practices with modern medical technology to
+            provide comprehensive care for your unique anatomy.</p>
+        <p>With specialized treatment rooms featuring fireproof walls, waterproof chambers, and anti-gravity zones, we ensure
+            comfort for all our patients. Our staff includes multilingual professionals fluent in all creature dialects, including
+            Mermish and Ancient Dragonspeak.</p>
+        <ul class="list">
+            <li>
+                <p>"After centuries of breathing fire, my throat was getting scratchy. The throat-coating elixir prescribed by Dr.
+                    Scalemender worked wonders!"</p>
+                <div class="author">Infernus the Dragon</div>
+            </li>
+            <li>
+                <p>"The wing therapy sessions completely fixed my migration-related strain."</p>
+                <div class="author">Cloudweaver the Griffin</div>
+            </li>
+            <li>
+                <p>"Finally, a waiting room that accommodates my full serpentine length!"</p>
+                <div class="author">Medusa</div>
+            </li>
+        </section>
+        <section>
+            <h2>Magical Career Advancement</h2>
+            <p>In today's rapidly evolving mythical realm, staying competitive means continuously developing your natural abilities.
+                Our certified career counselors understand the unique challenges faced by supernatural beings in the modern workplace,
+                from managing immortality in long-term career planning to navigating office politics as an invisible entity.</p>
+            <p>Our specialized programs include practical solutions for common workplace challenges, such as "Volume Control for
+                Banshees" and "Personal Space Management for Cloud Giants."</p>
+            <p class="quote">"Before taking the 'Leadership for Legendary Beings' course, my Gorgon stare kept turning my team to
+                stone. Now I'm successfully leading our department with a 0% petrification rate!" - Stella Serpentine, Senior Manager at
+                Olympus Corp</p>
+        </section>
+        <section>
+            <h2>Supernatural Property Solutions</h2>
+            <p>We understand that maintaining your mythical dwelling requires specialized expertise. Whether you're dealing with
+                persistent phoenix ash, managing underground lair humidity, or maintaining proper cloud castle buoyancy, our certified
+                specialists have you covered.</p>
+            <p>Each of our technicians undergoes rigorous training in both magical and conventional maintenance techniques, ensuring
+                they can handle everything from dragon-proof insulation to underwater kingdom pressurization.</p>
+            <div class="list">
+                <li>
+                    <p>"They installed a self-cleaning system for my cave that actually handles dragon soot!"</p>
+                    <div class="author">Flamewing the Mighty</div>
+                </li>
+                <li>
+                    <p>"The anti-frost enchantments they placed on my cloud castle have reduced my heating costs by 60%"</p>
+                    <div class="author">Cirrus the Sky King</div>
+                </li>
+                <li>
+                    <p>"Their underwater soundproofing solution finally let me practice my siren songs without disturbing the local merfolk"</p>
+                    <div class="author">Melodia the Siren</div>
+                </li>
+            </section>
+            <section>
+                <h2>Mythical Grooming & Spa</h2>
+                <p>Transform your supernatural self with our premium grooming services. Our expert stylists understand the unique
+                    challenges of maintaining everything from serpentine hair to scaled skin. We use only the finest enchanted products,
+                    sourced from sustainable magical forests and blessed by certified potion masters.</p>
+                <p>Every treatment room is equipped with size-shifting chairs and specialized tools designed to handle the most delicate
+                    fairy wings or the toughest dragon scales.</p>
+                <h3>Our Most Popular Treatment Packages:</h3>
+                <ul class="list">
+                    <li>
+                        <h4>The Phoenix Rebirth Spa Day</h4>
+                        <ul>
+                            <li>Full-body ash exfoliation</li>
+                            <li>Flame-infused hot stone massage</li>
+                            <li>Feather alignment and shimmer enhancement</li>
+                            <li>Complementary eternal flame maintenance</li>
+                        </ul>
+                        <p class="quote">I've gone through thousands of rebirths in my lifetime, but nothing compares to emerging from The Phoenix Rebirth treatment. My flames are burning brighter than ever, and the ash exfoliation really helps with those post-resurrection itches. The staff even adjusted the room temperature to my preferred 1000°C! Will definitely burst into flames here again.
+                            <span class="author">Ember Brightwind, 4,827 years young</span>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>The Medusa's Crown Special</h4>
+                        <ul>
+                            <li>Individual snake conditioning</li>
+                            <li>Venom gland detox</li>
+                            <li>Scale polishing</li>
+                            <li>Anti-petrification eye mask</li>
+                            <li>Serpentine coordination training</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>The Unicorn Radiance Package</h4>
+                        <ul>
+                            <li>Horn crystal treatment</li>
+                            <li>Mane rainbow infusion</li>
+                            <li>Magical aura cleansing</li>
+                            <li>Sparkle enhancement ritual</li>
+                            <li>Golden hoof buffing</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </body>
+    </html>
+</body></html>

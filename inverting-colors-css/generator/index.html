@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <style>
+        :root {
+            --primary-bg: #f5f5f5;
+            --secondary-bg: #ffffff;
+            --primary-text: #333333;
+            --accent: #007bff;
+            --border: #dddddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .config-panel {
+            flex: 1;
+            background-color: var(--secondary-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .preview-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--secondary-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .variable-entry {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .variable-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 0.5rem;
+        }
+
+        .variable-content {
+            transition: max-height 0.3s ease-out;
+            max-height: 500px;
+            overflow: hidden;
+        }
+
+        .variable-content.folded {
+            max-height: 0;
+        }
+
+        .fold-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .fold-icon.folded {
+            transform: rotate(-90deg);
+        }
+
+        .input-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .prefix-input {
+            width: 200px;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .clear-btn {
+            background-color: #6c757d;
+        }
+
+        #cssOutput {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        code[class*="language-"],
+        pre[class*="language-"] {
+            font-size: 14px;
+            line-height: 1.4;
+            tab-size: 4;
+        }
+
+        pre[class*="language-"] {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .settings-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .prefix-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="config-panel">
+            <h2>CSS Variables Configuration</h2>
+            
+            <div class="settings-group">
+                <div class="input-group">
+                    <label>Prefix:</label>
+                    <input type="text" 
+                           id="prefixInput" 
+                           class="prefix-input"
+                           value="_cssinv_" 
+                           onchange="saveAndGenerate()">
+                </div>
+            </div>
+
+            <div id="variablesContainer"></div>
+            <div class="button-group">
+                <button onclick="addVariable()">
+                    <svg width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                    </svg>
+                    Add Variable
+                </button>
+                <button class="clear-btn" onclick="clearStorage()">
+                    <svg width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                    Clear All
+                </button>
+            </div>
+        </div>
+        <div class="preview-panel">
+            <div class="preview-header">
+                <h2>Generated CSS</h2>
+                <button onclick="downloadCSS()">
+                    <svg width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path fill="currentColor" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Download CSS
+                </button>
+            </div>
+            <pre><code id="cssOutput" class="language-css"></code></pre>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script>
+        // Global variables
+        let variables = [];
+        const STORAGE_KEY = 'cssGeneratorState';
+        const DEFAULT_PREFIX = '_cssinv_';
+
+        // Initialization function
+        function init() {
+            loadFromLocalStorage();
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            document.getElementById('prefixInput').addEventListener('change', saveAndGenerate);
+        }
+
+        // Core functionality
+        function createVariableEntry() {
+            return {
+                name: '',
+                primaryValue: '',
+                secondaryValue: '',
+                folded: false
+            };
+        }
+
+        function addVariable() {
+            variables.push(createVariableEntry());
+            renderVariables();
+            saveAndGenerate();
+        }
+
+        function deleteVariable(index) {
+            variables.splice(index, 1);
+            renderVariables();
+            saveAndGenerate();
+        }
+
+        function updateVariable(index, field, value) {
+            variables[index][field] = value;
+            saveAndGenerate();
+        }
+
+        function toggleFold(index) {
+            variables[index].folded = !variables[index].folded;
+            renderVariables();
+            saveToLocalStorage();
+        }
+
+        // Rendering
+        function renderVariables() {
+            const container = document.getElementById('variablesContainer');
+            if (!container) return;
+
+            container.innerHTML = variables.map((variable, index) => `
+                <div class="variable-entry">
+                    <div class="variable-header" onclick="toggleFold(${index})">
+                        <span>${variable.name || 'Unnamed Variable'}</span>
+                        <svg class="fold-icon ${variable.folded ? 'folded' : ''}" width="16" height="16" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                        </svg>
+                    </div>
+                    <div class="variable-content ${variable.folded ? 'folded' : ''}">
+                        <div class="input-group">
+                            <label>Variable Name:</label>
+                            <input type="text" 
+                                value="${variable.name}" 
+                                onchange="updateVariable(${index}, 'name', this.value)"
+                                placeholder="e.g., button-color">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Primary Value:</label>
+                            <input type="text" 
+                                value="${variable.primaryValue}" 
+                                onchange="updateVariable(${index}, 'primaryValue', this.value)"
+                                placeholder="e.g., #ff0000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Secondary Value:</label>
+                            <input type="text" 
+                                value="${variable.secondaryValue}" 
+                                onchange="updateVariable(${index}, 'secondaryValue', this.value)"
+                                placeholder="e.g., #00ff00">
+                        </div>
+                        
+                        <button class="delete-btn" onclick="event.stopPropagation(); deleteVariable(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // CSS Generation
+        function generateCSS() {
+            const prefix = document.getElementById('prefixInput')?.value.trim() || DEFAULT_PREFIX;
+            let css = `// Generated by Hypersphere CSS Theme Invert: https://hypersphere.blog/css-theme-invert-generator
+
+:root {
+    --${prefix}parent_color: 0;
+    --invert: 0;
+    --theme: 0;
+
+${variables.map(v => {
+    if (!v.name || !v.primaryValue || !v.secondaryValue) return;
+    const baseVarName = v.name.replace(/^--/, '');
+    const prefixedVar = `--${prefix}${baseVarName}`;
+    return `    ${prefixedVar}: ${v.primaryValue}, ${v.secondaryValue}`;
+}).join('\n')}
+}
+
+* {
+    --theme: max(var(--${prefix}parent_color) - var(--invert), var(--invert) - var(--${prefix}parent_color));
+${variables.map(v => {
+    if (!v.name || !v.primaryValue || !v.secondaryValue) return;
+    const baseVarName = v.name.replace(/^--/, '');
+    const prefixedVar = `--${prefix}${baseVarName}`;
+    return `    --${baseVarName}: color-mix(in hsl, var(${prefixedVar}) calc(var(--theme) * 100%));`;
+}).join('\n')}
+}
+
+.invert {
+    --invert: 1;
+}
+
+@container style(--dark: 0) and style(--invert: 1) {
+    * {
+        --dark: 1;
+        --invert: 0;
+    }
+}
+
+@container style(--dark: 1) and style(--invert: 1) {
+    * {
+        --dark: 0;
+        --invert: 0;
+    }
+}
+`;
+            
+            const output = document.getElementById('cssOutput');
+            if (output) {
+                output.textContent = css;
+                Prism.highlightElement(output);
+            }
+            return css;
+        }
+        // Storage functions
+        function saveToLocalStorage() {
+            const data = {
+                variables,
+                prefix: document.getElementById('prefixInput')?.value || DEFAULT_PREFIX,
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    variables = data.variables;
+                    if (document.getElementById('prefixInput')) {
+                        document.getElementById('prefixInput').value = data.prefix || DEFAULT_PREFIX;
+                    }
+                    renderVariables();
+                    generateCSS();
+                } else {
+                    variables = [createVariableEntry()];
+                    renderVariables();
+                    generateCSS();
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+                variables = [createVariableEntry()];
+                renderVariables();
+                generateCSS();
+            }
+        }
+
+        function clearStorage() {
+            if (confirm('Are you sure you want to clear all variables? This cannot be undone.')) {
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                    variables = [createVariableEntry()];
+                    if (document.getElementById('prefixInput')) {
+                        document.getElementById('prefixInput').value = DEFAULT_PREFIX;
+                    }
+                    renderVariables();
+                    generateCSS();
+                } catch (e) {
+                    console.error('Failed to clear storage:', e);
+                }
+            }
+        }
+
+        function saveAndGenerate() {
+            saveToLocalStorage();
+            generateCSS();
+        }
+
+        // Download functionality
+        function downloadCSS() {
+            const css = generateCSS();
+            const blob = new Blob([css], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'variables.css';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
+        

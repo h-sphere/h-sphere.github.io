@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sono:wght,MONO@200..800,0&display=swap" rel="stylesheet">
+
+
+    <style>
+
+        :root {
+            --mouse-x: 0;
+            --mouse-y: 0;
+        }
+
+        h1 {
+                font-family: "Montserrat", sans-serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                letter-spacing: -10px;
+
+                font-size: 150px;
+}
+
+    h1 :nth-child(1) {
+        --i: 1;
+    }
+
+    h1 :nth-child(2) {
+        --i: 2;
+    }
+
+    h1 :nth-child(3) {
+        --i: 3;
+    }
+
+    h1 :nth-child(4) {
+        --i: 4;
+    }
+
+    h1 :nth-child(5) {
+        --i: 5;
+    }
+
+    h1 :nth-child(6) {
+        --i: 6;
+    }
+
+    h1 :nth-child(7) {
+        --i: 7;
+    }
+
+    h1 :nth-child(8) {
+        --i: 8;
+    }
+
+    h1 :nth-child(9) {
+        --i: 9;
+    }
+
+    h1 :nth-child(10) {
+        --i: 10;
+    }
+
+    h1 span {
+        
+
+        font-weight: calc(var(--i) * 40 + 100 + var(--mouse-x) * 200)
+    }
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+section {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    text-align: center;
+    align-items: center;
+}
+
+.scroll {
+    view-timeline-name: --page-scroll;
+    view-timeline-axis: block;
+    contain: layout;
+}
+
+
+
+@keyframes flyOff {
+  from {
+    color: red;
+    
+    transform: translateY(0);
+    font-weight: 100;
+  }
+
+  to {
+    font-weight: calc(800 - var(--i) * 80);
+    color: blue;
+    
+  }
+}
+                
+        
+    </style>
+</head>
+<body>
+    <section class="scroll">
+        <h1><span>L</span><span>o</span><span>r</span><span>e</span><span>m</span> <span>I</span><span>p</span><span>s</span><span>u</span><span>m</span></h1>
+    </section>
+    <section></section>
+
+    <script>
+       // Get the window dimensions
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+
+// Calculate center points
+let centerX = windowWidth / 2;
+let centerY = windowHeight / 2;
+
+// Get root element for CSS variables
+const root = document.documentElement;
+
+// Initialize variables
+let x = 0;
+let y = 0;
+
+// Update window dimensions when the window is resized
+window.addEventListener('resize', () => {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+    centerX = windowWidth / 2;
+    centerY = windowHeight / 2;
+});
+
+// Add mouse move listener
+window.addEventListener('mousemove', (event) => {
+    // Calculate distance from center
+    const deltaX = event.clientX - centerX;
+    const deltaY = event.clientY - centerY;
+    
+    // Convert to ratio from -1 to 1
+    x = deltaX / (windowWidth / 2);
+    y = deltaY / (windowHeight / 2);
+    
+    // Clamp values between -1 and 1
+    x = Math.max(-1, Math.min(1, x));
+    y = Math.max(-1, Math.min(1, y));
+    
+    // Set CSS variables
+    root.style.setProperty('--mouse-x', x);
+    root.style.setProperty('--mouse-y', y);
+});
+    </script>
+
+    </body>
+    </html>
+</body></html>

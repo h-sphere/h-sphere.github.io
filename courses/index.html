@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>CSS Scroll Animations</title>
+		<title>Hypersphere</title>
 		<meta name="description" content="Tech blog, mostly about TypeScript">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Hypersphere">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="Hypersphere">
@@ -12,8 +12,8 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Assistant&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
-		<meta property="og:title" content="CSS Scroll Animations"/>
-		<meta property="og:url" content="https://hypersphere.codes//blog/css-scroll-animations/" />
+		<meta property="og:title" content="Hypersphere"/>
+		<meta property="og:url" content="https://hypersphere.codes//courses/" />
 		<meta property="og:description" content="Tech blog, mostly about TypeScript"/>
 		<meta property="og:image" content="https://hypersphere.codes//default-cover.jpg"/>
 		<meta property="og:type" content="article" />
@@ -32,175 +32,7 @@
 
 		
 
-		<style>/**
- * okaidia theme for JavaScript, CSS and HTML
- * Loosely based on Monokai textmate theme by http://www.monokai.nl/
- * @author ocodia
- */
-
-code[class*="language-"],
-pre[class*="language-"] {
-	color: #f8f8f2;
-	background: none;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
-	border-radius: 0.3em;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #272822;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
-}
-
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-	color: #8292a2;
-}
-
-.token.punctuation {
-	color: #f8f8f2;
-}
-
-.token.namespace {
-	opacity: .7;
-}
-
-.token.property,
-.token.tag,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	color: #f92672;
-}
-
-.token.boolean,
-.token.number {
-	color: #ae81ff;
-}
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-	color: #a6e22e;
-}
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-	color: #f8f8f2;
-}
-
-.token.atrule,
-.token.attr-value,
-.token.function,
-.token.class-name {
-	color: #e6db74;
-}
-
-.token.keyword {
-	color: #66d9ef;
-}
-
-.token.regex,
-.token.important {
-	color: #fd971f;
-}
-
-.token.important,
-.token.bold {
-	font-weight: bold;
-}
-.token.italic {
-	font-style: italic;
-}
-
-.token.entity {
-	cursor: help;
-}
-/*
- * New diff- syntax
- */
-
-pre[class*="language-diff-"] {
-	--eleventy-code-padding: 1.25em;
-	padding-left: var(--eleventy-code-padding);
-	padding-right: var(--eleventy-code-padding);
-}
-.token.deleted {
-	background-color: hsl(0, 51%, 37%);
-	color: inherit;
-}
-.token.inserted {
-	background-color: hsl(126, 31%, 39%);
-	color: inherit;
-}
-
-/* Make the + and - characters unselectable for copy/paste */
-.token.prefix.unchanged,
-.token.prefix.inserted,
-.token.prefix.deleted {
-	-webkit-user-select: none;
-	user-select: none;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-.token.prefix.inserted,
-.token.prefix.deleted {
-	width: var(--eleventy-code-padding);
-	background-color: rgba(0,0,0,.2);
-}
-
-/* Optional: full-width background color */
-.token.inserted:not(.prefix),
-.token.deleted:not(.prefix) {
-	display: block;
-	margin-left: calc(-1 * var(--eleventy-code-padding));
-	margin-right: calc(-1 * var(--eleventy-code-padding));
-	text-decoration: none; /* override del, ins, mark defaults */
-	color: inherit; /* override del, ins, mark defaults */
-}
-*, *::before, *::after{
+		<style>*, *::before, *::after{
     box-sizing: border-box; /* Set the sizing of an element to include it's border */
 }
 
@@ -1066,7 +898,7 @@ html[data-theme="dark"] .formkit-powered-by-convertkit-container {
 					<ul class="nav" role="list">
 						<li class="nav-item"><a href="/">Articles</a></li>
 						<li class="nav-item"><a href="/projects/">Projects</a></li>
-						<li class="nav-item"><a href="/courses/">Courses</a></li>
+						<li class="nav-item"><a href="/courses/" aria-current="page">Courses</a></li>
 						<li class="nav-item"><a href="/newsletter/">Newsletter</a></li>
 						<li class="nav-item"><button id="theme-toggle" aria-label="Toggle theme"></button></li>
 					</ul>
@@ -1075,34 +907,19 @@ html[data-theme="dark"] .formkit-powered-by-convertkit-container {
 		</div>
 
 		<main id="skip" class="u-container">
-			
-
-<article class="article">
-	
-	<div class="cover">
-		<picture><source type="image/webp" srcset="/img/G3AEcG7hSz-1920.webp 1920w"><img alt="Article Cover" loading="lazy" decoding="async" style="aspect-ratio: 1.7777777777777777" width="1920" height="1080" src="/img/G3AEcG7hSz-1920.jpeg"></picture>
-	</div>
-	
-	<header class="article-headings">
-		<h1>CSS Scroll Animations</h1><h2>test</h2>
-		<time class="article-time" datetime="2025-01-01">01 January 2025</time>
-		<ul class="post-metadata" role="list">
-	<li><a href="/tags/css/" class="post-tag">CSS</a></li>
+			<section>
+<p>Are you interested in upskilling? Or do you want to explore Creative Coding for your personal projects?</p>
+<p>Currently we are open for early signups for 2 upcomming courses:</p>
+<ul>
+<li>TypeScript for JavaScript developers</li>
+<li>Introduction to Git</li>
 </ul>
-	</header>
-
-	<div class="article-content">
-		
-	</div>
-
-	<nav class="article-navigation">
-		<ul class="links-nextprev" role="list"><li class="link-prev">Previous: <a href="/blog/assembly-script-image-processing/">Sobel Article</a></li><li class="link-next">Next: <a href="/blog/css-synchronise-scroll-animations/">Synchronise Scroll Animations in CSS</a></li>
-		</ul>
-	</nav>
-	<section class="article-newletter-form">
-		<script async data-uid="d44c8c15fe" src="https://hypersphere.kit.com/d44c8c15fe/index.js"></script>
-	</section>
-</article>
+<p>These courses are planned to be gradually released in Q1 2025 and by signing up now you get early access to the content as it gets released!</p>
+<p>Sign up using form below to get the best deals on them!</p>
+<div class="article-newletter-form">
+<script async data-uid="5b132c46e2" src="https://hypersphere.kit.com/5b132c46e2/index.js"></script>
+</div>
+</section>
 
 		</main>
 
@@ -1115,6 +932,6 @@ html[data-theme="dark"] .formkit-powered-by-convertkit-container {
 		<script src="/js/main.js"></script>
 		<script src="/js/image-modal.js"></script>
 
-		<!-- Current page: /blog/css-scroll-animations/ -->
+		<!-- Current page: /courses/ -->
 	</body>
 </html>

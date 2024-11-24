@@ -62,12 +62,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
+		<loc>https://hypersphere.codes/tags/typeguards/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/as-const/</loc>
+		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -82,12 +82,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/typeguards/</loc>
+		<loc>https://hypersphere.codes/tags/mapped-types/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/type-narrowing-using-discriminated-unions/</loc>
+		<loc>https://hypersphere.codes/tags/as-const/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -122,12 +122,12 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/randomness/</loc>
+		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
+		<loc>https://hypersphere.codes/tags/randomness/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -137,7 +137,7 @@
 	</url>
 	
 	<url>
-		<loc>https://hypersphere.codes/tags/discriminated-unions/</loc>
+		<loc>https://hypersphere.codes/tags/prime-numbers/</loc>
 		<lastmod>2024-07-31</lastmod>
 	</url>
 	
@@ -164,5 +164,20 @@
 	<url>
 		<loc>https://hypersphere.codes/</loc>
 		<lastmod>2024-08-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/newsletter/</loc>
+		<lastmod>2024-10-20</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/courses/</loc>
+		<lastmod>2024-11-22</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://hypersphere.codes/thank-you-course/</loc>
+		<lastmod>2024-11-24</lastmod>
 	</url>
 </urlset>
